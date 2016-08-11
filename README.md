@@ -20,7 +20,7 @@ Place it at your home directory, or make a symlink there, like this `ln -s <wher
 
 A configuration for vim I use. 
 
-_Note_: I use () [vim-plug](https://github.com/junegunn/vim-plug) as a plugin manager. Install it, if you want to use it
+_Note_: I use [vim-plug](https://github.com/junegunn/vim-plug) as a plugin manager. Install it, if you want to use it
 
 #### How to use?
 
@@ -29,7 +29,7 @@ The same, as .tmux.conf
 ### awesome
 
 This is a config for awesome window manager. Mostly, edited default configuration, but I added some little things from myself.
-For it to correctly, `kmix`, `xscreensaver`, `konsole`, `krusader` andawesome `vicious` plugins are required.
+For it to correctly, `kmix`, `xscreensaver`, `konsole`, `krusader` and awesome `vicious` plugins are required.
 
 Also, it uses this: https://github.com/plotnikovanton/net_widgets (it is included in repo).
 
