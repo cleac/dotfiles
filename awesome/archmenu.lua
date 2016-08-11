@@ -1,0 +1,172 @@
+ local menue0e4fc6213e8b3593495a7260c3a4c2e = {
+     {"Accerciser", "/usr/bin/accerciser", "/usr/share/icons/hicolor/16x16/apps/accerciser.png" },
+     {"Screen Reader", "orca --replace", "/usr/share/icons/hicolor/16x16/apps/orca.png" },
+ }
+
+ local menu98edb85b00d9527ad5acebe451b3fae6 = {
+     {"Archive Manager", "file-roller ", "/usr/share/icons/hicolor/16x16/apps/file-roller.png" },
+     {"Ark", "ark -qwindowtitle Ark ", "/usr/share/icons/hicolor/16x16/apps/ark.png" },
+     {"Character Map", "gucharmap"},
+     {"Desktop Search", "tracker-needle"},
+     {"HP Device Manager", "hp-toolbox", "///usr/share/hplip/data/images/128x128/hp_logo.png" },
+     {"KCalc", "kcalc"},
+     {"KMail Import Wizard", "importwizard", "/usr/share/icons/hicolor/64x64/apps/kontact-import-wizard.png" },
+     {"Krusader", "krusader -caption \"Krusader\" ", "/usr/share/icons/hicolor/16x16/apps/krusader_user.png" },
+     {"Notes", "bijiben ", "/usr/share/icons/hicolor/16x16/apps/bijiben.png" },
+     {"Screen Reader", "orca --replace", "/usr/share/icons/hicolor/16x16/apps/orca.png" },
+     {"Shutter", "shutter ", "/usr/share/icons/hicolor/16x16/apps/shutter.png" },
+     {"ipython", "xterm -e ipython"},
+ }
+
+ local menu251bd8143891238ecedc306508e29017 = {
+     {"AisleRiot Solitaire", "sol", "/usr/share/icons/hicolor/16x16/apps/gnome-aisleriot.png" },
+     {"Alien Arena", "alienarena", "/usr/share/icons/alienarena.png" },
+     {"Chromium B.S.U.", "chromium-bsu", "/usr/share/icons/hicolor/64x64/apps/chromium-bsu.png" },
+     {"Civilisation V", "/home/cleac/Downloads/Civilisation5//Civ5XP", "///home/cleac/Downloads/Civilisation5/Civ5.png" },
+     {"Five or More", "five-or-more", "/usr/share/icons/hicolor/16x16/apps/five-or-more.png" },
+     {"Four-in-a-row", "four-in-a-row", "/usr/share/icons/hicolor/16x16/apps/four-in-a-row.png" },
+     {"Hitori", "hitori", "/usr/share/icons/hicolor/16x16/apps/hitori.png" },
+     {"Iagno", "iagno", "/usr/share/icons/hicolor/16x16/apps/iagno.png" },
+     {"Lights Off", "lightsoff"},
+     {"OpenArena", "openarena", "/usr/share/pixmaps/openarena.png" },
+     {"PlayOnLinux", "playonlinux", "///usr/share/playonlinux/etc/playonlinux.png" },
+     {"Quadrapassel", "quadrapassel", "/usr/share/icons/hicolor/16x16/apps/quadrapassel.png" },
+     {"Steam", "/usr/bin/steam ", "/usr/share/icons/hicolor/16x16/apps/steam.png" },
+     {"Swell Foop", "swell-foop", "/usr/share/icons/hicolor/16x16/apps/swell-foop.png" },
+     {"Tali", "tali", "/usr/share/icons/hicolor/16x16/apps/tali.png" },
+ }
+
+ local menud334dfcea59127bedfcdbe0a3ee7f494 = {
+     {"GNU Image Manipulation Program", "gimp-2.8 ", "/usr/share/icons/hicolor/16x16/apps/gimp.png" },
+     {"Inkscape", "inkscape ", "/usr/share/icons/hicolor/16x16/apps/inkscape.png" },
+     {"KSnapshot", "ksnapshot -caption KSnapshot", "/usr/share/icons/hicolor/16x16/apps/ksnapshot.png" },
+     {"Okular", "okular   -caption Okular", "/usr/share/icons/hicolor/16x16/apps/okular.png" },
+     {"Simple Scan", "simple-scan"},
+ }
+
+ local menuc8205c7636e728d448c2774e6a4a944b = {
+     {"Avahi SSH Server Browser", "/usr/bin/bssh"},
+     {"Avahi VNC Server Browser", "/usr/bin/bvnc"},
+     {"Birdie", "birdie ", "/usr/share/icons/hicolor/16x16/apps/birdie.png" },
+     {"Chrome App Launcher", "/opt/google/chrome/google-chrome --show-app-list"},
+     {"Cloud Storage Manager", "storageservicemanager", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"Contact Print Theme Editor", "contactprintthemeeditor"},
+     {"Contact Theme Editor", "contactthemeeditor"},
+     {"Firefox Developer", "firefox-developer ", "/usr/share/pixmaps/firefox-developer-icon.png" },
+     {"Google Chrome", "/usr/bin/google-chrome-stable ", "/usr/share/icons/hicolor/16x16/apps/google-chrome.png" },
+     {"Google Music Manager", "/opt/google/musicmanager/google-musicmanager", "/usr/share/icons/hicolor/16x16/apps/google-musicmanager.png" },
+     {"KMail", "kmail -qwindowtitle KMail ", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"KMail Header Theme Editor", "headerthemeeditor", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"Links", "xlinks -g", "/usr/share/pixmaps/links_32x32.xpm" },
+     {"Messenger", "/opt/MessengerForDesktop/Messenger", "/usr/share/icons/hicolor/48x48/apps/messengerfordesktop.png" },
+     {"OpenArena Server", "xterm -e openarena-server", "/usr/share/pixmaps/openarena-server.png" },
+     {"PIM Setting Exporter", "pimsettingexporter"},
+     {"Polari", "gapplication launch org.gnome.Polari", "/usr/share/icons/hicolor/16x16/apps/polari.png" },
+     {"Qtransmission Bittorrent Client", "transmission-qt ", "/usr/share/pixmaps/transmission-qt.png" },
+     {"Remote Desktop Viewer", "vinagre "},
+     {"Sieve Editor", "sieveeditor", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"Skype", "skype ", "/usr/share/icons/hicolor/16x16/apps/skype.png" },
+     {"Slack", "/usr/share/slack/slack ", "/usr/share/pixmaps/slack.png" },
+     {"Steam", "/usr/bin/steam ", "/usr/share/icons/hicolor/16x16/apps/steam.png" },
+     {"Telegram Desktop", "/home/cleac/Downloads/Telegram/Telegram -- ", "///home/cleac/.TelegramDesktop/tdata/icon.png" },
+     {"Thunderbird", "thunderbird ", "/usr/share/icons/hicolor/16x16/apps/thunderbird.png" },
+     {"Wicd", "/usr/bin/wicd-client", "/usr/share/icons/hicolor/16x16/apps/wicd-gtk.png" },
+ }
+
+ local menudf814135652a5a308fea15bff37ea284 = {
+     {"Cloud Storage Manager", "storageservicemanager", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"Contact Print Theme Editor", "contactprintthemeeditor"},
+     {"Contact Theme Editor", "contactthemeeditor"},
+     {"KMail", "kmail -qwindowtitle KMail ", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"KMail Header Theme Editor", "headerthemeeditor", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"Okular", "okular   -caption Okular", "/usr/share/icons/hicolor/16x16/apps/okular.png" },
+     {"PIM Setting Exporter", "pimsettingexporter"},
+     {"Sieve Editor", "sieveeditor", "/usr/share/icons/hicolor/16x16/apps/kmail.png" },
+     {"WPS Presentation", "/usr/bin/wpp ", "/usr/share/icons/hicolor/48x48/apps/wps-office-wppmain.png" },
+     {"WPS Spreadsheets", "/usr/bin/et ", "/usr/share/icons/hicolor/48x48/apps/wps-office-etmain.png" },
+     {"WPS Writer", "/usr/bin/wps ", "/usr/share/icons/hicolor/48x48/apps/wps-office-wpsmain.png" },
+ }
+
+ local menu6311ae17c1ee52b36e68aaf4ad066387 = {
+     {"Agilian_2.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_ag\"", "///home/cleac/VP_Suite4.2/.install4j/run_ag.png" },
+     {"Business_Process_Visual_ARCHITECT_3.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_bpva\"", "///home/cleac/VP_Suite4.2/.install4j/run_bpva.png" },
+     {"DB_Visual_ARCHITECT_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_dbva\"", "///home/cleac/VP_Suite4.2/.install4j/run_dbva.png" },
+     {"DB_Visual_ARCHITECT_SQL_${dbvasqldeploy-version}", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_dbvasql\"", "///home/cleac/VP_Suite4.2/.install4j/run_dbvasql.png" },
+     {"DB_Visual_ARCHITECT_for_Eclipse_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_dbvaec\"", "///home/cleac/VP_Suite4.2/.install4j/run_dbvaec.png" },
+     {"DB_Visual_ARCHITECT_for_IntelliJ_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_dbvaij\"", "///home/cleac/VP_Suite4.2/.install4j/run_dbvaij.png" },
+     {"DB_Visual_ARCHITECT_for_NetBeans_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_dbvanb\"", "///home/cleac/VP_Suite4.2/.install4j/run_dbvanb.png" },
+     {"SDE_for_Eclipse_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_sdeec\"", "///home/cleac/VP_Suite4.2/.install4j/run_sdeec.png" },
+     {"SDE_for_IntelliJ_IDEA_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_sdeij\"", "///home/cleac/VP_Suite4.2/.install4j/run_sdeij.png" },
+     {"SDE_for_NetBeans_5.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_sdenb\"", "///home/cleac/VP_Suite4.2/.install4j/run_sdenb.png" },
+     {"VP_Suite_Product_Edition_Manager_4.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/VP_Suite_Product_Edition_Manager\"", "///home/cleac/VP_Suite4.2/.install4j/VP_Suite_Product_Edition_Manager.png" },
+     {"VP_Suite_Product_Selector_4.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/VP_Suite_Product_Selector\"", "///home/cleac/VP_Suite4.2/.install4j/VP_Suite_Product_Selector.png" },
+     {"VP_Suite_Update_4.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/VP_Suite_Update\"", "///home/cleac/VP_Suite4.2/.install4j/VP_Suite_Update.png" },
+     {"Visual_Paradigm_Shape_Editor_4.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/Visual_Paradigm_Shape_Editor\"", "///home/cleac/VP_Suite4.2/.install4j/Visual_Paradigm_Shape_Editor.png" },
+     {"Visual_Paradigm_for_UML_7.2", "/bin/sh \"/home/cleac/VP_Suite4.2/launcher/run_vpuml\"", "///home/cleac/VP_Suite4.2/.install4j/run_vpuml.png" },
+ }
+
+ local menue6f43c40ab1c07cd29e4e83e4ef6bf85 = {
+     {"0xDBE", "0xdbe ", "/usr/share/pixmaps/0xdbe.png" },
+     {"Accerciser", "/usr/bin/accerciser", "/usr/share/icons/hicolor/16x16/apps/accerciser.png" },
+     {"Android Studio", "android-studio ", "/usr/share/pixmaps/android-studio.png" },
+     {"Brackets", "/opt/brackets/brackets ", "/usr/share/icons/hicolor/32x32/apps/brackets.png" },
+     {"CMake", "cmake-gui ", "/usr/share/icons/hicolor/32x32/apps/CMakeSetup.png" },
+     {"Database browser", "gda-browser-5.0", "/usr/share/pixmaps/gda-browser-5.0.png" },
+     {"Devhelp", "devhelp", "/usr/share/icons/hicolor/16x16/apps/devhelp.png" },
+     {"Genymotion", "/usr/bin/genymotion", "///opt/genymotion/icons/icon.png" },
+     {"Glade", "glade ", "/usr/share/icons/hicolor/16x16/apps/glade.png" },
+     {"IntelliJ IDEA Community EAP", "\"/opt/intellij-idea-ce-eap/bin/idea.sh\" ", "///opt/intellij-idea-ce-eap/bin/idea.png" },
+     {"Java Mission Control", "/usr/lib/jvm/java-8-jdk/bin/jmc", "/usr/share/icons/hicolor/16x16/apps/sun-java-jdk8.png" },
+     {"Java Monitoring and Management Console", "/usr/lib/jvm/java-8-jdk/bin/jconsole", "/usr/share/icons/hicolor/16x16/apps/sun-java-jdk8.png" },
+     {"Java VisualVM", "/usr/lib/jvm/java-8-jdk/bin/jvisualvm", "/usr/share/icons/hicolor/16x16/apps/sun-java-jdk8.png" },
+     {"MonoDevelop", "monodevelop ", "/usr/share/icons/hicolor/16x16/apps/monodevelop.png" },
+     {"PyCharm", "/usr/bin/pycharm", "/usr/share/pixmaps/pycharm.png" },
+     {"Qt Assistant", "/usr/lib/qt/bin/assistant", "/usr/share/icons/hicolor/32x32/apps/assistant.png" },
+     {"Qt Designer", "/usr/lib/qt/bin/designer", "/usr/share/icons/hicolor/128x128/apps/QtProject-designer.png" },
+     {"Qt Linguist", "/usr/lib/qt/bin/linguist", "/usr/share/icons/hicolor/16x16/apps/linguist.png" },
+     {"Qt QDbusViewer ", "/usr/lib/qt/bin/qdbusviewer", "/usr/share/icons/hicolor/32x32/apps/qdbusviewer.png" },
+     {"Qt4 Assistant ", "assistant-qt4", "/usr/share/icons/hicolor/32x32/apps/assistant-qt4.png" },
+     {"Qt4 Designer", "designer-qt4", "/usr/share/icons/hicolor/128x128/apps/designer-qt4.png" },
+     {"Qt4 Linguist ", "linguist-qt4", "/usr/share/icons/hicolor/16x16/apps/linguist-qt4.png" },
+     {"Qt4 QDbusViewer ", "qdbusviewer-qt4", "/usr/share/icons/hicolor/32x32/apps/qdbusviewer-qt4.png" },
+     {"Sublime Text 3 Dev", "subl3 ", "/usr/share/icons/hicolor/16x16/apps/sublime-text.png" },
+     {"Visual Studio Code", "/usr/bin/visual-studio-code", "/usr/share/icons/visual-studio-code.png" },
+     {"gitg", "gitg --no-wd ", "/usr/share/icons/hicolor/16x16/apps/gitg.png" },
+     {"ipython", "xterm -e ipython"},
+ }
+
+ local menu52dd1c847264a75f400961bfb4d1c849 = {
+     {"Brasero", "brasero ", "/usr/share/icons/hicolor/16x16/apps/brasero.png" },
+     {"DeaDBeeF", "deadbeef ", "/usr/share/icons/hicolor/16x16/apps/deadbeef.png" },
+     {"Google Music Manager", "/opt/google/musicmanager/google-musicmanager", "/usr/share/icons/hicolor/16x16/apps/google-musicmanager.png" },
+     {"Qt V4L2 test Utility", "qv4l2", "/usr/share/icons/hicolor/16x16/apps/qv4l2.png" },
+     {"VLC media player", "/usr/bin/vlc --started-from-file ", "/usr/share/icons/hicolor/16x16/apps/vlc.png" },
+ }
+
+ local menuee69799670a33f75d45c57d1d1cd0ab3 = {
+     {"Avahi Zeroconf Browser", "/usr/bin/avahi-discover"},
+     {"Disk Usage Analyzer", "baobab", "/usr/share/icons/hicolor/16x16/apps/baobab.png" },
+     {"File Manager PCManFM", "pcmanfm "},
+     {"Konsole", "konsole"},
+     {"Manage Printing", "/usr/bin/xdg-open http://localhost:631/", "/usr/share/icons/hicolor/16x16/apps/cups.png" },
+     {"Oracle VM VirtualBox", "VirtualBox ", "/usr/share/icons/hicolor/16x16/mimetypes/virtualbox.png" },
+     {"Terminator", "terminator", "/usr/share/icons/hicolor/16x16/apps/terminator.png" },
+     {"UXTerm", "uxterm", "/usr/share/pixmaps/xterm-color_48x48.xpm" },
+     {"XTerm", "xterm", "/usr/share/pixmaps/xterm-color_48x48.xpm" },
+     {"Yaourt-Gui", "xterm -e yaourt-gui", "/usr/share/pixmaps/yaourtgui.png" },
+     {"dconf Editor", "dconf-editor", "/usr/share/icons/hicolor/16x16/apps/dconf-editor.png" },
+ }
+
+xdgmenu = {
+    {"Accessibility", menue0e4fc6213e8b3593495a7260c3a4c2e},
+    {"Accessories", menu98edb85b00d9527ad5acebe451b3fae6},
+    {"Games", menu251bd8143891238ecedc306508e29017},
+    {"Graphics", menud334dfcea59127bedfcdbe0a3ee7f494},
+    {"Internet", menuc8205c7636e728d448c2774e6a4a944b},
+    {"Office", menudf814135652a5a308fea15bff37ea284},
+    {"Other", menu6311ae17c1ee52b36e68aaf4ad066387},
+    {"Programming", menue6f43c40ab1c07cd29e4e83e4ef6bf85},
+    {"Sound & Video", menu52dd1c847264a75f400961bfb4d1c849},
+    {"System Tools", menuee69799670a33f75d45c57d1d1cd0ab3},
+}
+
