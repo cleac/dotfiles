@@ -6,14 +6,14 @@ set expandtab
 call plug#begin('~/.vim/plugged')
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'jpo/vim-railscasts-theme'
-Plug 'https://github.com/nvie/vim-flake8'
-Plug 'https://github.com/airblade/vim-gitgutter'
-Plug 'https://github.com/scrooloose/nerdtree'
-Plug 'https://github.com/wavded/vim-stylus'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'wavded/vim-stylus'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'kien/ctrlp.vim'
+Plug 'jacoborus/tender.vim'
 
 call plug#end()
 
@@ -23,7 +23,6 @@ set mouse=a
 filetype on
 filetype plugin on
 
-let g:flake8_show_in_file = 1
 let g:flake8_show_in_gutter = 1
 
 set cindent
@@ -34,7 +33,6 @@ set number
 syntax on
 set guifont="Droid Sans Mono":h20
 set backspace=indent,eol,start
-colorscheme slate
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -47,5 +45,18 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_flake8_args="--ignore=F401,E128,W391,E124"
+let g:syntastic_loc_list_height = 5
+let g:syntastic_python_checkers=['pyflakes']
+
+let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules']
+
+set laststatus=2
+
+colorscheme tender
+
+set timeout timeoutlen=1000 ttimeoutlen=100
+
+set wildignore+=*/node_modules/*
+set wildignore+=*/__pycache__/*
+set wildignore+=*.pyc
 
