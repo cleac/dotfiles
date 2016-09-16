@@ -4,23 +4,25 @@
 
 theme = {}
 
-theme.font          = "Product Sans 10"
+theme.font          = "Fira Code 8.5"
 
-theme.bg_normal     = "#000000"
-theme.bg_focus      = "#010101"
-theme.bg_urgent     = "#ff0000"
+theme.bg_normal     = "#0d1118"
+theme.bg_focus      = "#0d1118"
+theme.bg_urgent     = "#5d1118"
 theme.bg_minimize   = "#000000"
-theme.bg_systray    = "#000000"
+theme.bg_systray    = "#0d1118"
 
 theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.border_width  = 0
+theme.border_width  = 3
 theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_focus  = "#0d1118"
 theme.border_marked = "#91231c"
+
+theme.wibox_height = 5 
 
 -- There are other variable sets
 -- overriding the default one when
@@ -32,6 +34,8 @@ theme.border_marked = "#91231c"
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+theme.taglist_fg_empty = "#9095A0"
+theme.tasklist_bg_normal = "#0d1118"
 
 -- -- Display the taglist squares
 -- theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
@@ -73,7 +77,7 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "/home/cleac/.config/awesome/themes/cleac/prague.jpg"
+theme.wallpaper = "/home/cleac/.config/awesome/themes/cleac/forest.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
@@ -91,9 +95,13 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.awesome_icon = "/home/cleac/.config/awesome/themes/cleac/arch.png"
 
+theme.arrow_left = "/home/cleac/.config/awesome/themes/cleac/pics/arrow_left"
+theme.mem = "/home/cleac/.config/awesome/themes/cleac/pics/mem.png"
+theme.tasklist_disable_icon = true
+
 -- Define the icon theme for application icons. If not set then the icons 
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = 'Mono-dark-flattr-icons' 
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
