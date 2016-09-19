@@ -2,18 +2,20 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set ts=4 sw=4 et
 
 call plug#begin('~/.vim/plugged')
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree'
-Plug 'wavded/vim-stylus'
+Plug 'http://github.com/airblade/vim-gitgutter'
+Plug 'http://github.com/scrooloose/nerdtree'
+Plug 'http://github.com/wavded/vim-stylus'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'kien/ctrlp.vim'
 Plug 'jacoborus/tender.vim'
+Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
 
@@ -60,3 +62,11 @@ set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
 
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 4
+
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd  ctermbg=236
+hi IndentGuidesEven ctermbg=238
+
+" IndentGuidesEnable " TODO: Find a way to make IndentGuides autostart
