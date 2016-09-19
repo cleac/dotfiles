@@ -39,15 +39,18 @@ set backspace=indent,eol,start
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+set statusline=%t
+set statusline+=\ [%{&ff}]
+set statusline+=\ %{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 5
 let g:syntastic_python_checkers=['pyflakes']
 
 let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules']
@@ -70,4 +73,7 @@ hi IndentGuidesOdd  ctermbg=238
 hi IndentGuidesEven ctermbg=236
 
 autocmd VimEnter * IndentGuidesEnable
+
+hi StatusLine ctermbg=239 ctermfg=254
+hi Visual ctermbg=239
 
