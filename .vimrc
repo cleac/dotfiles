@@ -16,6 +16,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'kien/ctrlp.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
@@ -39,9 +40,6 @@ set backspace=indent,eol,start
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 set statusline=%t
 set statusline+=\ [%{&ff}]
 set statusline+=\ %{SyntasticStatuslineFlag()}
@@ -52,6 +50,12 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_error_symbol = '!'
+let g:syntastic_style_error_symbol = '💋'
+let g:syntastic_warning_symbol = '👹'
+let g:syntastic_style_warning_symbol = '😭'
 
 let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules']
 
@@ -65,15 +69,16 @@ set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
 
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 4
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
 
 let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  ctermbg=238
-hi IndentGuidesEven ctermbg=236
+hi IndentGuidesEven  ctermbg=236
+hi IndentGuidesOdd ctermbg=236
 
 autocmd VimEnter * IndentGuidesEnable
 
 hi StatusLine ctermbg=239 ctermfg=254
 hi Visual ctermbg=239
+hi LineNr ctermbg=234
 
