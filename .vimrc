@@ -1,84 +1,156 @@
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set ts=4 sw=4 et
+""" <== START Plugins declarations ==> """
 
 call plug#begin('~/.vim/plugged')
-
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'http://github.com/airblade/vim-gitgutter'
-Plug 'http://github.com/scrooloose/nerdtree'
-Plug 'http://github.com/wavded/vim-stylus'
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'kien/ctrlp.vim'
-Plug 'jacoborus/tender.vim'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'sheerun/vim-polyglot'
-
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  Plug 'http://github.com/airblade/vim-gitgutter'
+  Plug 'http://github.com/scrooloose/nerdtree', { 'on': 'NERDTree' }
+  Plug 'http://github.com/wavded/vim-stylus', { 'for': '*.styl' }
+  Plug 'tpope/vim-surround'
+  Plug 'Glench/Vim-Jinja2-Syntax', { 'for': [ '*.jinja' ] }
+  Plug 'kien/ctrlp.vim'
+  Plug 'jacoborus/tender.vim'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'https://github.com/neomake/neomake'
+  Plug 'vim-airline/vim-airline'
+  Plug 'othree/html5.vim', { 'for': 'html' }
+  Plug 'isruslan/vim-es6', { 'for': [ '*.py', '*.jsx?' ] }
 call plug#end()
 
-set t_Co=256
-set mouse=a
+""" <== END Plugins declarations ==> """
 
-filetype on
-filetype plugin on
+""" <== START NeoMake linters declarations ==> """
 
-let g:flake8_show_in_gutter = 1
+let g:neomake_python_enable_makers = ['flake8']
+let g:neomake_javascript_enable_makers = ['eslint']
+autocmd! BufWritePost * Neomake
 
+""" <== END NeoMake linters declarations ==> """
+
+""" <== START Language specific configuration ==> """
+
+autocmd BufNewFile,BufRead *.py call SetPython()
+autocmd BufNewFile,BufRead *.js call SetJS()
+autocmd BufNewFile,BufRead *todo* call SetTodos()
+autocmd BufNewFile,BufRead *.md call SetMarkDown()
+
+function SetMarkDown()
+  inoremap № #
+  nnoremap Ж :
+  nnoremap ж :
+  nnoremap :ц :w
+  nnoremap :й :q
+  setlocal softtabstop=4
+  setlocal ts=4 sw=4 et
+  setlocal fdm=indent
+  setlocal cursorline
+endfunction
+
+function SetPython()
+  " Python specific declarations
+  setlocal softtabstop=4
+  setlocal ts=4 sw=4 et
+  setlocal fdm=indent
+endfunction
+
+function SetJS()
+  " Js specific declarations
+  setlocal softtabstop=2
+  setlocal ts=2 sw=2 et
+  setlocal fdm=marker fmr={,}
+endfunction
+
+function SetTodos()
+  "
+  " A simple self-written todo manager in vim
+  " How to use it:
+  "  - press "od" to place date marker
+  "  - press "[oO]t" to create new task
+  "  - press "[oO]s" to create new subtask
+  "  - press ",d" to mark task as done
+  "
+  setlocal fdm=indent
+  setlocal tabstop=2 softtabstop=2 noexpandtab ts=2 sw=0
+  setlocal nonumber
+  setlocal cursorline
+  nnoremap ot o<ESC>i<SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>(#)<ESC>i
+  nnoremap Ot O<ESC>i<SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>(#)<ESC>i
+  nnoremap os o<ESC>i<SPACE><SPACE><SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>
+  nnoremap Os O<ESC>i<SPACE><SPACE><SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>
+  nnoremap od :r!date<CR>o<C-o>50i=<ESC><ESC>o<ESC>
+  nnoremap oo o
+  nnoremap Oo o
+  inoremap <CR> <CR><ESC>vk$di
+  nnoremap ,d ^f[lrx:w<CR>j^f]2l
+  nnoremap ^ ^f]2l
+  nnoremap j j^f]2l
+  nnoremap k k^f]2l
+  inoremap <Esc> <Esc>:w<CR>
+endfunction
+
+""" <== END Language specific configuration ==> """
+
+""" <== START Non-specific configuration ==> """
+
+set nocompatible
 set cindent
 set hlsearch
 set ic
 set incsearch
-set number
 syntax on
+set cursorline
 set guifont="Droid Sans Mono":h20
 set backspace=indent,eol,start
-
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-set statusline=%t
-set statusline+=\ [%{&ff}]
-set statusline+=\ %{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers=['pyflakes']
-let g:syntastic_javascript_checkers = ['eslint']
-
-let g:syntastic_error_symbol = '!'
-let g:syntastic_style_error_symbol = '💋'
-let g:syntastic_warning_symbol = '👹'
-let g:syntastic_style_warning_symbol = '😭'
-
-let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules']
-
+set wildmenu
+set path+=**
+set backupcopy=yes
+set listchars=tab:▸\ ,trail:·
+set list
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+filetype on
+filetype plugin on
+syntax on
+set number
+set mouse=a
+set et ts=2 sw=2
 set laststatus=2
-
-colorscheme tender
-
-set timeout timeoutlen=1000 ttimeoutlen=100
-
+set scrolloff=5
+nnoremap ; :
+nnoremap :W :w
+nnoremap :Q! :q!
+nnoremap ; :
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+filetype on
+filetype plugin on
+let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules']
+set laststatus=2
+set timeout timeoutlen=500 ttimeoutlen=100
 set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
 
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
+""" <== END Non-specific configuration ==> """
 
-let g:indent_guides_auto_colors = 0
+""" <== START Color scheme configuration ==> """
+
+colorscheme tender
 hi IndentGuidesEven  ctermbg=236
 hi IndentGuidesOdd ctermbg=236
 
 autocmd VimEnter * IndentGuidesEnable
+autocmd VimEnter * call SetUpWhiteSpaces()
 
 hi StatusLine ctermbg=239 ctermfg=254
 hi Visual ctermbg=239
 hi LineNr ctermbg=234
+hi ExtraWhitespace ctermfg=238
 
+function SetUpWhiteSpaces()
+  match ExtraWhitespace /\s\+$/
+endfunction
+
+let g:airline_powerline_fonts = 1
+
+""" <== END Color scheme configuration ==> """
