@@ -3,17 +3,17 @@
 call plug#begin('~/.vim/plugged')
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   Plug 'http://github.com/airblade/vim-gitgutter'
-  Plug 'http://github.com/scrooloose/nerdtree', { 'on': 'NERDTree' }
-  Plug 'http://github.com/wavded/vim-stylus', { 'for': '*.styl' }
+  Plug 'http://github.com/scrooloose/nerdtree'
+  Plug 'http://github.com/wavded/vim-stylus'
   Plug 'tpope/vim-surround'
-  Plug 'Glench/Vim-Jinja2-Syntax', { 'for': [ '*.jinja' ] }
+  Plug 'Glench/Vim-Jinja2-Syntax'
   Plug 'kien/ctrlp.vim'
   Plug 'jacoborus/tender.vim'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'https://github.com/neomake/neomake'
   Plug 'vim-airline/vim-airline'
-  Plug 'othree/html5.vim', { 'for': 'html' }
-  Plug 'isruslan/vim-es6', { 'for': [ '*.py', '*.jsx?' ] }
+  Plug 'othree/html5.vim'
+  Plug 'isruslan/vim-es6'
 call plug#end()
 
 """ <== END Plugins declarations ==> """
@@ -54,8 +54,8 @@ endfunction
 
 function SetJS()
   " Js specific declarations
-  setlocal softtabstop=2
-  setlocal ts=2 sw=2 et
+  setlocal softtabstop=4
+  setlocal ts=4 sw=4 et
   setlocal fdm=marker fmr={,}
 endfunction
 
@@ -117,20 +117,31 @@ set et ts=2 sw=2
 set laststatus=2
 set scrolloff=5
 nnoremap ; :
-nnoremap :W :w
-nnoremap :Q! :q!
-nnoremap ; :
+cnoremap <F2> 
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
+
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+nnoremap  :NERDTreeToggle
+nnoremap v+ :vertical resize +10
+nnoremap v= :vertical resize +10
+nnoremap v- :vertical resize -10
+nnoremap = :resize +10
+nnoremap + :resize +10
+nnoremap - :resize -10
+
 filetype on
 filetype plugin on
-let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules']
+let NERDTreeIgnore = ['*\.pyc', '__pycache__', 'celerybeat-schedule', 'node_modules', 'yarn.lock']
 set laststatus=2
 set timeout timeoutlen=500 ttimeoutlen=100
 set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
+set wildignore+=yarn.lock
 
+autocmd CompleteDone * pclose
 """ <== END Non-specific configuration ==> """
 
 """ <== START Color scheme configuration ==> """
@@ -152,5 +163,9 @@ function SetUpWhiteSpaces()
 endfunction
 
 let g:airline_powerline_fonts = 1
+set fillchars+=vert:│
+set fillchars+=fold:\ 
+
+hi VertSplit ctermfg=058
 
 """ <== END Color scheme configuration ==> """
