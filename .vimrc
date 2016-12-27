@@ -42,7 +42,6 @@ function SetMarkDown()
   setlocal softtabstop=4
   setlocal ts=4 sw=4 et
   setlocal fdm=indent
-  setlocal cursorline
 endfunction
 
 function SetPython()
@@ -71,7 +70,6 @@ function SetTodos()
   setlocal fdm=indent
   setlocal tabstop=2 softtabstop=2 noexpandtab ts=2 sw=0
   setlocal nonumber
-  setlocal cursorline
   nnoremap ot o<ESC>i<SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>(#)<ESC>i
   nnoremap Ot O<ESC>i<SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>(#)<ESC>i
   nnoremap os o<ESC>i<SPACE><SPACE><SPACE><SPACE>-<SPACE>[<SPACE>]<SPACE>
@@ -97,7 +95,6 @@ set hlsearch
 set ic
 set incsearch
 syntax on
-set cursorline
 set guifont="Droid Sans Mono":h20
 set backspace=indent,eol,start
 set wildmenu
