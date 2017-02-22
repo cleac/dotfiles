@@ -1,19 +1,24 @@
 """ <== START Plugins declarations ==> """
 
 call plug#begin('~/.vim/plugged')
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py', 'on': [] }
   Plug 'http://github.com/airblade/vim-gitgutter'
-  Plug 'http://github.com/scrooloose/nerdtree'
-  Plug 'http://github.com/wavded/vim-stylus'
+  Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+  Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
   Plug 'tpope/vim-surround'
-  Plug 'Glench/Vim-Jinja2-Syntax'
+  Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
   Plug 'kien/ctrlp.vim'
   Plug 'jacoborus/tender.vim'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'https://github.com/neomake/neomake'
   Plug 'vim-airline/vim-airline'
-  Plug 'othree/html5.vim'
-  Plug 'isruslan/vim-es6'
+  Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
+  Plug 'isruslan/vim-es6', { 'for': ['js', 'jsx'] }
+  " Plug 'jiangmiao/auto-pairs'
+  " Plug 'tpope/vim-fugitive'
+  " Plug 'tommcdo/vim-fugitive-blame-ext'
+  "   Plug 'idanarye/vim-merginal'
 call plug#end()
 
 """ <== END Plugins declarations ==> """
@@ -23,6 +28,7 @@ call plug#end()
 let g:neomake_python_enable_makers = ['flake8']
 let g:neomake_javascript_enable_makers = ['eslint']
 autocmd! BufWritePost * Neomake
+autocmd! InsertEnter * call plug#load('YouCompleteMe')
 
 """ <== END NeoMake linters declarations ==> """
 
@@ -33,7 +39,7 @@ autocmd BufNewFile,BufRead *.js call SetJS()
 autocmd BufNewFile,BufRead *todo* call SetTodos()
 autocmd BufNewFile,BufRead *.md call SetMarkDown()
 
-function SetMarkDown()
+function! SetMarkDown()
   inoremap № #
   nnoremap Ж :
   nnoremap ж :
@@ -44,21 +50,19 @@ function SetMarkDown()
   setlocal fdm=indent
 endfunction
 
-function SetPython()
+function! SetPython()
   " Python specific declarations
   setlocal softtabstop=4
   setlocal ts=4 sw=4 et
   setlocal fdm=indent
 endfunction
 
-function SetJS()
+function! SetJS()
   " Js specific declarations
-  setlocal softtabstop=4
-  setlocal ts=4 sw=4 et
   setlocal fdm=marker fmr={,}
 endfunction
 
-function SetTodos()
+function! SetTodos()
   "
   " A simple self-written todo manager in vim
   " How to use it:
@@ -77,7 +81,6 @@ function SetTodos()
   nnoremap od :r!date<CR>o<C-o>50i=<ESC><ESC>o<ESC>
   nnoremap oo o
   nnoremap Oo o
-  inoremap <CR> <CR><ESC>vk$di
   nnoremap ,d ^f[lrx:w<CR>j^f]2l
   nnoremap ^ ^f]2l
   nnoremap j j^f]2l
@@ -95,7 +98,6 @@ set hlsearch
 set ic
 set incsearch
 syntax on
-set guifont="Droid Sans Mono":h20
 set backspace=indent,eol,start
 set wildmenu
 set path+=**
@@ -137,6 +139,7 @@ set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
 set wildignore+=yarn.lock
+set bo=all
 
 autocmd CompleteDone * pclose
 """ <== END Non-specific configuration ==> """
@@ -164,5 +167,4 @@ set fillchars+=vert:│
 set fillchars+=fold:\ 
 
 hi VertSplit ctermfg=058
-
 """ <== END Color scheme configuration ==> """
