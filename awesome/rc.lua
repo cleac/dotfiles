@@ -1,5 +1,5 @@
 -- Placement of config
-local CONFIG_PATH = "/home/a.nesterenko/.config/awesome"
+local CONFIG_PATH = "/home/anesterenko/.config/awesome"
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -18,12 +18,18 @@ HOME_DIR = '/home/cleac/.config/awesome/'
 
 do
   local cmds = {
-       HOME_DIR.."/run_once xscreensaver -nosplash",
-       HOME_DIR.."/run_once blueman-applet",
-       HOME_DIR.."/run_once nm-applet",
-       "xscreensaver",
-       "xcompmgr"
+    HOME_DIR.."/run_once blueman-applet",
+    HOME_DIR.."/run_once nm-applet",
+    "xrandr --output HDMI1 --left-of VGA1",
+    "slack &",
+    "~/Downloads/Telegram/Telegram &",
+    "xscreensaver -nosplash &"
   }
+
+  for _,cmd in pairs(cmds) do
+    awful.util.spawn_with_shell(cmd)
+  end
+end
 
   -- Initialize memory widget
   memwidget = wibox.widget.textbox()
@@ -69,12 +75,6 @@ do
       end
   end)
   vicious.register(timedatewidget, vicious.widgets.date, '<span font="'..'Product Sans 8.5'..'">%b %d, %R</span>')
-
-
-  for _,i in pairs(cmds) do
-      awful.util.spawn_with_shell(i)
-      end
-  end
 
   -- {{{ Error handling
   -- Check if awesome encountered an error during startup and fell back to

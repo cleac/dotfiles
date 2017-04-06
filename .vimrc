@@ -29,7 +29,7 @@ call plug#end()
 
 let g:neomake_python_enable_makers = ['flake8']
 let g:neomake_javascript_enable_makers = ['eslint']
-autocmd! BufWritePost * Neomake   
+autocmd! BufWritePost * Neomake
 autocmd! BufWritePre * normal :%s/\s+$//ge:noh
 autocmd! InsertEnter * call plug#load('YouCompleteMe')
 autocmd! VimEnter * IndentGuidesEnable
@@ -97,7 +97,8 @@ let NERDTreeIgnore = [
       \ 'celerybeat-schedule',
       \ 'node_modules',
       \ 'yarn.lock',
-      \ '.vagga'
+      \ '.vagga',
+      \ '*.egg-info'
   \ ]
 set laststatus=2
 set timeout timeoutlen=500 ttimeoutlen=100
@@ -105,6 +106,7 @@ set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
 set wildignore+=yarn.lock
+set wildignore+=*.egg-info
 set bo=all
 
 autocmd CompleteDone * pclose
@@ -129,3 +131,22 @@ set fillchars+=fold:\
 hi VertSplit ctermfg=058
 hi Comment cterm=italic
 """ <== END Color scheme configuration ==> """
+
+" Project-specific configs position at .vimconfig file
+" To use it, place the .vimconfig file to root folder of project with config
+" manipulations
+
+function! AttachProjectConfig()
+  if filereadable(".vimconfig")
+    source .vimconfig
+  endif
+endfunction
+autocmd! VimEnter * call AttachProjectConfig()
+
+
+" Try to suggest own-implemented tag-movement for python
+
+function! TagMoveInit()
+  let b:python_tags = {}
+
+endfunction
