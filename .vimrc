@@ -21,6 +21,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'tommcdo/vim-fugitive-blame-ext'
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer', 'on': [] }
+  Plug 'kshenoy/vim-signature'
+  Plug 'mileszs/ack.vim'
 call plug#end()
 
 """ <== END Plugins declarations ==> """
@@ -31,7 +33,7 @@ let g:neomake_python_enable_makers = ['flake8']
 let g:neomake_javascript_enable_makers = ['eslint']
 autocmd! BufWritePost * Neomake
 autocmd! BufWritePre * normal :%s/\s+$//ge:noh
-autocmd! InsertEnter * call plug#load('YouCompleteMe')
+autocmd! InsertEnter * call InitYCM()
 autocmd! VimEnter * IndentGuidesEnable
 
 """ <== END NeoMake linters declarations ==> """
@@ -51,6 +53,14 @@ endfunction
 function! SetJS()
   " Js specific declarations
   setlocal fdm=marker fmr={,}
+endfunction
+
+let g:load_ycm_done = 0
+function! InitYCM()
+  if g:load_ycm_done == 0
+    let g:load_ycm_done = 1
+    call plug#load('YouCompleteMe')
+  endif
 endfunction
 
 """ <== END Language specific configuration ==> """
@@ -142,6 +152,10 @@ function! AttachProjectConfig()
   endif
 endfunction
 autocmd! VimEnter * call AttachProjectConfig()
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 
 " Try to suggest own-implemented tag-movement for python
