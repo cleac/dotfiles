@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
   Plug 'tpope/vim-surround'
   Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
-  Plug 'kien/ctrlp.vim'
+  Plug 'ctrlpvim/ctrlp.vim'
   Plug 'jacoborus/tender.vim'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'https://github.com/neomake/neomake'
