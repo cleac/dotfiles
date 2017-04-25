@@ -57,17 +57,17 @@ end
   timedatewidget = wibox.widget.textbox()
   timedatewidget:connect_signal("mouse::enter", function ()
       -- TODO: Write more flexible way to display calendar
-      os.execute('cal > ~/.tmp') 
+      os.execute('cal > ~/.tmp')
       local fp = io.open('/home/cleac/.tmp', 'rb')
       if fp == nil then
           return -1
       end
       io.input(fp)
       local data = io.read("*a")
-      fp:close() 
+      fp:close()
       os.execute('rm ~/.tmp')
       tmdwidgt_data.notification = naughty.notify({ text = data })
-  end)    
+  end)
   timedatewidget:connect_signal("mouse::leave", function ()
       if tmdwidgt_data.notification ~= nil then
           naughty.destroy(tmdwidgt_data.notification)
@@ -287,8 +287,8 @@ end
   -- {{{ Tags
   -- Define a tag table which hold all screen tags.
   tags = {
-      screen_names = { '✭' ,'>_', 'c', '⛁', '♬', 'Π',   },
-    layout_configs = {layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2]}	
+      screen_names = { '• ' ,'•', '•', '•', '•', '•',   },
+      layout_configs = {layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2]}
   }
   for s = 1, screen.count() do
       -- Each screen has its own tag table.
@@ -402,31 +402,33 @@ end
       mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 })
 
       -- Widgets that are aligned to the left
-      local left_layout = wibox.layout.fixed.horizontal()
-      left_layout:add(mytaglist[s])
-      left_layout:add(mypromptbox[s])
+      local middle_layout = wibox.layout.fixed.horizontal()
+      middle_layout:add(mytaglist[s])
+      -- left_layout:add(mypromptbox[s])
 
       -- Widgets that are aligned to the right
       local right_layout = wibox.layout.fixed.horizontal()
-      if s == 1 then 
+      if s == 1 then
           systray = wibox.widget.systray()
           systray:set_base_size(16)
           right_layout:add(systray)
           right_layout:add(end_sep)
       end
-      right_layout:add(memwidget)
-      right_layout:add(sep)
+      -- right_layout:add(memwidget)
+      -- right_layout:add(sep)
       right_layout:add(timedatewidget)
       right_layout:add(sep)
       right_layout:add(batwidget)
-      
+
+      local left_layout = wibox.layout.fixed.horizontal()
+      left_layout:add(memwidget)
+
       -- right_layout:add(mytextclock)
       -- right_layout:add(mylayoutbox[s])
-      
-      -- Now bring it all together (with the tasklist in the middle)
+
       local layout = wibox.layout.align.horizontal()
+      layout:set_middle(middle_layout)
       layout:set_left(left_layout)
-      layout:set_middle(mytasklist[s])
       layout:set_right(right_layout)
 
       mywibox[s]:set_widget(layout)
@@ -453,11 +455,14 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86ScreenSaver", function ()
       awful.util.spawn("xscreensaver-command -lock")
     end),
-    awful.key({ modkey,  }, "e", function() 
+    awful.key({ modkey }, "F12", function ()
+      awful.util.spawn("xscreensaver-command -lock")
+    end),
+    awful.key({ modkey,  }, "e", function()
     awful.util.spawn("krusader") end),
-    awful.key({ modkey,  }, "t", function() 
+    awful.key({ modkey,  }, "t", function()
   awful.util.spawn(terminal) end),
-    awful.key({ modkey,  }, "b", function() 
+    awful.key({ modkey,  }, "b", function()
   awful.util.spawn("firefox") end),
 
     awful.key({ }, "XF86MonBrightnessDown", function ()
