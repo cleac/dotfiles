@@ -1,5 +1,5 @@
 -- Placement of config
-local CONFIG_PATH = "/home/anesterenko/.config/awesome"
+local CONFIG_PATH = "/home/alexcleac/.config/awesome"
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -14,13 +14,14 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
 
+local brightness = require("brightness")
+
 HOME_DIR = '/home/cleac/.config/awesome/'
 
 do
   local cmds = {
     HOME_DIR.."/run_once blueman-applet",
     HOME_DIR.."/run_once nm-applet",
-    "xrandr --output HDMI1 --left-of VGA1",
     "slack &",
     "~/Downloads/Telegram/Telegram &",
     "xscreensaver -nosplash &"
@@ -34,7 +35,7 @@ end
   -- Initialize memory widget
   memwidget = wibox.widget.textbox()
   -- Register memory widget
-  vicious.register(memwidget, vicious.widgets.mem, '<span font="'..'Product Sans 8.5'..'">Mem: $2M/$3M</span>', 1)
+  vicious.register(memwidget, vicious.widgets.mem, '<span font="'..'Product Sans 8.5'..'">'..'Mem: $2M/$3M</span>', 1)
 
   -- Initialaze battery widget
   batwidget = wibox.widget.textbox()
@@ -248,7 +249,7 @@ end
 
   -- This is used later as the default terminal and editor to run.
   terminal = "konsole"
-  editor = os.getenv("EDITOR") or "vim"
+  editor = os.getenv("EDITOR") or "nvim"
   editor_cmd = terminal .. " -e " .. editor
 
   -- Default modkey.
@@ -450,7 +451,7 @@ globalkeys = awful.util.table.join(
       awful.util.spawn("xscreensaver-command -lock")
       os.execute("sleep 2")
       awful.util.spawn("systemctl hybrid-sleep")
-  	 end),
+    end),
     -- Sleep command
     awful.key({ }, "XF86ScreenSaver", function ()
       awful.util.spawn("xscreensaver-command -lock")
@@ -458,17 +459,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F12", function ()
       awful.util.spawn("xscreensaver-command -lock")
     end),
-    awful.key({ modkey,  }, "e", function()
-    awful.util.spawn("krusader") end),
-    awful.key({ modkey,  }, "t", function()
-  awful.util.spawn(terminal) end),
-    awful.key({ modkey,  }, "b", function()
-  awful.util.spawn("firefox") end),
-
-    awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.util.spawn("xbacklight -dec 5") end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("xbacklight -inc 5") end),
 
     awful.key({ modkey,           }, "h",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "р",   awful.tag.viewprev       ),
@@ -530,6 +520,7 @@ globalkeys = awful.util.table.join(
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end)
 )
+globalkeys = brightness.init(globalkeys)
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
@@ -698,14 +689,12 @@ client.connect_signal("manage", function (c, startup)
         middle_layout:buttons(buttons)
 
         -- Now bring it all together
-        local layout = wibox.layout.align.horizontal()
-        layout:set_left(left_layout)
+        local layout = wibox.layout.align.horizontal() layout:set_left(left_layout)
         layout:set_right(right_layout)
         layout:set_middle(middle_layout)
 
         awful.titlebar(c):set_widget(layout)
     end
 end)
-
 
 -- }}}
