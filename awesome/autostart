@@ -1,0 +1,10 @@
+function run_once() {
+  pgrep $1 > /dev/null || ($1 &)
+}
+
+run_once "blueman-applet" &
+run_once "nm-applet" &
+slack &
+~/Downloads/Telegram/Telegram &
+xscreensaver -nosplash &
+

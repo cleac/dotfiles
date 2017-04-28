@@ -15,22 +15,11 @@ local menubar = require("menubar")
 local vicious = require("vicious")
 
 local brightness = require("brightness")
+local autostart = require("autostart")
 
 HOME_DIR = '/home/cleac/.config/awesome/'
 
-do
-  local cmds = {
-    HOME_DIR.."/run_once blueman-applet",
-    HOME_DIR.."/run_once nm-applet",
-    "slack &",
-    "~/Downloads/Telegram/Telegram &",
-    "xscreensaver -nosplash &"
-  }
-
-  for _,cmd in pairs(cmds) do
-    awful.util.spawn_with_shell(cmd)
-  end
-end
+autostart.init()
 
   -- Initialize memory widget
   memwidget = wibox.widget.textbox()
