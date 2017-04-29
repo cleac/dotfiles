@@ -7,6 +7,7 @@ awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
+require("errors")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -16,220 +17,18 @@ local vicious = require("vicious")
 
 local brightness = require("brightness")
 local autostart = require("autostart")
+local display = require("display")
 
-HOME_DIR = '/home/cleac/.config/awesome/'
+local widgets = require("widgets")
 
 autostart.init()
 
-  -- Initialize memory widget
-  memwidget = wibox.widget.textbox()
-  -- Register memory widget
-  vicious.register(memwidget, vicious.widgets.mem, '<span font="'..'Product Sans 8.5'..'">'..'Mem: $2M/$3M</span>', 1)
-
   -- Initialaze battery widget
-  batwidget = wibox.widget.textbox()
-  batwidget:connect_signal("mouse::enter", function ()
-      left_storage.notif = naughty.notify({ text=left_storage.text, timeout=10000000 })
-  end)
-  batwidget:connect_signal("mouse::leave", function ()
-      if left_storage.notif ~= nil then
-          naughty.destroy(left_storage.notif)
-          left_storage.notif = nil
-      end
-  end)
-  left_storage = {}
-  vicious.register(batwidget, vicious.widgets.bat, '<span font="'..'Product Sans 8.5'..'">$1$2% </span>', 1, "BAT0")
-  vicious.register(left_storage, vicious.widgets.bat, "$3 left", 1, "BAT0")
-
-  uptimewidget = wibox.widget.textbox()
-
-  local tmdwidgt_data = {}
-  timedatewidget = wibox.widget.textbox()
-  timedatewidget:connect_signal("mouse::enter", function ()
-      -- TODO: Write more flexible way to display calendar
-      os.execute('cal > ~/.tmp')
-      local fp = io.open('/home/cleac/.tmp', 'rb')
-      if fp == nil then
-          return -1
-      end
-      io.input(fp)
-      local data = io.read("*a")
-      fp:close()
-      os.execute('rm ~/.tmp')
-      tmdwidgt_data.notification = naughty.notify({ text = data })
-  end)
-  timedatewidget:connect_signal("mouse::leave", function ()
-      if tmdwidgt_data.notification ~= nil then
-          naughty.destroy(tmdwidgt_data.notification)
-          tmdwidgt_data.notification = nil
-      end
-  end)
-  vicious.register(timedatewidget, vicious.widgets.date, '<span font="'..'Product Sans 8.5'..'">%b %d, %R</span>')
 
   -- {{{ Error handling
   -- Check if awesome encountered an error during startup and fell back to
   -- another config (This code will only ever execute for the fallback config)
-  if awesome.startup_errors then
-      naughty.notify({ preset = naughty.config.presets.critical,
-                       title = "Oops, there were errors during startup!",
-                       text = awesome.startup_errors })
-  end
-
-  -- Handle runtime errors after startup
-  do
-      local in_error = false
-      awesome.connect_signal("debug::error", function (err)
-          -- Make sure we don't go into an endless error loop
-          if in_error then return end
-          in_error = true
-
-          naughty.notify({ preset = naughty.config.presets.critical,
-                           title = "Oops, an error happened!",
-                           text = err })
-          in_error = false
-      end)
-  end
   -- }}}
-
- -- {{{ Display configurations
-
-  -- Get active outputs
-  local function outputs()
-     local outputs = {}
-     local xrandr = io.popen("xrandr -q")
-     if xrandr then
-        for line in xrandr:lines() do
-     output = line:match("^([%w-]+) connected ")
-     if output then
-        outputs[#outputs + 1] = output
-     end
-        end
-        xrandr:close()
-     end
-
-     return outputs
-  end
-
-
-  local function arrange(out)
-     -- We need to enumerate all the way to combinate output. We assume
-     -- we want only an horizontal layout.
-     local choices  = {}
-     local previous = { {} }
-     for i = 1, #out do
-        -- Find all permutation of length `i`: we take the permutation
-        -- of length `i-1` and for each of them, we create new
-        -- permutations by adding each output at the end of it if it is
-        -- not already present.
-        local new = {}
-        for _, p in pairs(previous) do
-     for _, o in pairs(out) do
-        if not awful.util.table.hasitem(p, o) then
-           new[#new + 1] = awful.util.table.join(p, {o})
-        end
-     end
-        end
-        choices = awful.util.table.join(choices, new)
-        previous = new
-     end
-
-     return choices
-  end
-
-  -- Build available choices
-  local function menu()
-     local menu = {}
-     local out = outputs()
-     local choices = arrange(out)
-
-     for _, choice in pairs(choices) do
-        local cmd = "xrandr"
-        -- Enabled outputs
-        for i, o in pairs(choice) do
-     cmd = cmd .. " --output " .. o .. " --auto"
-     if i > 1 then
-        cmd = cmd .. " --above " .. choice[i-1]
-     end
-        end
-        -- Disabled outputs
-        for _, o in pairs(out) do
-     if not awful.util.table.hasitem(choice, o) then
-        cmd = cmd .. " --output " .. o .. " --off"
-     end
-        end
-
-        local label = ""
-        if #choice == 1 then
-     label = 'Only <span weight="bold">' .. choice[1] .. '</span>'
-        else
-     for i, o in pairs(choice) do
-        if i > 1 then label = label .. " + " end
-        label = label .. '<span weight="bold">' .. o .. '</span>'
-     end
-        end
-
-        menu[#menu + 1] = { label,
-          cmd,"/usr/share/icons/Tango/32x32/devices/display.png"}
-     end
-
-     return menu
-  end
-
-  -- Display xrandr notifications from choices
-  local state = { iterator = nil,
-      timer = nil,
-      cid = nil }
-  local function xrandr()
-     -- Stop any previous timer
-     if state.timer then
-        state.timer:stop()
-        state.timer = nil
-     end
-
-     -- Build the list of choices
-     if not state.iterator then
-        state.iterator = awful.util.table.iterate(menu(),
-            function() return true end)
-     end
-
-     -- Select one and display the appropriate notification
-     local next  = state.iterator()
-     local label, action, icon
-     if not next then
-        label, icon = "Keep the current configuration", "/usr/share/icons/Tango/32x32/devices/display.png"
-        state.iterator = nil
-     else
-        label, action, icon = unpack(next)
-     end
-     state.cid = naughty.notify({ text = label,
-          icon = icon,
-          timeout = 4,
-          screen = mouse.screen, -- Important, not all screens may be visible
-          font = "Free Sans 18",
-          replaces_id = state.cid }).id
-
-     -- Setup the timer
-     state.timer = timer { timeout = 4 }
-     state.timer:connect_signal("timeout",
-          function()
-             state.timer:stop()
-             state.timer = nil
-             state.iterator = nil
-             if action then
-                awful.util.spawn(action, false)
-                -- {{{ Wallpaper
-                if beautiful.wallpaper then
-                    for s = 1, screen.count() do
-                        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-                    end
-                end
-                -- }}}
-             end
-          end)
-     state.timer:start()
-  end
-
- --}}}
 
 
   -- {{{ Variable definitions
@@ -363,10 +162,12 @@ autostart.init()
                                             end))
 
   sep = wibox.widget.textbox()
+  left_sep = wibox.widget.textbox()
   end_sep = wibox.widget.textbox()
 
   sep:set_markup('<span font="Product Sans 11">'..awful.util.escape('>> <<')..'</span>')
   end_sep:set_markup('<span font="Product Sans 11">'..awful.util.escape(' <<')..'</span>')
+  left_sep:set_markup('<span font="Product Sans 11">'..awful.util.escape(' >> ')..'</span>')
 
   for s = 1, screen.count() do
       -- Create a promptbox for each screen
@@ -386,7 +187,7 @@ autostart.init()
           })
 
       -- Create a tasklist widget
-      mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+      -- mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
       -- Create the wibox
       mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 })
@@ -394,7 +195,6 @@ autostart.init()
       -- Widgets that are aligned to the left
       local middle_layout = wibox.layout.fixed.horizontal()
       middle_layout:add(mytaglist[s])
-      -- left_layout:add(mypromptbox[s])
 
       -- Widgets that are aligned to the right
       local right_layout = wibox.layout.fixed.horizontal()
@@ -406,12 +206,14 @@ autostart.init()
       end
       -- right_layout:add(memwidget)
       -- right_layout:add(sep)
-      right_layout:add(timedatewidget)
+      right_layout:add(widgets.timedate{font='Fira Code 8.5'})
       right_layout:add(sep)
-      right_layout:add(batwidget)
+      right_layout:add(widgets.battery{font='Fira Code 8.5'})
 
       local left_layout = wibox.layout.fixed.horizontal()
-      left_layout:add(memwidget)
+      left_layout:add(widgets.ram{font='Fira Code 8.5'})
+      left_layout:add(left_sep)
+      left_layout:add(mypromptbox[s])
 
       -- right_layout:add(mytextclock)
       -- right_layout:add(mylayoutbox[s])
@@ -586,7 +388,7 @@ clientbuttons = awful.util.table.join(
 
 globalkeys = awful.util.table.join(
    globalkeys,
-   awful.key({}, "XF86Display", xrandr))
+   awful.key({}, "XF86Display", display.xrandr))
 
 -- Set keys
 root.keys(globalkeys)
