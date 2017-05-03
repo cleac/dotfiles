@@ -1,5 +1,5 @@
 -- Placement of config
-local CONFIG_PATH = "/home/alexcleac/.config/awesome"
+local CONFIG_PATH = os.getenv('HOME') .. "/.config/awesome"
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -22,13 +22,6 @@ local display = require("display")
 local widgets = require("widgets")
 
 autostart.init()
-
-  -- Initialaze battery widget
-
-  -- {{{ Error handling
-  -- Check if awesome encountered an error during startup and fell back to
-  -- another config (This code will only ever execute for the fallback config)
-  -- }}}
 
 
   -- {{{ Variable definitions
