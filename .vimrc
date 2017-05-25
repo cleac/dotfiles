@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
   Plug 'tpope/vim-surround'
   Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
-  Plug 'ctrlpvim/ctrlp.vim'
+  " Plug 'ctrlpvim/ctrlp.vim'
   Plug 'jacoborus/tender.vim'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'https://github.com/neomake/neomake'
@@ -26,6 +26,8 @@ call plug#begin('~/.vim/plugged')
   " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer', 'on': [] }
   Plug 'kshenoy/vim-signature'
   Plug 'mileszs/ack.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'mako.vim'
 call plug#end()
 
 """ <== END Plugins declarations ==> """
@@ -170,3 +172,10 @@ let g:journal__path = '~/journaling/'
 function! Journal()
   normal :tabnew e g:journal_path
 endfunction
+
+nmap  :FZF
+vmap  :FZF
+
+let g:fzf_layout = { 'down': '~10%' }
+
+set nowrap
