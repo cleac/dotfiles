@@ -20,7 +20,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'othree/yajs.vim'
   Plug 'tpope/vim-fugitive'
   Plug 'tommcdo/vim-fugitive-blame-ext'
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer', 'on': [] }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'zchee/deoplete-jedi'
+  Plug 'sebastianmarkow/deoplete-rust'
+  " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer', 'on': [] }
   Plug 'kshenoy/vim-signature'
   Plug 'mileszs/ack.vim'
 call plug#end()
@@ -33,7 +36,7 @@ let g:neomake_python_enable_makers = ['flake8']
 let g:neomake_javascript_enable_makers = ['eslint']
 autocmd! BufWritePost * Neomake
 autocmd! BufWritePre * normal :%s/\s+$//ge:noh
-autocmd! InsertEnter * call InitYCM()
+" autocmd! InsertEnter * call InitYCM()
 autocmd! VimEnter * IndentGuidesEnable
 
 """ <== END NeoMake linters declarations ==> """
@@ -55,13 +58,13 @@ function! SetJS()
   setlocal fdm=marker fmr={,}
 endfunction
 
-let g:load_ycm_done = 0
-function! InitYCM()
-  if g:load_ycm_done == 0
-    let g:load_ycm_done = 1
-    call plug#load('YouCompleteMe')
-  endif
-endfunction
+" let g:load_ycm_done = 0
+" function! InitYCM()
+"   if g:load_ycm_done == 0
+"     let g:load_ycm_done = 1
+"     call plug#load('YouCompleteMe')
+"   endif
+" endfunction
 
 """ <== END Language specific configuration ==> """
 
@@ -157,10 +160,13 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+let g:deoplete#enable_at_startup = 1
 
-" Try to suggest own-implemented tag-movement for python
 
-function! TagMoveInit()
-  let b:python_tags = {}
+" [WIP] Add some journaling capabilities for vim
 
+let g:journal__path = '~/journaling/'
+
+function! Journal()
+  normal :tabnew e g:journal_path
 endfunction
