@@ -1,6 +1,6 @@
 local home_dir = os.getenv('HOME')
 ---------------------------
--- Default awesome theme --
+-- Customized default awesome theme --
 ---------------------------
 
 theme = {}
@@ -13,15 +13,15 @@ theme.bg_urgent     = "#5d1118"
 theme.bg_minimize   = "#000000"
 theme.bg_systray    = "#0d1118"
 
-theme.fg_normal     = "#aaaaaa"
+theme.fg_normal     = "#AAAAAA"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_minimize   = "#FFFFFF"
 
-theme.border_width  = 1
-theme.border_normal = "#000000"
-theme.border_focus  = "#0d1118"
-theme.border_marked = "#91231c"
+theme.border_width  = 10
+theme.border_normal = "transparent"
+theme.border_focus  = "transparent"
+theme.border_marked = "transparent"
 
 theme.wibox_height = 5
 
@@ -35,19 +35,13 @@ theme.wibox_height = 5
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
-theme.taglist_fg_empty = "#9095A0"
+theme.taglist_fg_normal = "#333333"
+theme.taglist_fg_empty = "#333333"
 theme.tasklist_bg_normal = "#0d1118"
 
 -- -- Display the taglist squares
 -- theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
 -- theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew.png"
-
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
-theme.menu_submenu_icon = "/usr/share/awesome/themes/default/submenu.png"
-theme.menu_height = 30
-theme.menu_width  = 200
 
 -- You can add as many variables as
 -- you wish and access them by using

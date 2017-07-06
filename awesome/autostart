@@ -8,7 +8,9 @@ function run_once() {
 
 run_once  blueman-applet
 run_once  nm-applet
+run_once  volumeicon
+run_once  xcompmgr
 run       slack
-run       ~/Downloads/Telegram/Telegram
+run       ~/software/Telegram
 run       xscreensaver -nosplash
 
