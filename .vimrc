@@ -1,4 +1,4 @@
-""" <== START Plugins declarations ==> """
+set nocompatible
 
 call plug#begin('~/.vim/plugged')
   Plug 'wincent/loupe'
@@ -27,32 +27,26 @@ call plug#begin('~/.vim/plugged')
   Plug 'kshenoy/vim-signature'
   Plug 'mileszs/ack.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'mako.vim'
+  Plug 'vim-scripts/mako.vim'
 call plug#end()
-
-""" <== END Plugins declarations ==> """
-
-""" <== START NeoMake linters declarations ==> """
 
 let g:neomake_python_enable_makers = ['flake8']
 let g:neomake_javascript_enable_makers = ['eslint']
-autocmd! BufWritePost * Neomake
-autocmd! BufWritePre * normal :%s/\s+$//ge:noh
-" autocmd! InsertEnter * call InitYCM()
-autocmd! VimEnter * IndentGuidesEnable
 
-""" <== END NeoMake linters declarations ==> """
+if !exists("autocommands_loaded")
+  let autocommands_loaded = 1
 
-""" <== START Language specific configuration ==> """
+  autocmd BufWritePost * Neomake
+  autocmd BufWritePre * normal :%s/\s+$//ge:noh
+  autocmd VimEnter * IndentGuidesEnable
 
-autocmd BufNewFile,BufRead *.py call SetPython()
-autocmd BufNewFile,BufRead *.js call SetJS()
+  autocmd BufNewFile,BufRead *.py call SetPython()
+  autocmd BufNewFile,BufRead *.js call SetJS()
+endif
 
 function! SetPython()
   " Python specific declarations
-  setlocal softtabstop=4
-  setlocal ts=4 sw=4 et
-  setlocal fdm=indent
+  setlocal softtabstop=4 ts=4 sw=4 et fdm=indent
 endfunction
 
 function! SetJS()
@@ -60,19 +54,6 @@ function! SetJS()
   setlocal fdm=marker fmr={,}
 endfunction
 
-" let g:load_ycm_done = 0
-" function! InitYCM()
-"   if g:load_ycm_done == 0
-"     let g:load_ycm_done = 1
-"     call plug#load('YouCompleteMe')
-"   endif
-" endfunction
-
-""" <== END Language specific configuration ==> """
-
-""" <== START Non-specific configuration ==> """
-
-set nocompatible
 set cindent
 set hlsearch
 set ic
@@ -92,7 +73,7 @@ filetype plugin on
 syntax on
 set number
 set mouse=a
-set et ts=2 sw=2
+set et ts=3 sw=3
 set laststatus=2
 set scrolloff=5
 nnoremap ; :
@@ -103,6 +84,16 @@ nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 nnoremap  :NERDTreeToggle
+
+syntax on
+
+hi IndentGuidesEven  ctermbg=236
+hi IndentGuidesOdd ctermbg=236
+
+hi StatusLine ctermbg=239 ctermfg=254
+hi Visual ctermbg=239
+hi LineNr ctermbg=234
+hi ExtraWhitespace ctermfg=238
 
 filetype on
 filetype plugin on
@@ -125,19 +116,8 @@ set wildignore+=*.egg-info
 set bo=all
 
 autocmd CompleteDone * pclose
-""" <== END Non-specific configuration ==> """
-
-""" <== START Color scheme configuration ==> """
 
 colorscheme tender
-hi IndentGuidesEven  ctermbg=236
-hi IndentGuidesOdd ctermbg=236
-
-
-hi StatusLine ctermbg=239 ctermfg=254
-hi Visual ctermbg=239
-hi LineNr ctermbg=234
-hi ExtraWhitespace ctermfg=238
 
 let g:airline_powerline_fonts = 1
 set fillchars+=vert:│
@@ -145,7 +125,6 @@ set fillchars+=fold:\
 
 hi VertSplit ctermfg=058
 hi Comment cterm=italic
-""" <== END Color scheme configuration ==> """
 
 " Project-specific configs position at .vimconfig file
 " To use it, place the .vimconfig file to root folder of project with config
@@ -156,7 +135,10 @@ function! AttachProjectConfig()
     source .vimconfig
   endif
 endfunction
-autocmd! VimEnter * call AttachProjectConfig()
+if !exists("project_config_attach")
+  let project_config_attach = 1
+  autocmd VimEnter * call AttachProjectConfig()
+endif
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -164,18 +146,9 @@ endif
 
 let g:deoplete#enable_at_startup = 1
 
-
-" [WIP] Add some journaling capabilities for vim
-
-let g:journal__path = '~/journaling/'
-
-function! Journal()
-  normal :tabnew e g:journal_path
-endfunction
-
 nmap  :FZF
 vmap  :FZF
 
-let g:fzf_layout = { 'down': '~10%' }
+let g:fzf_layout = { 'down': '~20%' }
 
 set nowrap
