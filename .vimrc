@@ -47,6 +47,7 @@ endif
 function! SetPython()
   " Python specific declarations
   setlocal softtabstop=4 ts=4 sw=4 et fdm=indent
+  h
 endfunction
 
 function! SetJS()
@@ -80,6 +81,7 @@ nnoremap ; :
 cnoremap <F2> 
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
+set fdm=marker fmr={{{,}}}
 
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
