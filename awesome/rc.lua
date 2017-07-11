@@ -77,11 +77,6 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
-mymainmenu = awful.menu({
- items = {
-   { "open terminal", terminal }
- }
-})
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -203,7 +198,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-   awful.button({ }, 3, function () mymainmenu:toggle() end),
+   awful.button({ }, 3, function ()  end),
    awful.button({ }, 4, awful.tag.viewnext),
    awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -239,7 +234,6 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -259,9 +253,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
+    -- TODO Implement resizing of floating windows using shortcuts
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey, "Control" }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Control" }, "j",     function () awful.client.incwfact( 0.05)    end), -- TODO Google how to fix vertical resizing
+    awful.key({ modkey, "Control" }, "j",     function () awful.client.incwfact( 0.05)    end),
     awful.key({ modkey, "Control" }, "k",     function () awful.client.incwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),

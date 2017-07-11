@@ -8,8 +8,9 @@ function run_once() {
 
 run_once  blueman-applet
 run_once  nm-applet
-run_once  volumeicon
+run_once  sleep 1 && volumeicon
 run_once  xcompmgr
+run_once  redshift-gtk
 run       slack
 run       ~/software/Telegram
 run       xscreensaver -nosplash
