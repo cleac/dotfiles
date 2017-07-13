@@ -36,7 +36,8 @@ theme.wibox_height = 5
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 theme.taglist_fg_normal = "#333333"
-theme.taglist_fg_empty = "#333333"
+theme.taglist_fg_empty = "#555555"
+theme.taglist_fg_occupied = "#555555"
 theme.tasklist_bg_normal = "#0d1118"
 
 -- -- Display the taglist squares

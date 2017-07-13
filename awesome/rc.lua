@@ -66,8 +66,8 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-   screen_names = { '1: 😄' ,'2: >_', '3: 🔥', '4: 🐍', },
-   layout_configs = {layouts[2], layouts[2], layouts[2], layouts[2]}
+   screen_names = { '1: 😄' ,'2: >_', '3: 🔥', '4: 🐍', '5: 🍄', '6: 🎮', '7: 🍕' },
+   layout_configs = {layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2]}
 }
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
@@ -249,7 +249,7 @@ globalkeys = awful.util.table.join(
        end),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    -- awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 

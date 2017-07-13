@@ -11,6 +11,7 @@ run_once  nm-applet
 run_once  sleep 1 && volumeicon
 run_once  xcompmgr
 run_once  redshift-gtk
+run_once  albert
 run       slack
 run       ~/software/Telegram
 run       xscreensaver -nosplash
