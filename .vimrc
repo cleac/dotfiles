@@ -47,7 +47,6 @@ endif
 function! SetPython()
   " Python specific declarations
   setlocal softtabstop=4 ts=4 sw=4 et fdm=indent
-  h
 endfunction
 
 function! SetJS()
