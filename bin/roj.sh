@@ -11,18 +11,17 @@ fi
 ROJDIR="$HOME/workspace/$project"
 SUBSCRIPT_NAME=.rojsh
 
-tmux attach -t "$project" 2>&1 > /dev/null
+tmux attach -t "$project" 2> /dev/null
 
 if [ ! $? -eq 0 ]; then
    if [ ! -d "$ROJDIR" ]; then
       mkdir -p "$ROJDIR"
    fi
-   if ([ -n "$ROJDIR/$SUBSCRIPT_NAME" ] && [ ! -z $(cat "$ROJDIR/$SUBSCRIPT_NAME")]); then
-      start_script="$SHELL $ROJDIR/$SUBSCRIPT_NAME && tmux detach"
+   if ([ -n "$ROJDIR/$SUBSCRIPT_NAME" ] && [ ! -z "$(cat "$ROJDIR/$SUBSCRIPT_NAME" 2> /dev/null)" ]); then
+      start_script="$SHELL \"$ROJDIR/$SUBSCRIPT_NAME; $SHELL\""
    else
       start_script=$SHELL
    fi
    tmux new -s "$project" -c "$ROJDIR" $start_script
-   tmux new-window
 fi
 

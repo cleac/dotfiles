@@ -1,0 +1,3 @@
+#!/bin/bash
+
+curl -sSf https://files.zerogw.com/vagga/vagga-install.sh | sh
