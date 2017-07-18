@@ -1,34 +1,42 @@
 set nocompatible
 
 call plug#begin('~/.vim/plugged')
-  Plug 'wincent/loupe'
-  Plug 'wincent/terminus'
-  Plug 'http://github.com/airblade/vim-gitgutter'
-  Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
-  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
-  Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
-  Plug 'tpope/vim-surround'
-  Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
-  " Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'jacoborus/tender.vim'
-  Plug 'nathanaelkane/vim-indent-guides'
-  Plug 'https://github.com/neomake/neomake'
-  Plug 'vim-airline/vim-airline'
-  Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
-  " TODO: use select yajs or vim-es6
-  " Plug 'isruslan/vim-es6'
-  Plug 'othree/yajs.vim'
-  Plug 'tpope/vim-fugitive'
-  Plug 'tommcdo/vim-fugitive-blame-ext'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-jedi'
-  Plug 'sebastianmarkow/deoplete-rust'
-  " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer', 'on': [] }
-  Plug 'kshenoy/vim-signature'
-  Plug 'mileszs/ack.vim'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'vim-scripts/mako.vim'
+    Plug 'wincent/loupe'
+    Plug 'wincent/terminus'
+    Plug 'http://github.com/airblade/vim-gitgutter'
+    Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+    Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
+    Plug 'tpope/vim-surround'
+    Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
+    Plug 'jacoborus/tender.vim'
+    Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'https://github.com/neomake/neomake'
+    Plug 'vim-airline/vim-airline'
+    Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
+    " TODO: use select yajs or vim-es6
+    " Plug 'isruslan/vim-es6'
+    Plug 'othree/yajs.vim'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tommcdo/vim-fugitive-blame-ext'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'zchee/deoplete-jedi'
+    Plug 'sebastianmarkow/deoplete-rust'
+    Plug 'kshenoy/vim-signature'
+    Plug 'mileszs/ack.vim'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'vim-scripts/mako.vim'
+    Plug 'kana/vim-textobj-user'
+    Plug 'michaeljsmith/vim-indent-object'
+    Plug 'kana/vim-textobj-line'
+    Plug 'glts/vim-textobj-comment'
+    Plug 'lucapette/vim-textobj-underscore'
+    Plug 'bps/vim-textobj-python'
+    Plug 'kana/vim-textobj-entire'
+    Plug 'tpope/vim-commentary'
 call plug#end()
+
+let mapleader="g"
 
 let g:neomake_python_enable_makers = ['flake8']
 let g:neomake_javascript_enable_makers = ['eslint']
@@ -65,6 +73,7 @@ set path+=**
 set backupcopy=yes
 set listchars=tab:▸\ ,trail:·
 set list
+setlocal softtabstop=4 ts=4 sw=4 et fdm=indent
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
@@ -151,7 +160,9 @@ vmap  :FZF
 
 let g:fzf_layout = { 'down': '~20%' }
 
-nnoremap <ESC> :noh<ESC>
-inoremap <ESC> :noh<ESC>
+nnoremap <ESC> :noh
+inoremap <ESC> <ESC>:noh
+
+set relativenumber
 
 set nowrap
