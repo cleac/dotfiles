@@ -45,8 +45,8 @@ if !exists("autocommands_loaded")
 endif
 
 function! SetPython()
-  " Python specific declarations
-  setlocal softtabstop=4 ts=4 sw=4 et fdm=indent
+   " Python specific declarations
+   setlocal softtabstop=4 ts=4 sw=4 et fdm=indent
 endfunction
 
 function! SetJS()
@@ -73,7 +73,6 @@ filetype plugin on
 syntax on
 set number
 set mouse=a
-set et ts=3 sw=3
 set laststatus=2
 set scrolloff=5
 nnoremap ; :
@@ -151,5 +150,8 @@ nmap  :FZF
 vmap  :FZF
 
 let g:fzf_layout = { 'down': '~20%' }
+
+nnoremap <ESC> :noh<ESC>
+inoremap <ESC> :noh<ESC>
 
 set nowrap
