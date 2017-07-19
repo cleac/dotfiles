@@ -50,6 +50,7 @@ if !exists("autocommands_loaded")
 
   autocmd BufNewFile,BufRead *.py call SetPython()
   autocmd BufNewFile,BufRead *.js call SetJS()
+  autocmd BufNewFile,BufRead *.mako setlocal syntax=mako
 endif
 
 function! SetPython()
