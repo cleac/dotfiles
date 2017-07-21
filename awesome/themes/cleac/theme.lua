@@ -18,7 +18,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
 
-theme.border_width  = 10
+theme.border_width  = 5
 theme.border_normal = "transparent"
 theme.border_focus  = "transparent"
 theme.border_marked = "transparent"
@@ -73,7 +73,7 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = home_dir .. "/.config/awesome/themes/cleac/prague.jpg"
+theme.wallpaper = home_dir .. "/.config/awesome/themes/cleac/ales-krivec-1881.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
@@ -91,8 +91,6 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.awesome_icon = "/home/a.nesterenko/.config/awesome/themes/cleac/arch.png"
 
-theme.arrow_left = "/home/a.nesterenko/.config/awesome/themes/cleac/pics/arrow_left"
-theme.mem = "/home/a.nesterenko/.config/awesome/themes/cleac/pics/mem.png"
 theme.tasklist_disable_icon = true
 theme.systray_icon_spacing = 8
 

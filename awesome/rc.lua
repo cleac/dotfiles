@@ -66,7 +66,7 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-   screen_names = { '1: 📡' ,'2: >_', '3: 🐍', '4: 📧', '5: 🍄', '6: 🎮', '7: 🍕' },
+   screen_names = { '1: 📡' ,'2: >_', '4: 📧', '5: 🍄', '6: 🎮', '7: 🍕' },
    layout_configs = {layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2]}
 }
 for s = 1, screen.count() do
@@ -136,9 +136,8 @@ sep = wibox.widget.textbox()
 left_sep = wibox.widget.textbox()
 end_sep = wibox.widget.textbox()
 
-sep:set_markup('<span font="Product Sans 11">'..awful.util.escape('>> <<')..'</span>')
-end_sep:set_markup('<span font="Product Sans 11">'..awful.util.escape(' <<')..'</span>')
-left_sep:set_markup('<span font="Product Sans 11">'..awful.util.escape(' >> ')..'</span>')
+sep:set_markup('<span fgcolor="#CCCCFF">╞══╡</span>')
+end_sep:set_markup('<span fgcolor="#CCCCFF">╔═╡</span>')
 
 for s = 1, screen.count() do
    -- Create a promptbox for each screen
@@ -158,37 +157,37 @@ for s = 1, screen.count() do
        })
 
    -- Create a tasklist widget
-   -- mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+   mytasklist[s] = awful.widget.tasklist(
+       s,
+       awful.widget.tasklist.filter.minimizedcurrenttags,
+       mytasklist.buttons)
+
 
    -- Create the wibox
    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 })
 
    -- Widgets that are aligned to the left
-   local middle_layout = wibox.layout.fixed.horizontal()
-   middle_layout:add(mytaglist[s])
+   local left_layout = wibox.layout.fixed.horizontal()
+   left_layout:add(mytaglist[s])
+   left_layout:add(mypromptbox[s])
 
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
    if s == 1 then
        systray = wibox.widget.systray()
        systray:set_base_size(16)
-       right_layout:add(systray)
        right_layout:add(end_sep)
+       right_layout:add(systray)
+       right_layout:add(sep)
    end
-   -- right_layout:add(memwidget)
-   -- right_layout:add(sep)
+   right_layout:add(widgets.ram{font='Fira Code 8.5'})
+   right_layout:add(sep)
    right_layout:add(widgets.timedate{font='Fira Code 8.5'})
    right_layout:add(sep)
    right_layout:add(widgets.battery{font='Fira Code 8.5'})
 
-   local left_layout = wibox.layout.fixed.horizontal()
-   left_layout:add(widgets.ram{font='Fira Code 8.5'})
-   left_layout:add(left_sep)
-   left_layout:add(mypromptbox[s])
-
-
    local layout = wibox.layout.align.horizontal()
-   layout:set_middle(middle_layout)
+   layout:set_middle(mytasklist[s])
    layout:set_left(left_layout)
    layout:set_right(right_layout)
 
