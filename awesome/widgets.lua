@@ -1,6 +1,16 @@
+-- {{{ Imports
+
+-- Standart awesome library
 local naughty = require('naughty')
 local wibox = require("wibox")
 local vicious = require("vicious")
+
+-- For awesome-client to work properly
+require('awful.remote')
+
+-- }}}
+
+-- {{{ Utility functions
 
 local function _render_modifiers(modifiers)
   if modifiers ~= nil then
@@ -45,6 +55,9 @@ local function _cache_widget(name, fn)
   end
 end
 
+-- }}}
+
+-- {{{ RAM widget
 
 local function ram(modifiers)
   widget = wibox.widget.textbox()
@@ -55,6 +68,10 @@ local function ram(modifiers)
     1)
   return widget
 end
+
+-- }}}
+
+-- {{{ Battery widget
 
 function battery(modifiers)
   local state = {
@@ -88,6 +105,10 @@ function battery(modifiers)
   return widget
 end
 
+-- }}}
+
+-- {{{ Timedate widget
+
 local function timedate(modifiers)
   widget = wibox.widget.textbox()
   vicious.register(
@@ -97,6 +118,7 @@ local function timedate(modifiers)
   return widget
 end
 
+-- }}}
 
 return {
   ram=ram,

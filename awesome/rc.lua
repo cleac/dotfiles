@@ -1,26 +1,40 @@
+-- {{{ Imports
+--
 -- Placement of config
 local CONFIG_PATH = os.getenv('HOME') .. "/.config/awesome"
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
 require("errors")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
+
+-- Menu bar for launching apps
 local menubar = require("menubar")
+
+-- Pro widgets library
 local vicious = require("vicious")
 
+
+-- Self addons
 local brightness = require("brightness")
 local autostart = require("autostart")
 local display = require("display")
-
 local widgets = require("widgets")
 
+-- }}}
+
+-- {{{ Misc initializations
 autostart.init()
 
 beautiful.init(CONFIG_PATH.."/themes/cleac/theme.lua")
@@ -31,13 +45,27 @@ editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
--- Table of layouts to cover with awful.layout.inc, order matters.
+-- Lock screen command; TODO: find another appliable screensaver
+lock_screen_command = "xscreensaver-command -lock"
+
+-- Set the terminal for applications that require it
+menubar.utils.terminal = terminal
+
+-- }}}
+
+-- {{{ Wallpaper
+if beautiful.wallpaper then
+   for s = 1, screen.count() do
+       gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+   end
+end
+-- }}}
+
+-- {{{ Tags
+-- Define a tag table which hold all screen tags.
+
 local layouts =
 {
    awful.layout.suit.floating,
@@ -53,32 +81,17 @@ local layouts =
    awful.layout.suit.max.fullscreen,
    awful.layout.suit.magnifier
 }
--- }}}
 
--- {{{ Wallpaper
-if beautiful.wallpaper then
-   for s = 1, screen.count() do
-       gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-   end
-end
--- }}}
-
--- {{{ Tags
--- Define a tag table which hold all screen tags.
 tags = {
    screen_names = { '1: 📡' ,'2: >_', '3: 🐍', '4: 📧', '5: 🍄', '6: 🎮', '7: 🍕' },
    layout_configs = {layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2]}
 }
+
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
    tags[s] = awful.tag(tags.screen_names, s, tags.layout_configs)
 end
--- }}}
 
--- {{{ Menu
--- Create a laucher widget and a main menu
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- {{{ Wibox
@@ -203,9 +216,8 @@ root.buttons(awful.util.table.join(
 ))
   -- }}}
 
-local lock_screen_command = "xscreensaver-command -lock" -- TODO: find another appliable screensaver
-
 -- {{{ Key bindings
+
 globalkeys = awful.util.table.join(
     awful.key({ }, "XF86Sleep", function ()
       awful.util.spawn(lock_screen_command)
