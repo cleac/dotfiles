@@ -235,44 +235,159 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "l",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
-    awful.key({ modkey,           }, "j",
+    -- Windows navigation staff
+    awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.byidx(1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "k",
+    awful.key({ modkey, "Shift"    }, "Tab",
         function ()
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
+    awful.key({ modkey, "Mod1"    }, "j",
+        function ()
+            awful.client.focus.global_bydirection('down')
+        end),
+    awful.key({ modkey, "Mod1"    }, "k",
+        function ()
+            awful.client.focus.global_bydirection('up')
+        end),
+    awful.key({ modkey, "Mod1"    }, "h",
+        function ()
+            awful.client.focus.global_bydirection('left')
+        end),
+    awful.key({ modkey,  "Mod1"   }, "l",
+        function ()
+            awful.client.focus.global_bydirection('right')
+        end),
+
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
-    awful.key({ modkey, "Shift"   }, "Tab", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey,           }, "`", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey, "Shift"   }, "`", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ modkey,           }, "Tab",
-       function ()
-           awful.client.focus.history.previous()
-           if client.focus then
-               client.focus:raise()
-           end
-       end),
 
     -- Standard program
     -- awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    -- TODO Implement resizing of floating windows using shortcuts
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Control" }, "j",     function () awful.client.incwfact( 0.05)    end),
-    awful.key({ modkey, "Control" }, "k",     function () awful.client.incwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Shift" }, "j",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Shift" }, "k",     function () awful.tag.incncol(-1)         end),
+    -- Resizing windows
+    awful.key({ modkey, "Control" }, "l", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incmwfact( 0.05)
+        else
+            awful.client.moveresize(0, 0, 10, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Control" }, "h", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incmwfact(-0.05)
+        else
+            awful.client.moveresize(-10, 0, 10, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Control" }, "j", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.client.incwfact( 0.05)
+        else
+            awful.client.moveresize(0, 0, 0, 10, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Control" }, "k", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.client.incwfact(-0.05)
+        else
+            awful.client.moveresize(0, -10, 0, 10, client.focus)
+        end
+    end),
+    -- Making size of floating windows lower
+    awful.key({ modkey, "Control", "Shift" }, "l", function ()
+        if awful.client.floating.get(client.focus) then
+            awful.client.moveresize(10, 0, 1, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Control", "Shift" }, "h", function ()
+        if awful.client.floating.get(client.focus) then
+            awful.client.moveresize(0, 0, -10, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Control", "Shift" }, "j", function ()
+        if awful.client.floating.get(client.focus) then
+            awful.client.moveresize(0, 10, 0, -1, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Control", "Shift" }, "k", function ()
+        if awful.client.floating.get(client.focus) then
+            awful.client.moveresize(0, 0, 0, -10, client.focus)
+        end
+    end),
+
+    -- Moving of floating windows
+    awful.key({ modkey, "Shift"   }, "h", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incnmaster( 1)
+        else
+            awful.client.moveresize(-10, 0, 0, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Shift"   }, "l", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incnmaster(-1)
+        else
+            awful.client.moveresize(10, 0, 0, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Shift" }, "j",     function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incncol( 1)
+        else
+            awful.client.moveresize(0, 10, 0, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Shift" }, "k",     function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incncol(-1)
+        else
+            awful.client.moveresize(0, -10, 0, 0, client.focus)
+        end
+    end),
+
+    --
+    -- Moving of floating windows
+    awful.key({ modkey, "Shift"   }, "h", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incnmaster( 1)
+        else
+            awful.client.moveresize(-10, 0, 0, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Shift"   }, "l", function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incnmaster(-1)
+        else
+            awful.client.moveresize(10, 0, 0, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Shift" }, "j",     function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incncol( 1)
+        else
+            awful.client.moveresize(0, 10, 0, 0, client.focus)
+        end
+    end),
+    awful.key({ modkey, "Shift" }, "k",     function ()
+        if not awful.client.floating.get(client.focus) then
+            awful.tag.incncol(-1)
+        else
+            awful.client.moveresize(0, -10, 0, 0, client.focus)
+        end
+    end),
+
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 

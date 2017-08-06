@@ -29,30 +29,10 @@ end
 
 local function _build_component(str, modifiers)
   if type(modifiers) == 'table' then modifiers = _render_modifiers(modifiers) end
-  result = '<span'
+  local result = '<span'
   if modifiers ~= nil then result = result .. ' ' .. modifiers end
   result = result .. '>' .. str .. '</span>'
   return result
-end
-
-local widget_cache = {}
--- Cache widget for more less resource usage
-local function _cache_widget(name, fn)
-  return function (modifiers)
-
-    cache_name = name
-    modifiers = _render_modifiers(modifiers)
-    if modifiers ~= nil then
-      cache_name = cache_name .. '!@#$' .. modifiers
-    end
-
-    if widget_cache[cache_name] == nil then
-      widget_cache[cache_name] = fn(modifiers)
-    end
-
-    return widget_cache[cache_name]
-
-  end
 end
 
 -- }}}
@@ -60,7 +40,7 @@ end
 -- {{{ RAM widget
 
 local function ram(modifiers)
-  widget = wibox.widget.textbox()
+  local widget = wibox.widget.textbox()
   vicious.register(
     widget,
     vicious.widgets.mem,
@@ -78,7 +58,7 @@ function battery(modifiers)
     notification=nil,
     notification_text_holder={text='ERROR: widget has not initialized'}}
 
-  widget = wibox.widget.textbox()
+  local widget = wibox.widget.textbox()
   widget:connect_signal("mouse::enter", function ()
     state.notification = naughty.notify{
       text=state.notification_text_holder.text,
@@ -110,7 +90,7 @@ end
 -- {{{ Timedate widget
 
 local function timedate(modifiers)
-  widget = wibox.widget.textbox()
+  local widget = wibox.widget.textbox()
   vicious.register(
     widget,
     vicious.widgets.date,
