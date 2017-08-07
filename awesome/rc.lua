@@ -186,18 +186,18 @@ for s = 1, screen.count() do
 
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
-   if s == 1 then
-       systray = wibox.widget.systray()
-       systray:set_base_size(16)
-       right_layout:add(end_sep)
-       right_layout:add(systray)
-       right_layout:add(sep)
-   end
+   right_layout:add(end_sep)
    right_layout:add(widgets.ram{font='Fira Code 8.5'})
    right_layout:add(sep)
    right_layout:add(widgets.timedate{font='Fira Code 8.5'})
    right_layout:add(sep)
    right_layout:add(widgets.battery{font='Fira Code 8.5'})
+   if s == 1 then
+       local systray = wibox.widget.systray()
+       systray:set_base_size(16)
+       right_layout:add(sep)
+       right_layout:add(systray)
+   end
 
    local layout = wibox.layout.align.horizontal()
    layout:set_middle(mytasklist[s])
@@ -263,6 +263,24 @@ globalkeys = awful.util.table.join(
             awful.client.focus.global_bydirection('right')
         end),
 
+    -- Modal way to navigate through windows from keyboard
+    -- awful.key({ modkey }, "w", function ()
+    --     local grabbr = awful.keygrabber.run(function(mod, key, event)
+    --         if event == "release" then return end
+
+    --         local key_ = nil
+    --         if key == "j" then key_ = 'down'
+    --         elseif key == "k" then key_ = 'up'
+    --         elseif key == "l" then key_ = 'left'
+    --         elseif key == "h" then key_ =  'right'
+    --         end
+    --         if key_ ~= nil then
+    --             awful.client.focus.global_bydirection(key_)
+    --         end
+    --         awful.keygrabber.stop(grabbr)
+    --     end)
+    -- end),
+
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -327,6 +345,41 @@ globalkeys = awful.util.table.join(
         end
     end),
 
+    -- Resize of client border
+    awful.key({ modkey,                    }, "-", function ()
+        local fromCurrentTag = function (c)
+            return awful.rules.match(c, {tag = tag.selected})
+        end
+        for client in awful.client.iterate(fromCurrentTag) do
+            if client.border_width < 25 then
+                client.border_width = client.border_width + 5
+                beautiful.border_width = beautiful.border_width + 5
+            else
+                client.border_width = 0
+                beautiful.border_width = 0
+            end
+        end
+        beautiful.init()
+    end),
+    awful.key({ modkey,                    }, "=", function ()
+        local fromCurrentTag = function (c)
+            return awful.rules.match(c, {properties = {tag = tag.selected}})
+        end
+        local current_width = nil
+        for client in awful.client.iterate(fromCurrentTag) do
+            if client.border_width > 0 then
+                client.border_width = current_width or client.border_width - 5
+                beautiful.border_width = current_width or beautiful.border_width - 5
+            else
+                client.border_width = current_width or 25
+                beautiful.border_width = current_width or 25
+            end
+            if current_width == nil then current_width = client.border_width end
+        end
+        beautiful.init()
+    end),
+
+
     -- Moving of floating windows
     awful.key({ modkey, "Shift"   }, "h", function ()
         if not awful.client.floating.get(client.focus) then
@@ -357,7 +410,6 @@ globalkeys = awful.util.table.join(
         end
     end),
 
-    --
     -- Moving of floating windows
     awful.key({ modkey, "Shift"   }, "h", function ()
         if not awful.client.floating.get(client.focus) then
@@ -507,8 +559,6 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
-    { rule = { class = "google-chrome" },
-      properties = { tag = tags[1][1] }},
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -584,3 +634,15 @@ client.connect_signal("manage", function (c, startup)
 end)
 
 -- }}}
+--
+--
+-- local grabbr = awful.keygrabber.run(function(mod, key, event)
+    -- if event == "release" then return end
+
+    -- if key == "j" then key = 'down'
+    -- elseif key == "k" then key = 'up'
+    -- elseif key == "l" then key = 'left'
+    -- elseif key == "h" then key =  'right'
+    -- else awful.keygrabber.stop(grabbr)
+    -- end
+-- end)

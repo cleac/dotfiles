@@ -7,13 +7,13 @@ theme = {}
 
 theme.font          = "Pruduct Sans 8.5"
 
-theme.bg_normal     = "#0d1118"
-theme.bg_focus      = "#0d1118"
-theme.bg_urgent     = "#5d1118"
-theme.bg_minimize   = "#000000"
-theme.bg_systray    = "#0d1118"
+theme.bg_normal     = "#0d1118CC"
+theme.bg_focus      = "#0d1118CC"
+theme.bg_urgent     = "#5d1118CC"
+theme.bg_minimize   = "#000000CC"
+theme.bg_systray    = "#0d1118CC"
 
-theme.fg_normal     = "#AAAAAA"
+theme.fg_normal     = "#BBBBBB"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
@@ -35,10 +35,10 @@ theme.wibox_height = 5
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
-theme.taglist_fg_normal = "#333333"
-theme.taglist_fg_empty = "#555555"
-theme.taglist_fg_occupied = "#555555"
-theme.tasklist_bg_normal = "#0d1118"
+theme.taglist_fg_normal = "#333333CC"
+theme.taglist_fg_empty = "#555555CC"
+theme.taglist_fg_occupied = "#555555CC"
+theme.tasklist_bg_normal = "#0d1118AA"
 
 -- -- Display the taglist squares
 -- theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"

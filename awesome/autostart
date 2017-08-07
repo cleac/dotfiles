@@ -22,4 +22,5 @@ run_once  albert
 run       slack
 run       ~/software/Telegram
 run       xscreensaver -nosplash
+run       unclutter -idle 1
 
