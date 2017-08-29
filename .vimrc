@@ -154,7 +154,6 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap  :NERDTreeToggle
 nnoremap <silent> <ESC> :noh
 inoremap <silent> <ESC> <ESC>:noh
-inoremap ii <Esc>
 nmap  :FZF
 
 nmap x "_d
