@@ -47,8 +47,8 @@ editor_cmd = terminal .. " -e " .. editor
 -- Default modkey.
 modkey = "Mod4"
 
--- Lock screen command; TODO: find another appliable screensaver
-lock_screen_command = "xscreensaver-command -lock"
+-- Lock screen command
+lock_screen_command = "i3lock -I 1 -e -i " .. os.getenv('HOME') .. "/Pictures/fedora_lockscreen1920x1080.png -c 000000"
 
 -- Set the terminal for applications that require it
 menubar.utils.terminal = terminal
@@ -113,10 +113,12 @@ mytasklist.buttons = awful.util.table.join(
                     awful.button({ }, 1, function (c)
                                              if c == client.focus then
                                                  c.minimized = true
+                                                 awful.util.spawn('kill -STOP ' .. c.pid)
                                              else
                                                  -- Without this, the following
                                                  -- :isvisible() makes no sense
                                                  c.minimized = false
+                                                 awful.util.spawn('kill -CONT ' .. c.pid)
                                                  if not c:isvisible() then
                                                      awful.tag.viewonly(c:tags()[1])
                                                  end
@@ -149,8 +151,8 @@ sep = wibox.widget.textbox()
 left_sep = wibox.widget.textbox()
 end_sep = wibox.widget.textbox()
 
-sep:set_markup('<span fgcolor="#CCCCFF">╞══╡</span>')
-end_sep:set_markup('<span fgcolor="#CCCCFF">╔═╡</span>')
+sep:set_markup('   ')
+end_sep:set_markup('')
 
 for s = 1, screen.count() do
    -- Create a promptbox for each screen
@@ -164,9 +166,8 @@ for s = 1, screen.count() do
                           awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                           awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
    -- Create a taglist widget
-   mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons, {
+   mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.noempty, mytaglist.buttons, {
            font = 'Product Sans',
-           squares_resize = true,
        })
 
    -- Create a tasklist widget
@@ -189,9 +190,14 @@ for s = 1, screen.count() do
    right_layout:add(end_sep)
    right_layout:add(widgets.ram{font='Fira Code 8.5'})
    right_layout:add(sep)
-   right_layout:add(widgets.timedate{font='Fira Code 8.5'})
+   right_layout:add(widgets.disk_status{font='Fira Code 8.5'})
    right_layout:add(sep)
    right_layout:add(widgets.battery{font='Fira Code 8.5'})
+   right_layout:add(sep)
+   right_layout:add(widgets.vpn_status{font='Fira Code 8.5'})
+   right_layout:add(sep)
+   right_layout:add(widgets.timedate{font='Fira Code 8.5'})
+
    if s == 1 then
        local systray = wibox.widget.systray()
        systray:set_base_size(16)
@@ -227,8 +233,14 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86ScreenSaver", function ()
       awful.util.spawn(lock_screen_command)
     end),
-    awful.key({ modkey }, "F12", function ()
+    awful.key({ modkey }, "w", function ()
       awful.util.spawn(lock_screen_command)
+    end),
+    awful.key({ modkey }, "s", function ()
+      awful.util.spawn('kill -STOP ' .. client.focus.pid)
+    end),
+    awful.key({ modkey }, "c", function ()
+      awful.util.spawn('kill -CONT ' .. client.focus.pid)
     end),
 
     awful.key({ modkey,           }, "h",   awful.tag.viewprev       ),
@@ -283,8 +295,8 @@ globalkeys = awful.util.table.join(
 
 
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
+    -- awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
+    -- awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
     awful.key({ modkey,           }, "`", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Shift"   }, "`", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
@@ -306,7 +318,7 @@ globalkeys = awful.util.table.join(
         if not awful.client.floating.get(client.focus) then
             awful.tag.incmwfact(-0.05)
         else
-            awful.client.moveresize(-10, 0, 10, 0, client.focus)
+            awful.client.moveresize(0, 0, -10, 0, client.focus)
         end
     end),
     awful.key({ modkey, "Control" }, "j", function ()
@@ -320,121 +332,52 @@ globalkeys = awful.util.table.join(
         if not awful.client.floating.get(client.focus) then
             awful.client.incwfact(-0.05)
         else
-            awful.client.moveresize(0, -10, 0, 10, client.focus)
-        end
-    end),
-    -- Making size of floating windows lower
-    awful.key({ modkey, "Control", "Shift" }, "l", function ()
-        if awful.client.floating.get(client.focus) then
-            awful.client.moveresize(10, 0, 1, 0, client.focus)
-        end
-    end),
-    awful.key({ modkey, "Control", "Shift" }, "h", function ()
-        if awful.client.floating.get(client.focus) then
-            awful.client.moveresize(0, 0, -10, 0, client.focus)
-        end
-    end),
-    awful.key({ modkey, "Control", "Shift" }, "j", function ()
-        if awful.client.floating.get(client.focus) then
-            awful.client.moveresize(0, 10, 0, -1, client.focus)
-        end
-    end),
-    awful.key({ modkey, "Control", "Shift" }, "k", function ()
-        if awful.client.floating.get(client.focus) then
             awful.client.moveresize(0, 0, 0, -10, client.focus)
         end
     end),
 
     -- Resize of client border
     awful.key({ modkey,                    }, "-", function ()
-        local fromCurrentTag = function (c)
-            return awful.rules.match(c, {tag = tag.selected})
+        local client = client.focus
+        if client.border_width > 0 then
+            client.border_width = client.border_width - 5
+        else
+            client.border_width = 25
         end
-        for client in awful.client.iterate(fromCurrentTag) do
-            if client.border_width < 25 then
-                client.border_width = client.border_width + 5
-                beautiful.border_width = beautiful.border_width + 5
-            else
-                client.border_width = 0
-                beautiful.border_width = 0
-            end
-        end
-        beautiful.init()
     end),
+    -- Restore border width to theme-defined
     awful.key({ modkey,                    }, "=", function ()
-        local fromCurrentTag = function (c)
-            return awful.rules.match(c, {properties = {tag = tag.selected}})
+        for client in awful.client.iterate(function () return true end) do
+            client.border_width = beautiful.border_width
         end
-        local current_width = nil
-        for client in awful.client.iterate(fromCurrentTag) do
-            if client.border_width > 0 then
-                client.border_width = current_width or client.border_width - 5
-                beautiful.border_width = current_width or beautiful.border_width - 5
-            else
-                client.border_width = current_width or 25
-                beautiful.border_width = current_width or 25
-            end
-            if current_width == nil then current_width = client.border_width end
-        end
-        beautiful.init()
     end),
 
 
     -- Moving of floating windows
     awful.key({ modkey, "Shift"   }, "h", function ()
         if not awful.client.floating.get(client.focus) then
-            awful.tag.incnmaster( 1)
+            awful.client.swap.bydirection('left', client.focus)
         else
             awful.client.moveresize(-10, 0, 0, 0, client.focus)
         end
     end),
     awful.key({ modkey, "Shift"   }, "l", function ()
         if not awful.client.floating.get(client.focus) then
-            awful.tag.incnmaster(-1)
+            awful.client.swap.bydirection('right', client.focus)
         else
             awful.client.moveresize(10, 0, 0, 0, client.focus)
         end
     end),
     awful.key({ modkey, "Shift" }, "j",     function ()
         if not awful.client.floating.get(client.focus) then
-            awful.tag.incncol( 1)
+            awful.client.swap.bydirection('down', client.focus)
         else
             awful.client.moveresize(0, 10, 0, 0, client.focus)
         end
     end),
     awful.key({ modkey, "Shift" }, "k",     function ()
         if not awful.client.floating.get(client.focus) then
-            awful.tag.incncol(-1)
-        else
-            awful.client.moveresize(0, -10, 0, 0, client.focus)
-        end
-    end),
-
-    -- Moving of floating windows
-    awful.key({ modkey, "Shift"   }, "h", function ()
-        if not awful.client.floating.get(client.focus) then
-            awful.tag.incnmaster( 1)
-        else
-            awful.client.moveresize(-10, 0, 0, 0, client.focus)
-        end
-    end),
-    awful.key({ modkey, "Shift"   }, "l", function ()
-        if not awful.client.floating.get(client.focus) then
-            awful.tag.incnmaster(-1)
-        else
-            awful.client.moveresize(10, 0, 0, 0, client.focus)
-        end
-    end),
-    awful.key({ modkey, "Shift" }, "j",     function ()
-        if not awful.client.floating.get(client.focus) then
-            awful.tag.incncol( 1)
-        else
-            awful.client.moveresize(0, 10, 0, 0, client.focus)
-        end
-    end),
-    awful.key({ modkey, "Shift" }, "k",     function ()
-        if not awful.client.floating.get(client.focus) then
-            awful.tag.incncol(-1)
+            awful.client.swap.bydirection('up', client.focus)
         else
             awful.client.moveresize(0, -10, 0, 0, client.focus)
         end
@@ -472,6 +415,7 @@ clientkeys = awful.util.table.join(
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
+            awful.util.spawn('kill -STOP ' .. c.pid)
         end),
     awful.key({ modkey }, "]", function ()
                 mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
