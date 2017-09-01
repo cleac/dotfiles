@@ -156,10 +156,14 @@ end
 
 -- }}}
 
+local separator = wibox.widget.textbox()
+separator:set_markup('  ')
+
 return {
   ram=ram,
   battery=battery,
   timedate=timedate,
   vpn_status=vpn_status,
   disk_status=disk_status,
+  separator=separator,
 }
