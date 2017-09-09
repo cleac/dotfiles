@@ -74,27 +74,11 @@ function battery(modifiers)
     notification_text_holder={text='ERROR: widget has not initialized'}}
 
   local widget = wibox.widget.textbox()
-  widget:connect_signal("mouse::enter", function ()
-    state.notification = naughty.notify{
-      text=state.notification_text_holder.text,
-      timeout=10000000}
-  end)
-  widget:connect_signal("mouse::leave", function ()
-    if state.notification ~= nil then
-      naughty.destroy(state.notification)
-      state.notification = nil
-    end
-  end)
   vicious.register(
     widget,
     vicious.widgets.bat,
     _build_component(_colorize('Battery: ') .. '$1$2%  ' .. _colorize('Left: ') .. '$3', modifiers),
     1,
-    "BAT0")
-  vicious.register(
-    state.notification_text_holder,
-    vicious.widgets.bat,
-    _colorize('Battery:') .. ' $3 left', 5,
     "BAT0")
   return widget
 end

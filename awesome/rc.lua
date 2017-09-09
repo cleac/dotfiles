@@ -61,6 +61,7 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -73,7 +74,6 @@ awful.layout.layouts = {
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
     awful.layout.suit.corner.nw,
-    awful.layout.suit.floating,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -209,9 +209,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
     -- sysystray
-    wibox.widget.systray.forced_height = 16
     s.systray = wibox.widget.systray()
-    s.systray.forced_height = 16
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -259,6 +257,49 @@ local function run_lock_screen ()
         awful.util.spawn("i3lock -I 1 -e -c 000000")
     end
 end
+
+incstatus_collection = {}
+
+IncStatus = {
+    DEFAULT_STEP=10,
+    INC_STEP=5,
+    MAX_STEP=25,
+}
+
+function IncStatus:new(initial_step)
+    o = {}
+    setmetatable(o, self)
+    self.__index = self
+    self.calls = 0
+    self.step = initial_step or 5
+    incstatus_collection[#incstatus_collection] = o
+    return o
+end
+
+function IncStatus:get_inc()
+    self.calls = self.calls + 1
+    if self.calls > 5 then
+        self.step = math.min(self.step + self.INC_STEP, self.MAX_STEP)
+        self.calls = 2 -- For cleaning procedure not to be invoken
+    end
+    return self.step
+end
+
+gears.timer{
+    timeout=.5,
+    autostart=true,
+    callback=function()
+        for _, incsstatus in pairs(incstatus_collection) do
+            if incstatus.calls < 2 then
+                resize_inc_status.step = resize_inc_status.default_step
+            end
+            incstatus.calls = 0
+        end
+    end
+}
+
+resize_inc_status = IncStatus:new(nil)
+move_inc_status = IncStatus:new(nil)
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
@@ -329,20 +370,42 @@ globalkeys = gears.table.join(
     -- Resizing windows
     awful.key({ modkey, "Control" }, "l", function ()
         if not awful.client.floating.get(client.focus) then awful.tag.incmwfact( 0.05)
-        else awful.client.moveresize(0, 0, 10, 0, client.focus) end
+        else client.focus:relative_move(0, 0, resize_inc_status:get_inc(), 0) end
     end, {description = 'resize window inc to left', group = 'resize'}),
     awful.key({ modkey, "Control" }, "h", function ()
         if not awful.client.floating.get(client.focus) then awful.tag.incmwfact(-0.05)
-        else awful.client.moveresize(0, 0, -10, 0, client.focus) end
+        else awful.client.moveresize(0, 0, -resize_inc_status:get_inc(), 0) end
     end, {description = 'resize window inc to right', group = 'resize'}),
     awful.key({ modkey, "Control" }, "j", function ()
         if not awful.client.floating.get(client.focus) then awful.client.incwfact( 0.05)
-        else awful.client.moveresize(0, 0, 0, 10, client.focus) end
+        else awful.client.moveresize(0, 0, 0, resize_inc_status:get_inc()) end
     end, {description = 'resize window inc to top', group = 'resize'}),
     awful.key({ modkey, "Control" }, "k", function ()
         if not awful.client.floating.get(client.focus) then awful.client.incwfact(-0.05)
-        else awful.client.moveresize(0, 0, 0, -10, client.focus) end
+        else awful.client.moveresize(0, 0, 0, -resize_inc_status:get_inc()) end
     end, {description = 'resize window inc to bottom', group = 'resize'}),
+
+    -- Resizing windows
+    awful.key({ modkey, "Shift" }, "l", function ()
+        if awful.client.floating.get(client.focus) then
+            client.focus:relative_move(move_inc_status:get_inc(), 0, 0, 0)
+        end
+    end, {description = 'move window to left', group = 'move'}),
+    awful.key({ modkey, "Shift" }, "h", function ()
+        if awful.client.floating.get(client.focus) then
+            client.focus:relative_move(-move_inc_status:get_inc(), 0, 0, 0)
+        end
+    end, {description = 'move window to right', group = 'move'}),
+    awful.key({ modkey, "Shift" }, "j", function ()
+        if awful.client.floating.get(client.focus) then
+            client.focus:relative_move(0, move_inc_status:get_inc(), 0, 0)
+        end
+    end, {description = 'move window to top', group = 'move'}),
+    awful.key({ modkey, "Shift" }, "k", function ()
+        if awful.client.floating.get(client.focus) then
+            client.focus:relative_move(0, move_inc_status:get_inc(), 0, 0)
+        end
+    end, {description = 'move window to bottom', group = 'move'}),
 
     -- Standard program
     awful.key({ modkey, "Control" }, "r", awesome.restart,
