@@ -44,6 +44,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'jaxbot/semantic-highlight.vim'
     Plug 'tpope/vim-eunuch'
+    Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'hsanson/vim-android'
+    Plug 'tfnico/vim-gradle'
+    Plug 'zchee/deoplete-clang'
 call plug#end()
 
 " }}}
@@ -129,13 +133,15 @@ let NERDTreeIgnore = [
       \ 'node_modules',
       \ 'yarn.lock',
       \ '.vagga',
-      \ '*.egg-info'
+      \ '*.egg-info',
+      \ 'build/'
   \ ]
 set wildignore+=*/node_modules/*
 set wildignore+=*/__pycache__/*
 set wildignore+=*.pyc
 set wildignore+=yarn.lock
 set wildignore+=*.egg-info
+set wildignore+=*/build/*
 
 let g:deoplete#enable_at_startup = 1
 let g:fzf_layout = { 'down': '~20%' }
@@ -156,10 +162,10 @@ nnoremap <silent> <ESC> :noh
 inoremap <silent> <ESC> <ESC>:noh
 nmap  :FZF
 
-nmap x "_d
-nmap X "_D
-nmap XX "_DD
-nmap xx "_dd
+" nmap x "_d
+" nmap X "_D
+" nmap XX "_DD
+" nmap xx "_dd
 
 nnoremap [e :lne
 nnoremap ]e :lNe
@@ -202,3 +208,7 @@ if !exists("project_config_attach")
 endif
 
 " }}}
+
+let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
