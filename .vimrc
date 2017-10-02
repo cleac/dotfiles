@@ -48,6 +48,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'hsanson/vim-android'
     Plug 'tfnico/vim-gradle'
     Plug 'zchee/deoplete-clang'
+    Plug 'kchmck/vim-coffee-script'
 call plug#end()
 
 " }}}
