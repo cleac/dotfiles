@@ -118,13 +118,13 @@ end
 local function disk_status(modifiers)
     local disk = '/home'
     local widget = wibox.widget.textbox()
-    local size_key = '{' .. disk .. ' size_mb}'
-    local used_key = '{' .. disk .. ' used_mb}'
+    local size_key = '{' .. disk .. ' size_gb}'
+    local used_key = '{' .. disk .. ' used_gb}'
     vicious.register(
       widget,
       vicious.widgets.fs,
       function (w, data)
-          return _build_component(_colorize('Disk: ') .. data[used_key] .. 'M/' .. data[size_key] .. 'M', modifiers)
+          return _build_component(_colorize('Disk: ') .. data[used_key] .. '/' .. data[size_key], modifiers)
       end)
     return widget
 end

@@ -9,17 +9,32 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
+local g_shape = require("gears.shape")
+local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "sans 8"
 
 
-theme.bg_normal     = "#000000"
-theme.bg_focus      = "#000000"
-theme.bg_urgent     = "#5d1118"
-theme.bg_minimize   = "#000000"
-theme.bg_systray    = theme.bg_normal
+local function make_wibar_gradient(start_color)
+    local default_start_color = "#000000"
+    local default_start_color_opacity = "ee"
+    local default_start_end_opacity = "55"
+    return g_color.create_pattern(
+        "linear:0,0:0,".. theme.wibar_height ..
+        ":0," .. (start_color or default_start_color) .. default_start_color_opacity ..
+        ":0.9," .. (start_color or default_start_color) .. default_start_color_opacity ..
+        ":0.95,#00000000")
+end
+
+
+theme.wibar_height = dpi(24)
+theme.bg_normal     = make_wibar_gradient()
+theme.bg_focus      = make_wibar_gradient()
+theme.bg_urgent     = make_wibar_gradient('#880000')
+theme.bg_minimize   = make_wibar_gradient()
+theme.bg_systray    = "#000"
 
 theme.fg_normal     = "#BBBBBB"
 theme.fg_focus      = "#ffffff"
@@ -27,17 +42,37 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
 
 theme.useless_gap   = dpi(4)
-theme.border_width  = dpi(0)
-theme.border_normal = "transparent"
-theme.border_focus  = "#535d6c"
+theme.max_gap       = dpi(15)
+theme.zero_gap      = dpi(0)
+theme.border_width  = dpi(1)
+theme.border_normal = "#333333"
+theme.border_focus  = "#706a6a"
 theme.border_marked = "#91231c"
+
+
+-- theme.wibar_default_opacity = 0.85
+-- theme.wibar_fill_opacity = 1
+theme.wibar_border = dpi(4)
+
+theme.wibar_bg = make_wibar_gradient()
 
 theme.taglist_fg_normal = "#333333"
 theme.taglist_fg_empty = "#555555"
 theme.taglist_fg_occupied = "#555555"
-theme.tasklist_bg_normal = "#0d1118"
 
-theme.wibox_height = dpi(5)
+theme.tasklist_bg_normal = make_wibar_gradient()
+theme.tasklist_bg_focus = make_wibar_gradient()
+theme.taglist_bg_normal = make_wibar_gradient()
+
+
+--
+-- theme.wibar_shape = function (cr, w, h)
+--     return g_shape.partially_rounded_rect(cr, w, h, false, false, true, true, 5)
+-- end
+-- theme.wibar_type='dock'
+
+-- beautiful.taglist_shape = g_shape.powerline
+-- beautiful.taglist_bg_focus = '#FF0000'
 
 -- There are other variable sets
 -- overriding the default one when
@@ -140,5 +175,3 @@ theme.wallpaper = function ()
 end
 
 return theme
-
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
