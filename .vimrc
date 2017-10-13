@@ -152,8 +152,6 @@ let g:semanticTermColors = [104, 122, 152, 146, 167, 191, 137, 167, 23, 71, 130]
 
 " Mappings {{{
 
-nnoremap ; :
-cnoremap <F2> 
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
