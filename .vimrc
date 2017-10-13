@@ -13,14 +13,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'wincent/terminus'
     Plug 'http://github.com/airblade/vim-gitgutter'
     Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
-    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+    " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
     Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
     Plug 'tpope/vim-surround'
     Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
     Plug 'jacoborus/tender.vim'
     Plug 'nathanaelkane/vim-indent-guides'
     Plug 'w0rp/ale'
-    Plug 'vim-airline/vim-airline'
+    " Plug 'vim-airline/vim-airline'
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
     " TODO: use select yajs or vim-es6
     " Plug 'isruslan/vim-es6'
@@ -28,10 +28,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'tommcdo/vim-fugitive-blame-ext'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-jedi'
-    Plug 'sebastianmarkow/deoplete-rust'
+    Plug 'zchee/deoplete-jedi', {'for': ['python']}
+    Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
     Plug 'kshenoy/vim-signature'
-    Plug 'mileszs/ack.vim'
+    " Plug 'mileszs/ack.vim'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'vim-scripts/mako.vim'
     Plug 'kana/vim-textobj-user'
@@ -39,15 +39,15 @@ call plug#begin('~/.vim/plugged')
     Plug 'kana/vim-textobj-line'
     Plug 'glts/vim-textobj-comment'
     Plug 'lucapette/vim-textobj-underscore'
-    Plug 'bps/vim-textobj-python'
+    Plug 'bps/vim-textobj-python', { 'for': ['python', 'rst', 'md'] }
     Plug 'kana/vim-textobj-entire'
     Plug 'tpope/vim-commentary'
     Plug 'jaxbot/semantic-highlight.vim'
     Plug 'tpope/vim-eunuch'
     Plug 'artur-shaik/vim-javacomplete2'
-    Plug 'hsanson/vim-android'
-    Plug 'tfnico/vim-gradle'
-    Plug 'zchee/deoplete-clang'
+    Plug 'hsanson/vim-android', {'for': ['java'. 'groovy'. 'scala']}
+    Plug 'tfnico/vim-gradle', {'for': ['java'. 'groovy'. 'scala']}
+    Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
     Plug 'kchmck/vim-coffee-script'
 call plug#end()
 
@@ -64,7 +64,7 @@ if !exists("autocommands_loaded")
     autocmd Syntax python call SetPython()
     autocmd Syntax lua call SetLua()
     autocmd Syntax javascript call SetJS()
-    autocmd Syntax *.mako setlocal syntax=mako
+    autocmd BufRead *.mako set syntax=mako
 
     autocmd CompleteDone * pclose
 endif
@@ -124,7 +124,7 @@ set fillchars+=vert:│
 set fillchars+=fold:\
 
 set bo=all
-set relativenumber
+" set relativenumber
 set nowrap
 
 let NERDTreeIgnore = [

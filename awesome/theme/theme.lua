@@ -14,7 +14,7 @@ local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
-theme.font          = "sans 8"
+theme.font          = "sans 9"
 
 
 local function make_wibar_gradient(start_color)
@@ -29,7 +29,7 @@ local function make_wibar_gradient(start_color)
 end
 
 
-theme.wibar_height = dpi(24)
+theme.wibar_height = dpi(28)
 theme.bg_normal     = make_wibar_gradient()
 theme.bg_focus      = make_wibar_gradient()
 theme.bg_urgent     = make_wibar_gradient('#880000')
