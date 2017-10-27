@@ -18,23 +18,28 @@ theme.font          = "sans 9"
 
 
 local function make_wibar_gradient(start_color)
-    local default_start_color = "#000000"
-    local default_start_color_opacity = "ee"
-    local default_start_end_opacity = "55"
-    return g_color.create_pattern(
-        "linear:0,0:0,".. theme.wibar_height ..
-        ":0," .. (start_color or default_start_color) .. default_start_color_opacity ..
-        ":0.9," .. (start_color or default_start_color) .. default_start_color_opacity ..
-        ":0.95,#00000000")
+    return "#000"
+    -- local default_start_color = "#000000"
+    -- local default_start_color_opacity = "ee"
+    -- local default_start_end_opacity = "55"
+    -- return g_color.create_pattern(
+    --     "linear:0,0:0,".. theme.wibar_height ..
+    --     ":0," .. (start_color or default_start_color) .. default_start_color_opacity ..
+    --     ":0.9," .. (start_color or default_start_color) .. default_start_color_opacity ..
+    --     ":0.95,#00000000")
 end
 
 
 theme.wibar_height = dpi(28)
-theme.bg_normal     = make_wibar_gradient()
-theme.bg_focus      = make_wibar_gradient()
-theme.bg_urgent     = make_wibar_gradient('#880000')
-theme.bg_minimize   = make_wibar_gradient()
+theme.wibar_bg_normal     = make_wibar_gradient()
+theme.wibar_bg_focus      = make_wibar_gradient()
+theme.wibar_bg_urgent     = make_wibar_gradient('#880000')
+theme.wibar_bg_minimize   = make_wibar_gradient()
 theme.bg_systray    = "#000"
+
+theme.notification_fg = "#FFF"
+theme.notification_bg = "#404030F0"
+theme.notification_font = "sans 13"
 
 theme.fg_normal     = "#BBBBBB"
 theme.fg_focus      = "#ffffff"

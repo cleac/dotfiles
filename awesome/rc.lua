@@ -45,7 +45,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/home/alexcleac/.config/awesome/theme/theme.lua")
+beautiful.init(os.getenv('HOME') .. "/.config/awesome/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xfce4-terminal"
@@ -73,7 +73,7 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -187,7 +187,21 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({
+        "browse",
+        "code",
+        "chat",
+        "play",
+        "read",
+        "else",
+    }, s, {
+        awful.layout.layouts[10],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+    })
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -209,13 +223,13 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar{
         position = "top",
         screen = s,
-        ontop = true,
+        -- ontop = true,
         -- opacity = beautiful.wibar_default_opacity
     }
 
     -- sysystray
     s.systray = wibox.widget.systray()
-    s.systray:set_base_size(18)
+    s.systray:set_base_size(20)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -672,9 +686,14 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "dialog" }
-      }, properties = { titlebars_enabled = true }
-    },
+    { rule_any = {type = { "dialog" }},
+      properties = { titlebars_enabled = true }},
+    { rule_any = { class = { 'TelegramDesktop', 'Slack' }},
+      properties = { tag = 'chat' }},
+    { rule_any = { class = { 'firefox', 'firefox-developer', 'chromium' }},
+      properties = { tag = 'browse' }},
+    { rule_any = { class = { 'Steam' }},
+      properties = { tag = 'play' }},
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -696,8 +715,15 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
 
-    if awful.screen.focused().selected_tag.layout.name == 'floating' then
-        c.floating = true
+    if c.class ~= 'albert' then
+        not_all_tiled = false
+        for _, tag in pairs(c:tags()) do
+            if tag.layout.name == 'floating' then
+                not_all_tiled = true
+                break
+            end
+        end
+        c.floating = not_all_tiled
     end
 end)
 
@@ -751,6 +777,35 @@ client.connect_signal("mouse::enter", function(c)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+freeze_apps = {
+    'firefox',
+    'firefox-developer',
+    'google-chrome',
+    'chromium',
+    'Slack',
+}
+
+function is_charged()
+    battery_string = io.popen('acpi'):read('*line')
+    return string.match(battery_string, '%s*9%d%s*') ~= nil
+end
+
+client.connect_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+    for _, class_name in pairs(freeze_apps) do
+        if c.class == class_name then
+            awful.util.spawn_with_shell('kill -CONT '..c.pid)
+        end
+    end
+end)
+client.connect_signal("unfocus", function(c)
+    c.border_color = beautiful.border_normal
+    -- if not is_charged() then
+    --     for _, class_name in pairs(freeze_apps) do
+    --         if c.class == class_name then
+    --             awful.util.spawn_with_shell('kill -STOP '..c.pid)
+    --         end
+    --     end
+    -- end
+end)
 -- }}}
