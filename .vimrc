@@ -9,8 +9,8 @@ endif
 " Plugins {{{
 
 call plug#begin('~/.vim/plugged')
-    Plug 'wincent/loupe'
-    Plug 'wincent/terminus'
+    " Plug 'wincent/loupe'
+    " Plug 'wincent/terminus'
     Plug 'http://github.com/airblade/vim-gitgutter'
     Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
     " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
@@ -49,6 +49,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tfnico/vim-gradle', {'for': ['java'. 'groovy'. 'scala']}
     Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
     Plug 'kchmck/vim-coffee-script'
+    " Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 " }}}
@@ -72,6 +73,11 @@ endif
 " }}}
 
 " Specific setups {{{
+
+let g:ale_linters = {
+            \ 'javascript': ['eslint'],
+            \ }
+
 
 function! SetLua()
     setlocal softtabstop=2 ts=2 sw=2 et
@@ -152,6 +158,9 @@ let g:semanticTermColors = [104, 122, 152, 146, 167, 191, 137, 167, 23, 71, 130]
 
 " Mappings {{{
 
+nnoremap <C-s> :w
+nnoremap <C-t> :tabnew
+nnoremap <C-q> :q
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
@@ -160,6 +169,8 @@ nnoremap  :NERDTreeToggle
 nnoremap <silent> <ESC> :noh
 inoremap <silent> <ESC> <ESC>:noh
 nmap  :FZF
+map gy "+y
+map gY "+Y
 
 " nmap x "_d
 " nmap X "_D
@@ -168,6 +179,10 @@ nmap  :FZF
 
 nnoremap [e :lne
 nnoremap ]e :lNe
+nnoremap gb /<TBD><Esc>
+nnoremap gB ?<TBD><Esc>
+nnoremap cgb /<TBD><Esc>ca>
+nnoremap cgB ?<TBD><Esc>ca>
 
 " }}}
 
