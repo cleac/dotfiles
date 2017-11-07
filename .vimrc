@@ -9,15 +9,12 @@ endif
 " Plugins {{{
 
 call plug#begin('~/.vim/plugged')
-    " Plug 'wincent/loupe'
-    " Plug 'wincent/terminus'
     Plug 'http://github.com/airblade/vim-gitgutter'
     Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
     " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
     Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
     Plug 'tpope/vim-surround'
     Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
-    Plug 'jacoborus/tender.vim'
     Plug 'nathanaelkane/vim-indent-guides'
     Plug 'w0rp/ale'
     " Plug 'vim-airline/vim-airline'
@@ -31,7 +28,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'zchee/deoplete-jedi', {'for': ['python']}
     Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
     Plug 'kshenoy/vim-signature'
-    " Plug 'mileszs/ack.vim'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'vim-scripts/mako.vim'
     Plug 'kana/vim-textobj-user'
@@ -42,14 +38,23 @@ call plug#begin('~/.vim/plugged')
     Plug 'bps/vim-textobj-python', { 'for': ['python', 'rst', 'md'] }
     Plug 'kana/vim-textobj-entire'
     Plug 'tpope/vim-commentary'
-    Plug 'jaxbot/semantic-highlight.vim'
+    " Plug 'jaxbot/semantic-highlight.vim'
     Plug 'tpope/vim-eunuch'
     Plug 'artur-shaik/vim-javacomplete2'
     Plug 'hsanson/vim-android', {'for': ['java'. 'groovy'. 'scala']}
     Plug 'tfnico/vim-gradle', {'for': ['java'. 'groovy'. 'scala']}
     Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
     Plug 'kchmck/vim-coffee-script'
-    " Plug 'leafgarland/typescript-vim'
+    Plug 'mrinterweb/vim-visual-surround'
+    Plug 'raimondi/delimitmate'
+    Plug 'vim-scripts/matchit.zip'
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'kien/rainbow_parentheses.vim'
+    Plug 'terryma/vim-expand-region'
+    Plug 'junegunn/goyo.vim'
+    Plug 'valloric/matchtagalways'
+    Plug 'osyo-manga/vim-over'
+    Plug 'vimwiki/vimwiki'
 call plug#end()
 
 " }}}
@@ -152,7 +157,7 @@ set wildignore+=*/build/*
 
 let g:deoplete#enable_at_startup = 1
 let g:fzf_layout = { 'down': '~20%' }
-let g:semanticTermColors = [104, 122, 152, 146, 167, 191, 137, 167, 23, 71, 130]
+" let g:semanticTermColors = [104, 122, 152, 146, 167, 191, 137, 167, 23, 71, 130]
 
 " }}}
 
@@ -171,11 +176,6 @@ inoremap <silent> <ESC> <ESC>:noh
 nmap  :FZF
 map gy "+y
 map gY "+Y
-
-" nmap x "_d
-" nmap X "_D
-" nmap XX "_DD
-" nmap xx "_dd
 
 nnoremap [e :lne
 nnoremap ]e :lNe
@@ -196,11 +196,9 @@ hi Visual ctermbg=239
 hi LineNr ctermbg=234
 hi ExtraWhitespace ctermfg=238
 
-colorscheme tender
+colorscheme jellybeans
 
-let g:airline_powerline_fonts = 1
-
-hi VertSplit ctermfg=058
+" hi VertSplit ctermfg=058
 hi Comment cterm=italic
 
 " }}}
@@ -226,3 +224,7 @@ endif
 let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+
+let g:jellybeans_use_term_italics = 1
+let g:jellybeans_use_lowcolor_black = 0
+
