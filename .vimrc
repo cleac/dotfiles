@@ -11,13 +11,14 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'http://github.com/airblade/vim-gitgutter'
     Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
-    " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
     Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
     Plug 'tpope/vim-surround'
     Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
     Plug 'nathanaelkane/vim-indent-guides'
     Plug 'w0rp/ale'
-    " Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
     " TODO: use select yajs or vim-es6
     " Plug 'isruslan/vim-es6'
@@ -55,6 +56,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'valloric/matchtagalways'
     Plug 'osyo-manga/vim-over'
     Plug 'vimwiki/vimwiki'
+    Plug 'sjl/badwolf'
+    Plug 'majutsushi/tagbar'
 call plug#end()
 
 " }}}
@@ -158,22 +161,26 @@ set wildignore+=*/build/*
 let g:deoplete#enable_at_startup = 1
 let g:fzf_layout = { 'down': '~20%' }
 " let g:semanticTermColors = [104, 122, 152, 146, 167, 191, 137, 167, 23, 71, 130]
+"
+let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 " }}}
 
 " Mappings {{{
 
 nnoremap <C-s> :w
-nnoremap <C-t> :tabnew
 nnoremap <C-q> :q
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-nnoremap  :NERDTreeToggle
+nnoremap <silent>  :NERDTreeToggle
 nnoremap <silent> <ESC> :noh
 inoremap <silent> <ESC> <ESC>:noh
-nmap  :FZF
+nmap <silent>  :FZF
+nnoremap <silent> <C-t> :Tagbar
 map gy "+y
 map gY "+Y
 
@@ -188,18 +195,20 @@ nnoremap cgB ?<TBD><Esc>ca>
 
 " Style {{{
 
-hi IndentGuidesEven  ctermbg=236
-hi IndentGuidesOdd ctermbg=236
+hi IndentGuidesEven ctermbg=235
+hi IndentGuidesOdd ctermbg=235
 
-hi StatusLine ctermbg=239 ctermfg=254
-hi Visual ctermbg=239
-hi LineNr ctermbg=234
-hi ExtraWhitespace ctermfg=238
+" hi StatusLine ctermbg=239 ctermfg=254
+" hi Visual ctermbg=239
+" hi LineNr ctermbg=234
+" hi ExtraWhitespace ctermfg=238
 
-colorscheme jellybeans
+colorscheme badwolf
 
 " hi VertSplit ctermfg=058
 hi Comment cterm=italic
+
+let g:airline_theme='badwolf'
 
 " }}}
 
@@ -220,11 +229,3 @@ if !exists("project_config_attach")
 endif
 
 " }}}
-
-let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
-
-let g:jellybeans_use_term_italics = 1
-let g:jellybeans_use_lowcolor_black = 0
-
