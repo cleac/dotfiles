@@ -16,7 +16,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
     Plug 'nathanaelkane/vim-indent-guides'
-    Plug 'w0rp/ale'
+    " Plug 'w0rp/ale'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
@@ -58,6 +58,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vimwiki/vimwiki'
     Plug 'sjl/badwolf'
     Plug 'majutsushi/tagbar'
+    Plug 'vim-syntastic/syntastic'
 call plug#end()
 
 " }}}
@@ -165,6 +166,13 @@ let g:fzf_layout = { 'down': '~20%' }
 let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+
+let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_aggregate_errors = 1
 
 " }}}
 
