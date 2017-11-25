@@ -2,7 +2,8 @@
 -- Default awesome theme --
 ---------------------------
 
-local THEME_SOURCE = os.getenv('HOME') .. '/pictures/wallpapers/'
+local WALLP_SOURCE = os.getenv('HOME') .. '/pictures/wallpapers/'
+local ICONS_SOURCE = os.getenv('HOME') .. '/.config/awesome/theme/'
 
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
@@ -14,27 +15,13 @@ local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
-theme.font          = "sans 9"
+theme.font          = "sans 11"
 
-
-local function make_wibar_gradient(start_color)
-    return "#000"
-    -- local default_start_color = "#000000"
-    -- local default_start_color_opacity = "ee"
-    -- local default_start_end_opacity = "55"
-    -- return g_color.create_pattern(
-    --     "linear:0,0:0,".. theme.wibar_height ..
-    --     ":0," .. (start_color or default_start_color) .. default_start_color_opacity ..
-    --     ":0.9," .. (start_color or default_start_color) .. default_start_color_opacity ..
-    --     ":0.95,#00000000")
-end
-
-
-theme.wibar_height = dpi(28)
-theme.wibar_bg_normal     = make_wibar_gradient()
-theme.wibar_bg_focus      = make_wibar_gradient()
-theme.wibar_bg_urgent     = make_wibar_gradient('#880000')
-theme.wibar_bg_minimize   = make_wibar_gradient()
+theme.wibar_height = dpi(32)
+theme.wibar_bg_normal     = '#000'
+theme.wibar_bg_focus      = '#000'
+theme.wibar_bg_urgent     = '#880000'
+theme.wibar_bg_minimize   = '#000'
 theme.bg_systray    = "#000"
 
 theme.notification_fg = "#FFF"
@@ -46,7 +33,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
 
-theme.useless_gap   = dpi(4)
+theme.useless_gap   = dpi(0)
 theme.max_gap       = dpi(15)
 theme.zero_gap      = dpi(0)
 theme.border_width  = dpi(1)
@@ -59,15 +46,13 @@ theme.border_marked = "#91231c"
 -- theme.wibar_fill_opacity = 1
 theme.wibar_border = dpi(4)
 
-theme.wibar_bg = make_wibar_gradient()
-
 theme.taglist_fg_normal = "#333333"
 theme.taglist_fg_empty = "#555555"
 theme.taglist_fg_occupied = "#555555"
 
-theme.tasklist_bg_normal = make_wibar_gradient()
-theme.tasklist_bg_focus = make_wibar_gradient()
-theme.taglist_bg_normal = make_wibar_gradient()
+-- theme.tasklist_bg_normal = make_wibar_gradient()
+-- theme.tasklist_bg_focus = make_wibar_gradient()
+-- theme.taglist_bg_normal = make_wibar_gradient()
 
 
 --
@@ -120,8 +105,8 @@ theme.menu_width  = dpi(100)
 --theme.bg_widget = "#cc0000"
 
 -- Define the image to load
-theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
-theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
+theme.titlebar_close_button_normal = ICONS_SOURCE.."/titlebar/close_normal_.png"
+theme.titlebar_close_button_focus  = ICONS_SOURCE.."/titlebar/close_focus_.png"
 
 theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
 theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
@@ -176,7 +161,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 theme.icon_theme = nil
 
 theme.wallpaper = function ()
-    return THEME_SOURCE .. io.popen('ls ' .. THEME_SOURCE .. '|sort -R'):read('*line')
+    return WALLP_SOURCE .. io.popen('ls ' .. WALLP_SOURCE .. '|sort -R'):read('*line')
 end
 
 return theme
