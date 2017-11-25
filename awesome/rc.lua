@@ -195,7 +195,7 @@ awful.screen.connect_for_each_screen(function(s)
         "read",
         "else",
     }, s, {
-        awful.layout.layouts[10],
+        awful.layout.layouts[2],
         awful.layout.layouts[2],
         awful.layout.layouts[2],
         awful.layout.layouts[2],
