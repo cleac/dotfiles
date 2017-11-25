@@ -21,5 +21,6 @@ run_once  albert
 # run_once  slack
 run_once  ~/software/Telegram
 run_once  unclutter -idle 1
+run_once  caffeine
 run       pkill -9 volumeicon
 run       volumeicon
