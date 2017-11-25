@@ -6,7 +6,7 @@ local get_args = ''
 local inc_cmd = '-Ap '
 local dec_cmd = '-Up '
 local last_modificator = 2
-local percent_modificator = 50
+local percent_modificator = 30
 
 local inc_key = "XF86MonBrightnessUp"
 local dec_key = "XF86MonBrightnessDown"
