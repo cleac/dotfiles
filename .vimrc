@@ -58,7 +58,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'vimwiki/vimwiki'
     Plug 'sjl/badwolf'
     Plug 'majutsushi/tagbar'
-    Plug 'vim-syntastic/syntastic'
+    " Plug 'vim-syntastic/syntastic'
+    Plug 'neomake/neomake'
 call plug#end()
 
 " }}}
@@ -167,12 +168,19 @@ let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
-let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_aggregate_errors = 1
+" let g:syntastic_always_populate_loc_list = 1
+" " let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_aggregate_errors = 1
+
+call neomake#configure#automake('nw', 1000)
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+if has("gui_running")
+    set guifont=Source\ Code\ Pro\ 10
+endif
 
 " }}}
 
