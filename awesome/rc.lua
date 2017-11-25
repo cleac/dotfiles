@@ -229,7 +229,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- sysystray
     s.systray = wibox.widget.systray()
-    s.systray:set_base_size(20)
+    s.systray:set_base_size(beautiful.wibar_height * .7)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -445,6 +445,14 @@ globalkeys = gears.table.join(
             local current_tag = awful.screen.focused().selected_tag
             for _, client in pairs(current_tag:clients()) do
                 client.floating = current_tag.layout.name == 'floating'
+                local c = client
+                if c.floating and c.type ~= 'desktop' and
+                    c.type ~= 'splash' and 
+                    c.type ~= 'notification' and
+                    c.type ~= 'dock' and
+                    c.type ~= 'combo' and
+                    c.type ~= 'menu' then awful.titlebar.show(c) 
+                elseif not c.floating then awful.titlebar.hide(c) end
             end
         end,
                   {description = "select next", group = "layout"}),
@@ -496,6 +504,14 @@ globalkeys = gears.table.join(
             local current_tag = awful.screen.focused().selected_tag
             for _, client in pairs(current_tag:clients()) do
                 client.floating = current_tag.layout.name == 'floating'
+                local c = client
+                if c.floating and c.type ~= 'desktop' and
+                    c.type ~= 'splash' and 
+                    c.type ~= 'notification' and
+                    c.type ~= 'dock' and
+                    c.type ~= 'combo' and
+                    c.type ~= 'menu' then awful.titlebar.show(c) 
+                elseif not c.floating then awful.titlebar.hide(c) end
             end
         end,
                   {description = "select previous", group = "layout"}),
@@ -649,7 +665,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                     titlebars_enabled = true,
      }
     },
     { rule={class = 'Xfce4-terminal'},
@@ -686,7 +703,7 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "dialog" }},
+    { rule = { floating = true },
       properties = { titlebars_enabled = true }},
     { rule_any = { class = { 'TelegramDesktop', 'Slack' }},
       properties = { tag = 'chat' }},
@@ -725,6 +742,15 @@ client.connect_signal("manage", function (c)
         end
         c.floating = not_all_tiled
     end
+
+    if c.floating and c.type ~= 'desktop' and
+        c.type ~= 'splash' and 
+        c.type ~= 'notification' and
+        c.type ~= 'dock' and
+        c.type ~= 'combo' and
+        c.type ~= 'menu' then awful.titlebar.show(c) 
+    elseif not c.floating or c.class == 'albert' then awful.titlebar.hide(c) end
+    if c.class == 'albert' then awful.titlebar.hide(c) end 
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -744,26 +770,18 @@ client.connect_signal("request::titlebars", function(c)
     )
 
     awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
+        { -- Right
+            awful.titlebar.widget.closebutton    (c),
+            awful.titlebar.widget.maximizedbutton(c),
+            layout = wibox.layout.fixed.horizontal()
         },
         { -- Middle
             { -- Title
-                align  = "center",
+                align  = "left",
                 widget = awful.titlebar.widget.titlewidget(c)
             },
             buttons = buttons,
             layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
         },
         layout = wibox.layout.align.horizontal
     }
@@ -787,7 +805,7 @@ freeze_apps = {
 
 function is_charged()
     battery_string = io.popen('acpi'):read('*line')
-    return string.match(battery_string, '%s*9%d%s*') ~= nil
+    return string.match(battery_string, '%s*(10|9)%d%s*') ~= nil
 end
 
 client.connect_signal("focus", function(c)
