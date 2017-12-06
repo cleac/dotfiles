@@ -100,6 +100,7 @@ endfunction
 function! SetJS()
   " Js specific declarations
   setlocal softtabstop=2 tw=2 sw=2 et fdm=marker fmr={,}
+    set tw=119
 endfunction
 
 " }}}
@@ -107,6 +108,8 @@ endfunction
 " Global setup {{{
 
 set tw=79
+let &l:colorcolumn = '+' . join(range(1, 255), ',+')
+set relativenumber
 set cindent
 set hlsearch
 set ic
@@ -207,6 +210,8 @@ nnoremap gB ?<TBD><Esc>
 nnoremap cgb /<TBD><Esc>ca>
 nnoremap cgB ?<TBD><Esc>ca>
 
+nnoremap go #ggN
+
 " }}}
 
 " Style {{{
@@ -214,12 +219,15 @@ nnoremap cgB ?<TBD><Esc>ca>
 hi IndentGuidesEven ctermbg=235
 hi IndentGuidesOdd ctermbg=235
 
+
 " hi StatusLine ctermbg=239 ctermfg=254
 " hi Visual ctermbg=239
 " hi LineNr ctermbg=234
 " hi ExtraWhitespace ctermfg=238
 
 colorscheme badwolf
+
+hi LineNr ctermbg=235
 
 " hi VertSplit ctermfg=058
 hi Comment cterm=italic
