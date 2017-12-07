@@ -188,19 +188,25 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     awful.tag({
-        "browse",
-        "code",
-        "chat",
-        "play",
-        "read",
-        "else",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
     }, s, {
         awful.layout.layouts[2],
         awful.layout.layouts[2],
         awful.layout.layouts[2],
         awful.layout.layouts[2],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
     })
 
     -- Create a promptbox for each screen
@@ -706,11 +712,11 @@ awful.rules.rules = {
     { rule = { floating = true },
       properties = { titlebars_enabled = true }},
     { rule_any = { class = { 'TelegramDesktop', 'Slack' }},
-      properties = { tag = 'chat' }},
-    { rule_any = { class = { 'firefox', 'firefox-developer', 'chromium' }},
-      properties = { tag = 'browse' }},
+      properties = { tag = '3' }},
+    { rule_any = { class = { 'firefox', 'firefox-developer', 'chromium', 'google-chrome' }},
+      properties = { tag = '1' }},
     { rule_any = { class = { 'Steam' }},
-      properties = { tag = 'play' }},
+      properties = { tag = '4' }},
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
