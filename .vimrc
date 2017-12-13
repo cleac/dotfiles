@@ -69,13 +69,17 @@ call plug#end()
 if !exists("autocommands_loaded")
     let autocommands_loaded = 1
 
-    autocmd BufWritePre * normal :%s/\s+$//ge:noh
+    autocmd BufWritePre * normal :%s/\s\+$//ge:noh
     autocmd VimEnter * IndentGuidesEnable
 
     autocmd Syntax python call SetPython()
     autocmd Syntax lua call SetLua()
     autocmd Syntax javascript call SetJS()
     autocmd BufRead *.mako set syntax=mako
+
+    autocmd BufRead *.py call SetPython()
+    autocmd BufRead lua call SetLua()
+    autocmd BufRead javascript call SetJS()
 
     autocmd CompleteDone * pclose
 endif
@@ -95,19 +99,19 @@ endfunction
 
 function! SetPython()
    setlocal softtabstop=4 ts=4 sw=4 et
+   setlocal tw=79
 endfunction
 
 function! SetJS()
   " Js specific declarations
   setlocal softtabstop=2 tw=2 sw=2 et fdm=marker fmr={,}
-    set tw=119
 endfunction
 
 " }}}
 
 " Global setup {{{
 
-set tw=79
+set tw=119
 let &l:colorcolumn = '+' . join(range(1, 255), ',+')
 set relativenumber
 set cindent
