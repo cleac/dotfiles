@@ -314,6 +314,7 @@ move_inc_status = IncStatus:new()
 globalkeys = gears.table.join(
         awful.key({ }, "XF86ScreenSaver", function () run_lock_screen() end,
                   {description = 'lock screen', group = 'lockscreen'}),
+        awful.key({ modkey }, "t", function () awful.util.spawn(terminal) end),
         awful.key({ modkey }, "w", function () run_lock_screen() end,
                   {description = 'lock screen', group = 'lockscreen'}),
 
@@ -453,11 +454,11 @@ globalkeys = gears.table.join(
                 client.floating = current_tag.layout.name == 'floating'
                 local c = client
                 if c.floating and c.type ~= 'desktop' and
-                    c.type ~= 'splash' and 
+                    c.type ~= 'splash' and
                     c.type ~= 'notification' and
                     c.type ~= 'dock' and
                     c.type ~= 'combo' and
-                    c.type ~= 'menu' then awful.titlebar.show(c) 
+                    c.type ~= 'menu' then awful.titlebar.show(c)
                 elseif not c.floating then awful.titlebar.hide(c) end
             end
         end,
@@ -512,11 +513,11 @@ globalkeys = gears.table.join(
                 client.floating = current_tag.layout.name == 'floating'
                 local c = client
                 if c.floating and c.type ~= 'desktop' and
-                    c.type ~= 'splash' and 
+                    c.type ~= 'splash' and
                     c.type ~= 'notification' and
                     c.type ~= 'dock' and
                     c.type ~= 'combo' and
-                    c.type ~= 'menu' then awful.titlebar.show(c) 
+                    c.type ~= 'menu' then awful.titlebar.show(c)
                 elseif not c.floating then awful.titlebar.hide(c) end
             end
         end,
@@ -717,6 +718,8 @@ awful.rules.rules = {
       properties = { tag = '1' }},
     { rule_any = { class = { 'Steam' }},
       properties = { tag = '4' }},
+    { rule_any = { class = { 'jetbrains-idea' }},
+      properties = { floating = true }},
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -750,13 +753,13 @@ client.connect_signal("manage", function (c)
     end
 
     if c.floating and c.type ~= 'desktop' and
-        c.type ~= 'splash' and 
+        c.type ~= 'splash' and
         c.type ~= 'notification' and
         c.type ~= 'dock' and
         c.type ~= 'combo' and
-        c.type ~= 'menu' then awful.titlebar.show(c) 
+        c.type ~= 'menu' then awful.titlebar.show(c)
     elseif not c.floating or c.class == 'albert' then awful.titlebar.hide(c) end
-    if c.class == 'albert' then awful.titlebar.hide(c) end 
+    if c.class == 'albert' then awful.titlebar.hide(c) end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.

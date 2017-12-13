@@ -12,6 +12,8 @@ alias tmd="tmux detach"
 alias tmn="tmux new"
 alias con="nmcli con"
 
+alias doc2pdf="unoconv -fpdf"
+
 plugins+=(k zsh-autosuggestions)
 
 PATH=$PATH:~/.roswell/bin
