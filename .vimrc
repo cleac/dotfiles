@@ -60,6 +60,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'majutsushi/tagbar'
     " Plug 'vim-syntastic/syntastic'
     Plug 'neomake/neomake'
+    Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
+    Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
 call plug#end()
 
 " }}}
@@ -77,7 +79,7 @@ if !exists("autocommands_loaded")
     autocmd Syntax javascript call SetJS()
     autocmd BufRead *.mako set syntax=mako
 
-    autocmd BufRead *.py call SetPython()
+    autocmd BufRead python call SetPython()
     autocmd BufRead lua call SetLua()
     autocmd BufRead javascript call SetJS()
 
@@ -201,7 +203,6 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 nnoremap <silent>  :NERDTreeToggle
 nnoremap <silent> <ESC> :noh
-inoremap <silent> <ESC> <ESC>:noh
 nmap <silent>  :FZF
 nnoremap <silent> <C-t> :Tagbar
 map gy "+y
