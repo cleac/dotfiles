@@ -15,7 +15,7 @@ local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
-theme.font          = "sans 11"
+theme.font          = "Source Code Pro 10"
 
 theme.wibar_height = dpi(32)
 theme.wibar_bg_normal     = '#000'
