@@ -6,19 +6,11 @@ function run_once() {
   pgrep $@ > /dev/null || ($@ &)
 }
 
-function volumeicn() {
-    sleep 1
-    volumeicon
-}
-
 run_once  blueman-applet
 run_once  nm-applet
 run_once  xcompmgr
 run_once  redshift-gtk
-run_once  albert
-# run_once  slack
 run_once  ~/software/Telegram
 run_once  unclutter -idle 1
 run_once  caffeine
-run       pkill -9 volumeicon
-run       volumeicon
+run_once  volumeicon
