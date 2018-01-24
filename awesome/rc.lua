@@ -18,6 +18,10 @@ local widgets = require('widgets')
 
 require('autostart').init()
 
+naughty.config.defaults.icon_size = 32
+naughty.config.defaults.border_width = 0
+naughty.config.defaults.font = 'Sans 12'
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -198,15 +202,15 @@ awful.screen.connect_for_each_screen(function(s)
         "8",
         "9",
     }, s, {
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
+        awful.layout.layouts[1],
     })
 
     -- Create a promptbox for each screen
@@ -315,28 +319,28 @@ globalkeys = gears.table.join(
         awful.key({ }, "XF86ScreenSaver", function () run_lock_screen() end,
                   {description = 'lock screen', group = 'lockscreen'}),
         awful.key({ modkey }, "t", function () awful.util.spawn(terminal) end),
-        awful.key({ modkey }, "w", function () run_lock_screen() end,
+        awful.key({ modkey }, "l", function () run_lock_screen() end,
                   {description = 'lock screen', group = 'lockscreen'}),
 
         awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
                   {description="show help", group="awesome"}),
 
-        awful.key({ modkey,           }, "h",   awful.tag.viewprev,
+        awful.key({ modkey,           }, "j",   awful.tag.viewprev,
                   {description = "view previous", group = "tag"}),
-        awful.key({ modkey,           }, "l",  awful.tag.viewnext,
+        awful.key({ modkey,           }, "k",  awful.tag.viewnext,
                   {description = "view next", group = "tag"}),
         awful.key({ modkey,           }, ']', function ()
             local wibar_cur = awful.screen.focused().mywibox
             wibar_cur.visible = not wibar_cur.visible
         end, {}),
 
-        awful.key({ modkey,           }, "j",
+        awful.key({ modkey,           }, "Tab",
             function ()
-                awful.client.focus.byidx( 1)
+               awful.client.focus.byidx( 1)
             end,
             {description = "focus next by index", group = "client"}
         ),
-        awful.key({ modkey,           }, "k",
+        awful.key({ modkey, "Shift"   }, "Tab",
             function ()
                 awful.client.focus.byidx(-1)
             end,
@@ -372,14 +376,6 @@ globalkeys = gears.table.join(
                   {description = "swap with next client by index", group = "client"}),
         awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
                   {description = "swap with previous client by index", group = "client"}),
-        awful.key({ modkey,           }, "Tab",
-            function ()
-                awful.client.focus.history.previous()
-                if client.focus then
-                    client.focus:raise()
-                end
-            end,
-            {description = "go back", group = "client"}),
 
         -- Resizing windows
         awful.key({ modkey, "Control" }, "l", function ()
@@ -562,8 +558,8 @@ clientkeys = gears.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey,           }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
-              {description = "toggle floating", group = "client"}),
+    awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle ,
+        {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
@@ -571,7 +567,8 @@ clientkeys = gears.table.join(
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "i", function (c)
-        naughty.notify{ title='Focused window class', text=tostring(c.class)  }
+        local titlebar = awful.titlebar(c)
+        naughty.notify{ title='Titlebar', text=tostring(titlebar)  }
     end),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -677,11 +674,9 @@ awful.rules.rules = {
      }
     },
     { rule={class = 'Xfce4-terminal'},
-      properties = { size_hints_honor = false },
-    },
+      properties = { size_hints_honor = false }},
     { rule={class = 'albert'},
-      properties = { border_width = 0 },
-    },
+      properties = { border_width = 0 }},
 
     -- Floating clients.
     { rule_any = {
@@ -710,14 +705,6 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule = { floating = true },
-      properties = { titlebars_enabled = true }},
-    { rule_any = { class = { 'TelegramDesktop', 'Slack' }},
-      properties = { tag = '3' }},
-    { rule_any = { class = { 'firefox', 'firefox-developer', 'chromium', 'google-chrome' }},
-      properties = { tag = '1' }},
-    { rule_any = { class = { 'Steam' }},
-      properties = { tag = '4' }},
     { rule_any = { class = { 'jetbrains-idea' }},
       properties = { floating = true }},
 
@@ -741,25 +728,24 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
 
-    if c.class ~= 'albert' then
-        not_all_tiled = false
-        for _, tag in pairs(c:tags()) do
-            if tag.layout.name == 'floating' then
-                not_all_tiled = true
-                break
-            end
+    local not_all_tiled = false
+    for _, tag in pairs(c:tags()) do
+        if tag.layout.name == 'floating' then
+            not_all_tiled = true
+            break
         end
-        c.floating = not_all_tiled
     end
+    c.floating = not_all_tiled
 
     if c.floating and c.type ~= 'desktop' and
         c.type ~= 'splash' and
         c.type ~= 'notification' and
         c.type ~= 'dock' and
         c.type ~= 'combo' and
-        c.type ~= 'menu' then awful.titlebar.show(c)
-    elseif not c.floating or c.class == 'albert' then awful.titlebar.hide(c) end
-    if c.class == 'albert' then awful.titlebar.hide(c) end
+        c.type ~= 'menu' and
+        c.class ~= 'albert' then awful.titlebar.show(c)
+    elseif not c.floating then awful.titlebar.hide(c) end
+
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -804,14 +790,6 @@ client.connect_signal("mouse::enter", function(c)
     end
 end)
 
-freeze_apps = {
-    'firefox',
-    'firefox-developer',
-    'google-chrome',
-    'chromium',
-    'Slack',
-}
-
 function is_charged()
     battery_string = io.popen('acpi'):read('*line')
     return string.match(battery_string, '%s*(10|9)%d%s*') ~= nil
@@ -819,20 +797,8 @@ end
 
 client.connect_signal("focus", function(c)
     c.border_color = beautiful.border_focus
-    for _, class_name in pairs(freeze_apps) do
-        if c.class == class_name then
-            awful.util.spawn_with_shell('kill -CONT '..c.pid)
-        end
-    end
 end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
-    -- if not is_charged() then
-    --     for _, class_name in pairs(freeze_apps) do
-    --         if c.class == class_name then
-    --             awful.util.spawn_with_shell('kill -STOP '..c.pid)
-    --         end
-    --     end
-    -- end
 end)
 -- }}}

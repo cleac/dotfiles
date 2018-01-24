@@ -78,6 +78,7 @@ local function registerBrightnessKeys(keys)
 end
 
 -- widget to display brightness
+-- could be used as a sample about how to create widgets in awesome
 local function make_widget(modifiers)
     local widget = wibox.widget {
         {
