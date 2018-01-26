@@ -1,5 +1,8 @@
 set nocompatible
 
+let g:python_host_prog =  $HOME.'/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim3/bin/python'
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -10,8 +13,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
     Plug 'http://github.com/airblade/vim-gitgutter'
-    Plug 'http://github.com/scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTree'] }
-    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTree'] }
+    Plug 'http://github.com/scrooloose/nerdtree'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
     Plug 'tpope/vim-surround'
     Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
@@ -19,6 +22,7 @@ call plug#begin('~/.vim/plugged')
     " Plug 'w0rp/ale'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'editorconfig/editorconfig-vim'
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
     " TODO: use select yajs or vim-es6
     " Plug 'isruslan/vim-es6'
@@ -60,8 +64,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'majutsushi/tagbar'
     " Plug 'vim-syntastic/syntastic'
     Plug 'neomake/neomake'
+    Plug 'dracula/vim'
     Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
     Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
+    Plug 'jistr/vim-nerdtree-tabs'
 call plug#end()
 
 " }}}
@@ -176,6 +182,7 @@ let g:fzf_layout = { 'down': '~20%' }
 let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+let g:deoplete#sources#jedi#show_dostring = 1
 
 " let g:syntastic_always_populate_loc_list = 1
 " " let g:syntastic_auto_loc_list = 1
@@ -201,7 +208,7 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-nnoremap <silent>  :NERDTreeToggle
+nnoremap <silent>  :NERDTreeTabsToggle
 nnoremap <silent> <ESC> :noh
 nmap <silent>  :FZF
 nnoremap <silent> <C-t> :Tagbar
