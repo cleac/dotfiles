@@ -25,8 +25,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'editorconfig/editorconfig-vim'
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
     " TODO: use select yajs or vim-es6
-    " Plug 'isruslan/vim-es6'
-    Plug 'othree/yajs.vim'
+    Plug 'isruslan/vim-es6'
+    " Plug 'othree/yajs.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'tommcdo/vim-fugitive-blame-ext'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -68,6 +68,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
     Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
     Plug 'jistr/vim-nerdtree-tabs'
+    Plug 'carlitux/deoplete-ternjs'
 call plug#end()
 
 " }}}
@@ -183,6 +184,10 @@ let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 let g:deoplete#sources#jedi#show_dostring = 1
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#docs = 1
+
+let g:deoplete#sources#ternjs#filetypes = ['jsx', 'js']
 
 " let g:syntastic_always_populate_loc_list = 1
 " " let g:syntastic_auto_loc_list = 1
