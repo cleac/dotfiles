@@ -1,0 +1,28 @@
+[core]
+  excludesfile = ~/.gitignore
+[user]
+  email = a.nesterenko@smartweb.com.ua
+  name = Alexander Nesterenko
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[push]
+  default = current
+[alias]
+  d = difftool
+  ci = commit
+  am = commit --amend
+  st = status
+  ch = log --cc --graph
+  hs = log --oneline --graph --all --date rfc --shortstat
+  rt = !git fetch origin && git rebase origin/master
+  th = push origin HEAD --force
+  recommit = commit --amend --no-edit --reset-author
+  amend = commit --amend
+  changes = log --cc --graph
+  history = log --oneline --graph --all --date rfc --shortstat
+  throw = push origin HEAD --force
+  rebuild-tree = !git fetch origin && git rebase origin/master
+[merge]
+  conflictstyle = diff3
