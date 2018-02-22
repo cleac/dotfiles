@@ -24,7 +24,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
-    " TODO: use select yajs or vim-es6
     Plug 'isruslan/vim-es6'
     " Plug 'othree/yajs.vim'
     Plug 'tpope/vim-fugitive'
@@ -43,7 +42,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'bps/vim-textobj-python', { 'for': ['python', 'rst', 'md'] }
     Plug 'kana/vim-textobj-entire'
     Plug 'tpope/vim-commentary'
-    " Plug 'jaxbot/semantic-highlight.vim'
     Plug 'tpope/vim-eunuch'
     Plug 'artur-shaik/vim-javacomplete2'
     Plug 'hsanson/vim-android', {'for': ['java'. 'groovy'. 'scala']}
@@ -62,13 +60,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'vimwiki/vimwiki'
     Plug 'sjl/badwolf'
     Plug 'majutsushi/tagbar'
-    " Plug 'vim-syntastic/syntastic'
     Plug 'neomake/neomake'
     Plug 'dracula/vim'
-    Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
-    Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
+    Plug 'leafgarland/typescript-vim'
+    Plug 'mhartington/deoplete-typescript'
     Plug 'jistr/vim-nerdtree-tabs'
     Plug 'carlitux/deoplete-ternjs'
+    Plug 'shougo/denite.nvim'
 call plug#end()
 
 " }}}
