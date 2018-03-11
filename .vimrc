@@ -12,28 +12,56 @@ endif
 " Plugins {{{
 
 call plug#begin('~/.vim/plugged')
+
+    " Misc editor view improvements
     Plug 'http://github.com/airblade/vim-gitgutter'
-    Plug 'http://github.com/scrooloose/nerdtree'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
-    Plug 'tpope/vim-surround'
-    Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
     Plug 'nathanaelkane/vim-indent-guides'
-    " Plug 'w0rp/ale'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'kshenoy/vim-signature'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-eunuch'
     Plug 'editorconfig/editorconfig-vim'
+    Plug 'valloric/matchtagalways'
+    Plug 'shougo/denite.nvim'
+
+    " Navigation
+    Plug 'http://github.com/scrooloose/nerdtree'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'jistr/vim-nerdtree-tabs'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'majutsushi/tagbar', {'on': 'Tagbar'}
+
+    " Easier editing
+    Plug 'tpope/vim-surround'
+    Plug 'terryma/vim-expand-region'
+
+    " Syntaxes
+    Plug 'http://github.com/wavded/vim-stylus', { 'for': 'stylus' }
+    Plug 'Glench/Vim-Jinja2-Syntax', {'for': ['jinja', 'html'] }
     Plug 'othree/html5.vim', { 'for': ['html', 'html5'] }
     Plug 'isruslan/vim-es6'
-    " Plug 'othree/yajs.vim'
+    Plug 'vim-scripts/mako.vim', {'on': []}
+    Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
+    Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
+
+    " Git
     Plug 'tpope/vim-fugitive'
-    Plug 'tommcdo/vim-fugitive-blame-ext'
+    Plug 'tommcdo/vim-fugitive-blame-ext', {'on': ['Gblame', 'GBlame']}
+
+    " Plug 'othree/yajs.vim'
+    " Completion
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-jedi', {'for': ['python']}
     Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
-    Plug 'kshenoy/vim-signature'
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'vim-scripts/mako.vim'
+    Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
+    Plug 'hsanson/vim-android', {'for': ['java', 'groovy']}
+    Plug 'tfnico/vim-gradle', {'for': ['java', 'groovy']}
+    Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
+    Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
+    Plug 'carlitux/deoplete-ternjs'
+
+    " Text objects
     Plug 'kana/vim-textobj-user'
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'kana/vim-textobj-line'
@@ -41,48 +69,43 @@ call plug#begin('~/.vim/plugged')
     Plug 'lucapette/vim-textobj-underscore'
     Plug 'bps/vim-textobj-python', { 'for': ['python', 'rst', 'md'] }
     Plug 'kana/vim-textobj-entire'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-eunuch'
-    Plug 'artur-shaik/vim-javacomplete2'
-    Plug 'hsanson/vim-android', {'for': ['java'. 'groovy'. 'scala']}
-    Plug 'tfnico/vim-gradle', {'for': ['java'. 'groovy'. 'scala']}
-    Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
-    Plug 'kchmck/vim-coffee-script'
-    Plug 'mrinterweb/vim-visual-surround'
-    Plug 'raimondi/delimitmate'
-    Plug 'vim-scripts/matchit.zip'
-    Plug 'nanotech/jellybeans.vim'
-    Plug 'kien/rainbow_parentheses.vim'
-    Plug 'terryma/vim-expand-region'
-    Plug 'junegunn/goyo.vim'
-    Plug 'valloric/matchtagalways'
-    Plug 'osyo-manga/vim-over'
-    Plug 'vimwiki/vimwiki'
-    Plug 'sjl/badwolf'
-    Plug 'majutsushi/tagbar'
+
+    " Linting
     Plug 'neomake/neomake'
-    Plug 'dracula/vim'
-    Plug 'leafgarland/typescript-vim'
-    Plug 'mhartington/deoplete-typescript'
-    Plug 'jistr/vim-nerdtree-tabs'
-    Plug 'carlitux/deoplete-ternjs'
-    Plug 'shougo/denite.nvim'
+
+    " Theme
+    Plug 'sjl/badwolf'
+
 call plug#end()
 
 " }}}
 
 " Autocommands {{{
+"
+
+fun! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+fun! LoadMako()
+    call plug#load('mako.vim')
+    set syntax=mako
+endfun
 
 if !exists("autocommands_loaded")
     let autocommands_loaded = 1
 
-    autocmd BufWritePre * normal :%s/\s\+$//ge:noh
+    autocmd BufWritePre * :call CleanExtraSpaces()
     autocmd VimEnter * IndentGuidesEnable
 
     autocmd Syntax python call SetPython()
     autocmd Syntax lua call SetLua()
     autocmd Syntax javascript call SetJS()
-    autocmd BufRead *.mako set syntax=mako
+    autocmd BufRead *.mako call LoadMako()
 
     autocmd BufRead python call SetPython()
     autocmd BufRead lua call SetLua()
@@ -132,7 +155,6 @@ set path+=**
 set backupcopy=yes
 set listchars=tab:▸\ ,trail:·
 set list
-setlocal softtabstop=4 ts=4 sw=4 et
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
@@ -146,7 +168,7 @@ set scrolloff=5
 set fdm=marker fmr={{{,}}}
 set laststatus=2
 set timeout timeoutlen=500 ttimeoutlen=200
-set softtabstop=4 ts=4 sw=4 et
+set softtabstop=4 ts=4 sw=4 et si ai smarttab
 filetype on
 filetype plugin on
 
@@ -205,8 +227,8 @@ endif
 
 " Mappings {{{
 
-nnoremap <C-s> :w
-nnoremap <C-q> :q
+nnoremap <silent> <C-s> :w
+nnoremap <silent> <C-q> :q
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
@@ -226,6 +248,7 @@ nnoremap cgb /<TBD><Esc>ca>
 nnoremap cgB ?<TBD><Esc>ca>
 
 nnoremap go #ggN
+nnoremap gp v:terminal<Space>
 
 " }}}
 
