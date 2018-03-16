@@ -260,6 +260,8 @@ awful.screen.connect_for_each_screen(function(s)
             widgets.separator,
             widgets.battery(),
             widgets.separator,
+            widgets.timer(),
+            widgets.separator,
             s.systray,
             mytextclock,
             s.mylayoutbox,
