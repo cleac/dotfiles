@@ -159,7 +159,7 @@ local function timer()
     local state = {
         timerTimeout = 60 * 60, -- AN HOUR
         currentMoment = 0,
-        enabled = true,
+        enabled = false,
         label = _colorize('Timer: '),
         renderText = function (signal, state)
             local addText
@@ -169,7 +169,7 @@ local function timer()
                     return;
                 end
                 if state.enabled then
-                    addText = formatTime(state.currentMoment)
+                    addText = formatTime(state.timerTimeout - state.currentMoment)
                 else
                     addText = 'DISABLED'
                 end
