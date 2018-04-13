@@ -569,8 +569,10 @@ clientkeys = gears.table.join(
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "i", function (c)
-        local titlebar = awful.titlebar(c)
-        naughty.notify{ title='Titlebar', text=tostring(titlebar)  }
+        naughty.notify{
+            title='Client class',
+            text="Class: " .. tostring(c.class) .. '\nFloating: ' .. tostring(c.floating)
+        }
     end),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -695,8 +697,8 @@ awful.rules.rules = {
           "Wpa_gui",
           "pinentry",
           "veromix",
-          "xtightvncviewer"},
-
+          "xtightvncviewer",
+          "jetbrains-idea"},
         name = {
           "Event Tester",  -- xev.
         },
@@ -705,10 +707,6 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
-
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = { class = { 'jetbrains-idea' }},
-      properties = { floating = true }},
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -747,6 +745,11 @@ client.connect_signal("manage", function (c)
         c.type ~= 'menu' and
         c.class ~= 'albert' then awful.titlebar.show(c)
     elseif not c.floating then awful.titlebar.hide(c) end
+
+    if c.class == 'jetbrains-idea' then
+        c.floating = true
+        awful.titlebar.hide(c)
+    end
 
 end)
 
