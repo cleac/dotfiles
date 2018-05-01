@@ -2,7 +2,7 @@
 -- Default awesome theme --
 ---------------------------
 
-local WALLP_SOURCE = os.getenv('HOME') .. '/pictures/wallpapers/'
+local WALLP_SOURCE = os.getenv('HOME') .. '/Pictures/wallpapers/'
 local ICONS_SOURCE = os.getenv('HOME') .. '/.config/awesome/theme/'
 
 local theme_assets = require("beautiful.theme_assets")
@@ -15,20 +15,21 @@ local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
-theme.font          = "Source Code Pro 10"
+theme.font          = "Source Code Pro 9"
 
-theme.wibar_height = dpi(32)
-theme.wibar_bg_normal     = '#000'
+theme.wibar_height = dpi(24)
+theme.wibar_bg_normal     = '#2c3033'
 theme.wibar_bg_focus      = '#000'
 theme.wibar_bg_urgent     = '#880000'
-theme.wibar_bg_minimize   = '#000'
-theme.bg_systray    = "#000"
+theme.wibar_bg_minimize   = theme.wibar_bg_normal
+theme.bg_systray    = "#2c3033"
+theme.bg_normal = '#2c3033'
 
 theme.notification_fg = "#FFF"
 theme.notification_bg = "#404030F0"
 theme.notification_font = "sans 13"
 
-theme.fg_normal     = "#BBBBBB"
+theme.fg_normal     = "#CCC"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
@@ -37,18 +38,18 @@ theme.useless_gap   = dpi(0)
 theme.max_gap       = dpi(15)
 theme.zero_gap      = dpi(0)
 theme.border_width  = dpi(1)
-theme.border_normal = "#333333"
+theme.border_normal = "#00000011"
 theme.border_focus  = "#706a6a"
 theme.border_marked = "#91231c"
 
 
 -- theme.wibar_default_opacity = 0.85
 -- theme.wibar_fill_opacity = 1
-theme.wibar_border = dpi(4)
+theme.wibar_border = dpi(2)
 
-theme.taglist_fg_normal = "#333333"
-theme.taglist_fg_empty = "#555555"
-theme.taglist_fg_occupied = "#555555"
+theme.taglist_fg_normal = "#444444"
+theme.taglist_fg_empty = "#666666"
+theme.taglist_fg_occupied = "#666666"
 
 -- theme.tasklist_bg_normal = make_wibar_gradient()
 -- theme.tasklist_bg_focus = make_wibar_gradient()
