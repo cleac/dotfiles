@@ -1,7 +1,7 @@
 set nocompatible
 
-let g:python_host_prog =  $HOME.'/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim3/bin/python'
+" let g:python_host_prog =  $HOME.'/.pyenv/versions/neovim2/bin/python'
+" let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim3/bin/python'
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -22,7 +22,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-eunuch'
     Plug 'editorconfig/editorconfig-vim'
-    Plug 'valloric/matchtagalways'
+    " Plug 'valloric/matchtagalways'
     Plug 'shougo/denite.nvim'
 
     " Navigation
@@ -49,17 +49,17 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'tommcdo/vim-fugitive-blame-ext', {'on': ['Gblame', 'GBlame']}
 
-    " Plug 'othree/yajs.vim'
-    " Completion
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-jedi', {'for': ['python']}
-    Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
-    Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
-    Plug 'hsanson/vim-android', {'for': ['java', 'groovy']}
-    Plug 'tfnico/vim-gradle', {'for': ['java', 'groovy']}
-    Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
-    Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
-    Plug 'carlitux/deoplete-ternjs'
+    " " Plug 'othree/yajs.vim'
+    " " Completion
+    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Plug 'zchee/deoplete-jedi', {'for': ['python']}
+    " Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
+    " Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
+    " Plug 'hsanson/vim-android', {'for': ['java', 'groovy']}
+    " Plug 'tfnico/vim-gradle', {'for': ['java', 'groovy']}
+    " Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
+    " Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
+    " Plug 'carlitux/deoplete-ternjs'
 
     " Text objects
     Plug 'kana/vim-textobj-user'
