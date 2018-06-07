@@ -18,9 +18,15 @@ function edit_config() {
 }
 
 function up_connection() {
+    if [ -z $1 ]; then
+        echo "Couldn't find the first argument. Try to run, e.g. 'vpn.sh $(head $CONFIG_FILE -n 1)'"
+        exit 5
+    fi
     down_connections
     if [ $DEBUG ]; then echo "Setting up $1"; fi
-    nmcli con up $1
+    nmcli con up $1 >/dev/null 2>/dev/null
+    echo "$1" >> "$CONFIG_DIR/history"
+    echo "Successfully connected to $1"
 }
 
 function down_connections() {
@@ -28,14 +34,19 @@ function down_connections() {
         if [ $DEBUG ]; then echo "Closing $link"; fi
         nmcli con down $link >/dev/null 2>/dev/null
     done
+    echo "Killed all connections"
+}
+
+function reconnect() {
+    up_connection $(head "$CONFIG_DIR/history" -n 1)
 }
 
 function _check_vpns_config() {
-    if [[ -z $(ls "$CONFIG_FILE" 2>/dev/null) ]]; then
-        echo "Configuration dir was not initialized. Run 'init' or 'edit' to configure it"
+    if [ ! -d "$CONFIG_DIR" ] && [ ! -a "$CONFIG_FILE" ]; then
+        echo "Configuration dir was not initialized. Run 'vpn.sh init' to configure it"
         exit 1
     fi
-    if [[ -z $(cat "$CONFIG_FILE" 2>/dev/null) ]]; then
+    if [ ! -s "$CONFIG_FILE" ]; then
         echo "No VPNs found registered at vpn.sh. Run 'vpn.sh edit' to add some"
         exit 2
     fi
@@ -43,27 +54,17 @@ function _check_vpns_config() {
 
 case $1 in
     "init")
-        # TODO: find out how to make this thing smaller and simpler
-        if [[ -z $(ls "$CONFIG_FILE" 2>/dev/null) ]]; then
-            initialize_config
-            exit 0
-        fi
-        echo -n "Configuration is already created: reinitialize it? [yN] "
-        read v
-        if [ "y" == $v ]; then
-            rm -rf "$CONFIG_DIR"
-            initialize_config
-        fi;;
-    "edit")
-        if [[ -z $(ls "$CONFIG_FILE" 2>/dev/null) ]]; then
-            echo -n "Configuration dir was not initialized. Initialize it? [yN] "
+        if [ -d "$CONFIG_DIR" ] && [ -a "$CONFIG_FILE" ]; then
+            echo -n "Configuration is already created: reinitialize it? [yN] "
             read v
-            if [ "y" == $v ]; then
-                initialize_config
-            else
+            if [ "y" != $v ]; then
                 exit 0
             fi
+            rm -rf "$CONFIG_DIR"
         fi
+        initialize_config;;
+    "edit")
+        _check_vpns_config $@
         edit_config;;
     "up")
         _check_vpns_config $@
@@ -77,6 +78,9 @@ case $1 in
     "down")
         _check_vpns_config $@
         down_connections;;
+    "reconnect")
+        _check_vpns_config $@
+        reconnect;;
     *)
         _check_vpns_config $@
         if [ $1 ] && [ $(grep $CONFIG_FILE -e $1 2>/dev/null) ]; then
