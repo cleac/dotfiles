@@ -4,7 +4,10 @@ project=$1
 ROJDIR="$HOME/workspace/$project"
 
 if [ -z "$project" ]; then
-   echo 'No project specified: please type project name'
+   echo -e 'No project specified: please type project name.\nHere is list of projects:'
+   for pr in $(ls "$HOME/workspace/"); do
+       echo -e " - $pr"
+   done
    exit 2
 fi
 
