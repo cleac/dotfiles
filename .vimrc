@@ -22,8 +22,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-eunuch'
     Plug 'editorconfig/editorconfig-vim'
-    " Plug 'valloric/matchtagalways'
-    Plug 'shougo/denite.nvim'
 
     " Navigation
     Plug 'http://github.com/scrooloose/nerdtree'
@@ -44,6 +42,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-scripts/mako.vim', {'on': []}
     Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
     Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
+    Plug 'stfl/meson.vim'
 
     " Git
     Plug 'tpope/vim-fugitive'
@@ -51,15 +50,10 @@ call plug#begin('~/.vim/plugged')
 
     " " Plug 'othree/yajs.vim'
     " " Completion
-    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     " Plug 'zchee/deoplete-jedi', {'for': ['python']}
     " Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
-    " Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
     " Plug 'hsanson/vim-android', {'for': ['java', 'groovy']}
     " Plug 'tfnico/vim-gradle', {'for': ['java', 'groovy']}
-    " Plug 'zchee/deoplete-clang', { 'for': ['c', 'cpp', 'c++'] }
-    " Plug 'mhartington/deoplete-typescript', {'for': ['typescript']}
-    " Plug 'carlitux/deoplete-ternjs'
 
     " Text objects
     Plug 'kana/vim-textobj-user'
@@ -69,6 +63,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'lucapette/vim-textobj-underscore'
     Plug 'bps/vim-textobj-python', { 'for': ['python', 'rst', 'md'] }
     Plug 'kana/vim-textobj-entire'
+
+    " Completion
+    Plug 'davidhalter/jedi-vim', {'for': ['python']}
+    Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
+    Plug 'marijnh/tern_for_vim'
 
     " Linting
     Plug 'neomake/neomake'
@@ -130,6 +129,7 @@ endfunction
 function! SetPython()
    setlocal softtabstop=4 ts=4 sw=4 et
    setlocal tw=79
+   " set omnifunc=lsp#complete
 endfunction
 
 function! SetJS()
@@ -196,25 +196,10 @@ set wildignore+=yarn.lock
 set wildignore+=*.egg-info
 set wildignore+=*/build/*
 
-let g:deoplete#enable_at_startup = 1
 let g:fzf_layout = { 'down': '~20%' }
 " let g:semanticTermColors = [104, 122, 152, 146, 167, 191, 137, 167, 23, 71, 130]
 "
 let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
-let g:deoplete#sources#jedi#show_dostring = 1
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#docs = 1
-
-let g:deoplete#sources#ternjs#filetypes = ['jsx', 'js']
-
-" let g:syntastic_always_populate_loc_list = 1
-" " let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_aggregate_errors = 1
 
 call neomake#configure#automake('nw', 1000)
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -222,6 +207,8 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 if has("gui_running")
     set guifont=Source\ Code\ Pro\ 10
 endif
+
+" set omnifunc=lsp#complete
 
 " }}}
 
