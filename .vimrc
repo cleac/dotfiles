@@ -1,7 +1,5 @@
 set nocompatible
 
-" let g:python_host_prog =  $HOME.'/.pyenv/versions/neovim2/bin/python'
-" let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim3/bin/python'
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -20,7 +18,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'kshenoy/vim-signature'
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-eunuch'
     Plug 'editorconfig/editorconfig-vim'
 
     " Navigation
@@ -42,18 +39,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-scripts/mako.vim', {'on': []}
     Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
     Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
-    Plug 'stfl/meson.vim'
+    Plug 'vim-scripts/cmake.vim-syntax'
 
     " Git
     Plug 'tpope/vim-fugitive'
     Plug 'tommcdo/vim-fugitive-blame-ext', {'on': ['Gblame', 'GBlame']}
-
-    " " Plug 'othree/yajs.vim'
-    " " Completion
-    " Plug 'zchee/deoplete-jedi', {'for': ['python']}
-    " Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
-    " Plug 'hsanson/vim-android', {'for': ['java', 'groovy']}
-    " Plug 'tfnico/vim-gradle', {'for': ['java', 'groovy']}
 
     " Text objects
     Plug 'kana/vim-textobj-user'
@@ -80,7 +70,6 @@ call plug#end()
 " }}}
 
 " Autocommands {{{
-"
 
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -101,41 +90,14 @@ if !exists("autocommands_loaded")
     autocmd BufWritePre * :call CleanExtraSpaces()
     autocmd VimEnter * IndentGuidesEnable
 
-    autocmd Syntax python call SetPython()
-    autocmd Syntax lua call SetLua()
-    autocmd Syntax javascript call SetJS()
-    autocmd BufRead *.mako call LoadMako()
+    autocmd Syntax python setlocal tw=79 softtabstop=4 ts=4 sw=4 et
+    autocmd Syntax lua setlocal softtabstop=2 ts=2 sw=2 et
+    autocmd Syntax javascript setlocal softtabstop=2 tw=2 sw=2 et fdm=marker fmr={,}
 
-    autocmd BufRead python call SetPython()
-    autocmd BufRead lua call SetLua()
-    autocmd BufRead javascript call SetJS()
+    autocmd BufRead *.mako call LoadMako()
 
     autocmd CompleteDone * pclose
 endif
-
-" }}}
-
-" Specific setups {{{
-
-let g:ale_linters = {
-            \ 'javascript': ['eslint'],
-            \ }
-
-
-function! SetLua()
-    setlocal softtabstop=2 ts=2 sw=2 et
-endfunction
-
-function! SetPython()
-   setlocal softtabstop=4 ts=4 sw=4 et
-   setlocal tw=79
-   " set omnifunc=lsp#complete
-endfunction
-
-function! SetJS()
-  " Js specific declarations
-  setlocal softtabstop=2 tw=2 sw=2 et fdm=marker fmr={,}
-endfunction
 
 " }}}
 
@@ -143,11 +105,7 @@ endfunction
 
 set tw=119
 let &l:colorcolumn = '+' . join(range(1, 255), ',+')
-set relativenumber
-set cindent
-set hlsearch
-set ic
-set incsearch
+set relativenumber cindent hlsearch ic incsearch
 syntax on
 set backspace=indent,eol,start
 set wildmenu
@@ -208,12 +166,11 @@ if has("gui_running")
     set guifont=Source\ Code\ Pro\ 10
 endif
 
-" set omnifunc=lsp#complete
-
 " }}}
 
 " Mappings {{{
 
+" Modal shortcuts
 nnoremap <silent> <C-s> :w
 nnoremap <silent> <C-q> :q
 nnoremap <C-e> 3<C-e>
@@ -224,18 +181,29 @@ nnoremap <silent>  :NERDTreeTabsToggle
 nnoremap <silent> <ESC> :noh
 nmap <silent>  :FZF
 nnoremap <silent> <C-t> :Tagbar
+
+" Copy to global
 map gy "+y
 map gY "+Y
 
+" Errors navigation
 nnoremap [e :lne
 nnoremap ]e :lNe
+
+" To be done part
+nnoremap <Space><Space> i<TBD><Esc>
 nnoremap gb /<TBD><Esc>
 nnoremap gB ?<TBD><Esc>
 nnoremap cgb /<TBD><Esc>ca>
 nnoremap cgB ?<TBD><Esc>ca>
 
+" Navigating to import statement in Python
 nnoremap go #ggN
-nnoremap gp v:terminal<Space>
+nnoremap gof #ggNgf
+
+" Opening terminal in split
+nnoremap <C-w>gp v:terminal<CR>
+nnoremap <C-w>gP v:terminal<Space>
 
 " }}}
 
@@ -243,12 +211,6 @@ nnoremap gp v:terminal<Space>
 
 hi IndentGuidesEven ctermbg=235
 hi IndentGuidesOdd ctermbg=235
-
-
-" hi StatusLine ctermbg=239 ctermfg=254
-" hi Visual ctermbg=239
-" hi LineNr ctermbg=234
-" hi ExtraWhitespace ctermfg=238
 
 colorscheme badwolf
 
