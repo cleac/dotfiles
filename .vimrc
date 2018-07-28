@@ -1,12 +1,5 @@
 set nocompatible
 
-
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
-
 " Plugins {{{
 
 call plug#begin('~/.vim/plugged')
@@ -64,6 +57,7 @@ call plug#begin('~/.vim/plugged')
 
     " Theme
     Plug 'sjl/badwolf'
+    Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -209,17 +203,19 @@ nnoremap <C-w>gP v:terminal<Space>
 
 " Style {{{
 
+colorscheme badwolf
+
 hi IndentGuidesEven ctermbg=235
 hi IndentGuidesOdd ctermbg=235
 
-colorscheme badwolf
-
 hi LineNr ctermbg=235
 
-" hi VertSplit ctermfg=058
+hi VertSplit ctermfg=058
 hi Comment cterm=italic
 
-let g:airline_theme='badwolf'
+let g:airline_theme='gruvbox'
+
+set background=dark
 
 " }}}
 
