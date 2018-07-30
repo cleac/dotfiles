@@ -233,8 +233,6 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar{
         position = "top",
         screen = s,
-        -- ontop = true,
-        -- opacity = beautiful.wibar_default_opacity
     }
 
     -- sysystray
@@ -260,9 +258,9 @@ awful.screen.connect_for_each_screen(function(s)
             widgets.separator,
             widgets.battery(),
             widgets.separator,
-            widgets.timer(),
-            widgets.separator,
-            s.systray,
+            wibox.container.margin(
+              s.systray, 0, 0, 4
+            ),
             mytextclock,
             s.mylayoutbox,
         },
@@ -747,6 +745,11 @@ client.connect_signal("manage", function (c)
     elseif not c.floating then awful.titlebar.hide(c) end
 
     if c.class == 'jetbrains-idea' then
+        c.floating = true
+        awful.titlebar.hide(c)
+    end
+
+    if c.class == 'albert' then
         c.floating = true
         awful.titlebar.hide(c)
     end
