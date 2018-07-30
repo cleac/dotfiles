@@ -120,7 +120,7 @@ set scrolloff=5
 set fdm=marker fmr={{{,}}}
 set laststatus=2
 set timeout timeoutlen=500 ttimeoutlen=200
-set softtabstop=4 ts=4 sw=4 et si ai smarttab
+set softtabstop=2 ts=2 sw=2 et si ai smarttab
 filetype on
 filetype plugin on
 
