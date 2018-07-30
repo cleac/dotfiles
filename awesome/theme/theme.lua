@@ -2,8 +2,7 @@
 -- Default awesome theme --
 ---------------------------
 
-local WALLP_SOURCE = os.getenv('HOME') .. '/Pictures/wallpapers/'
-local ICONS_SOURCE = os.getenv('HOME') .. '/.config/awesome/theme/'
+local THEME_PATH = os.getenv('HOME') .. '/.config/awesome/theme/'
 
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
@@ -15,26 +14,22 @@ local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
-theme.font          = "Source Code Pro 9"
+theme.font = "monospace 9"
 
 theme.wibar_height = dpi(24)
-theme.wibar_bg_normal     = '#2c3033'
+theme.wibar_bg_normal     = '#000'
 theme.wibar_bg_focus      = '#000'
 theme.wibar_bg_urgent     = '#880000'
 theme.wibar_bg_minimize   = theme.wibar_bg_normal
 theme.bg_systray    = "#2c3033"
 theme.bg_normal = '#2c3033'
 
-theme.notification_fg = "#FFF"
-theme.notification_bg = "#404030F0"
-theme.notification_font = "sans 13"
-
 theme.fg_normal     = "#CCC"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
 
-theme.useless_gap   = dpi(0)
+theme.useless_gap   = dpi(5)
 theme.max_gap       = dpi(15)
 theme.zero_gap      = dpi(0)
 theme.border_width  = dpi(1)
@@ -42,28 +37,9 @@ theme.border_normal = "#00000011"
 theme.border_focus  = "#706a6a"
 theme.border_marked = "#91231c"
 
-
--- theme.wibar_default_opacity = 0.85
--- theme.wibar_fill_opacity = 1
-theme.wibar_border = dpi(2)
-
 theme.taglist_fg_normal = "#444444"
-theme.taglist_fg_empty = "#666666"
+theme.taglist_fg_empty = theme.bg_normal
 theme.taglist_fg_occupied = "#666666"
-
--- theme.tasklist_bg_normal = make_wibar_gradient()
--- theme.tasklist_bg_focus = make_wibar_gradient()
--- theme.taglist_bg_normal = make_wibar_gradient()
-
-
---
--- theme.wibar_shape = function (cr, w, h)
---     return g_shape.partially_rounded_rect(cr, w, h, false, false, true, true, 5)
--- end
--- theme.wibar_type='dock'
-
--- beautiful.taglist_shape = g_shape.powerline
--- beautiful.taglist_bg_focus = '#FF0000'
 
 -- There are other variable sets
 -- overriding the default one when
@@ -79,19 +55,28 @@ theme.taglist_fg_occupied = "#666666"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
+-- local taglist_square_size = dpi(24)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+--     taglist_square_size, '#555'
+-- )
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+--     taglist_square_size, '#555'
+-- )
 
 -- Variables set for theming notifications:
 -- notification_font
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
+
+theme.notification_font = "monospace 13"
+theme.notification_fg = "#FFF"
+theme.notification_bg = "#555e63ff"
+theme.notification_margin = dpi(4)
+theme.notification_opacity = .8
+theme.notification_shape = function (cr, w, h)
+  return g_shape.rounded_rect(cr, w, h, dpi(4))
+end
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -106,8 +91,8 @@ theme.menu_width  = dpi(100)
 --theme.bg_widget = "#cc0000"
 
 -- Define the image to load
-theme.titlebar_close_button_normal = ICONS_SOURCE.."/titlebar/close_normal_.png"
-theme.titlebar_close_button_focus  = ICONS_SOURCE.."/titlebar/close_focus_.png"
+theme.titlebar_close_button_normal = THEME_PATH.."/titlebar/close_normal_.png"
+theme.titlebar_close_button_focus  = THEME_PATH.."/titlebar/close_focus_.png"
 
 theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
 theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
@@ -132,7 +117,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
--- theme.wallpaper = themes_path.."default/background.png"
+theme.wallpaper = THEME_PATH.."/background.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
@@ -152,17 +137,8 @@ theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
 theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
 theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
 
--- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
-)
-
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
-
-theme.wallpaper = function ()
-    return WALLP_SOURCE .. io.popen('ls ' .. WALLP_SOURCE .. '|sort -R'):read('*line')
-end
 
 return theme
