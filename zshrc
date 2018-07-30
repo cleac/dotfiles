@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 alias vim="nvim"
 alias v="nvim"
@@ -10,10 +10,14 @@ alias tma="tmux attach"
 alias tmat="tmux attach -t"
 alias tmd="tmux detach"
 alias tmn="tmux new"
-alias con="nmcli con"
 
 alias doc2pdf="unoconv -fpdf"
 
 plugins+=(k zsh-autosuggestions)
 
-PATH=$PATH:~/.roswell/bin
+# For CommonLISP things
+export PATH=$PATH:~/.roswell/bin
+
+# For android development
+export PATH=$PATH:/home/alexcleac/vendor/android/tools:/home/alexcleac/vendor/android/tools/bin
+
