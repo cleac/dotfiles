@@ -18,6 +18,12 @@ local widgets = require('widgets')
 
 require('autostart').init()
 
+local evo = nil
+
+if pcall(function () evo = require('evo') end) then
+  evo.init()
+end
+
 naughty.config.defaults.icon_size = 32
 naughty.config.defaults.border_width = 0
 naughty.config.defaults.font = 'Sans 12'
@@ -202,15 +208,15 @@ awful.screen.connect_for_each_screen(function(s)
         "8",
         "9",
     }, s, {
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
-        awful.layout.layouts[1],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
+        awful.layout.layouts[2],
     })
 
     -- Create a promptbox for each screen
