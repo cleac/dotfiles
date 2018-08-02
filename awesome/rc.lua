@@ -20,9 +20,7 @@ require('autostart').init()
 
 local evo = nil
 
-if pcall(function () evo = require('evo') end) then
-  evo.init()
-end
+if pcall(function () evo = require('evo') end) then end
 
 naughty.config.defaults.icon_size = 32
 naughty.config.defaults.border_width = 0
@@ -235,42 +233,68 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons)
 
-    -- Create the wibox
-    s.mywibox = awful.wibar{
-        position = "top",
-        screen = s,
-    }
+    if s.index == 1 then
+      -- Create the wibox
+      s.topbar = awful.wibar{
+          position = "bottom",
+          screen = s,
+      }
 
-    -- sysystray
-    s.systray = wibox.widget.systray()
-    s.systray:set_base_size(beautiful.wibar_height * .7)
+      -- sysystray
+      s.systray = wibox.widget.systray()
+      s.systray:set_base_size(beautiful.wibar_height * .7)
 
-    -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            widgets.separator,
-            widgets.disk_status(),
-            widgets.separator,
-            widgets.ram(),
-            widgets.separator,
-            widgets.battery(),
-            widgets.separator,
-            wibox.container.margin(
-              s.systray, 0, 0, 4
-            ),
-            mytextclock,
-            s.mylayoutbox,
-        },
-    }
+      -- Add widgets to the wibox
+      s.topbar:setup {
+          layout = wibox.layout.align.horizontal,
+          { -- Left widgets
+              layout = wibox.layout.fixed.horizontal,
+              s.mytaglist,
+              s.mypromptbox,
+          },
+          s.mytasklist, -- Middle widget
+          { -- Right widgets
+              layout = wibox.layout.fixed.horizontal,
+              mykeyboardlayout,
+              widgets.disk_status(),
+              widgets.ram(),
+              widgets.battery(),
+              widgets.separator,
+              evo.prom_default(),
+              wibox.container.margin(
+                s.systray, 2, 2, 4
+              ),
+              mytextclock,
+              s.mylayoutbox,
+          },
+      }
+
+      -- s.bottombar = awful.wibar {
+      --   position = 'left',
+      --   screen = s,
+      --   bg = '#444',
+      --   height = 400,
+      --   width = 32,
+      --   y = 0,
+      --   x = 0,
+      -- }
+      -- s.bottombar.x = 0
+      -- s.bottombar.y = 20
+    else
+      -- Create the wibox
+      s.topbar = awful.wibar{
+          position = "bottom",
+          screen = s,
+      }
+
+      -- Add widgets to the wibox
+      s.topbar:setup {
+          layout = wibox.layout.align.horizontal,
+          s.mytaglist,
+          s.mytasklist, -- Middle widget
+          s.mylayoutbox,
+      }
+    end
 end)
 -- }}}
 
