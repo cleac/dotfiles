@@ -236,7 +236,7 @@ awful.screen.connect_for_each_screen(function(s)
     if s.index == 1 then
       -- Create the wibox
       s.topbar = awful.wibar{
-          position = "bottom",
+          position = "top",
           screen = s,
       }
 
@@ -283,7 +283,7 @@ awful.screen.connect_for_each_screen(function(s)
     else
       -- Create the wibox
       s.topbar = awful.wibar{
-          position = "bottom",
+          position = "left",
           screen = s,
       }
 
@@ -308,7 +308,7 @@ root.buttons(gears.table.join(
 
 local function run_lock_screen ()
     if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
+        local wallpaper = beautiful.wallpaper_lock or beautiful.wallpaper
         if type(wallpaper) == 'function' then
             wallpaper = wallpaper(nil)
         end
