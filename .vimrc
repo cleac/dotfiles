@@ -16,7 +16,7 @@ call plug#begin('~/.vim/plugged')
     " Navigation
     Plug 'http://github.com/scrooloose/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'jistr/vim-nerdtree-tabs'
+    " Plug 'jistr/vim-nerdtree-tabs'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'majutsushi/tagbar', {'on': 'Tagbar'}
 
@@ -155,6 +155,9 @@ let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 
 call neomake#configure#automake('nw', 1000)
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_python_flake8_exe = 'flake8-3'
+
+let g:jedi#popup_on_dot = 0
 
 if has("gui_running")
     set guifont=Source\ Code\ Pro\ 10
@@ -171,7 +174,7 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-nnoremap <silent>  :NERDTreeTabsToggle
+nnoremap <silent>  :NERDTreeToggle
 nnoremap <silent> <ESC> :noh
 nmap <silent>  :FZF
 nnoremap <silent> <C-t> :Tagbar
@@ -199,18 +202,22 @@ nnoremap gof #ggNgf
 nnoremap <C-w>gp v:terminal<CR>
 nnoremap <C-w>gP v:terminal<Space>
 
+" Light/dark scheme changing
+nnoremap <silent> gsd :set<SPACE>background=dark<CR>
+nnoremap <silent> gsD :set<SPACE>background=light<CR>
+
 " }}}
 
 " Style {{{
 
-colorscheme badwolf
+colorscheme gruvbox
 
-hi IndentGuidesEven ctermbg=235
-hi IndentGuidesOdd ctermbg=235
+" hi IndentGuidesEven ctermbg=235
+" hi IndentGuidesOdd ctermbg=235
 
-hi LineNr ctermbg=235
+" hi LineNr ctermbg=235
 
-hi VertSplit ctermfg=058
+" hi VertSplit ctermfg=058
 hi Comment cterm=italic
 
 let g:airline_theme='gruvbox'
