@@ -20,7 +20,7 @@ require('autostart').init()
 
 local evo = nil
 
-if pcall(function () evo = require('evo') end) then end
+-- if pcall(function () evo = require('evo') end) then end
 
 naughty.config.defaults.icon_size = 32
 naughty.config.defaults.border_width = 0
@@ -231,21 +231,21 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons)
 
     if s.index == 1 then
       -- Create the wibox
-      s.topbar = awful.wibar{
+      s.mywibox = awful.wibar{
           position = "top",
           screen = s,
       }
+      s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons)
 
       -- sysystray
       s.systray = wibox.widget.systray()
       s.systray:set_base_size(beautiful.wibar_height * .7)
 
       -- Add widgets to the wibox
-      s.topbar:setup {
+      s.mywibox:setup {
           layout = wibox.layout.align.horizontal,
           { -- Left widgets
               layout = wibox.layout.fixed.horizontal,
@@ -260,7 +260,6 @@ awful.screen.connect_for_each_screen(function(s)
               widgets.ram(),
               widgets.battery(),
               widgets.separator,
-              evo.prom_default(),
               wibox.container.margin(
                 s.systray, 2, 2, 4
               ),
@@ -281,15 +280,19 @@ awful.screen.connect_for_each_screen(function(s)
       -- s.bottombar.x = 0
       -- s.bottombar.y = 20
     else
+
+
+      s.mytaglist = awful.widget.taglist(
+        s, awful.widget.taglist.filter.all, taglist_buttons, nil, nil, wibox.layout.fixed.vertical())
       -- Create the wibox
-      s.topbar = awful.wibar{
+      s.mywibox = awful.wibar{
           position = "left",
           screen = s,
       }
 
       -- Add widgets to the wibox
-      s.topbar:setup {
-          layout = wibox.layout.align.horizontal,
+      s.mywibox:setup {
+          layout = wibox.layout.align.vertical,
           s.mytaglist,
           s.mytasklist, -- Middle widget
           s.mylayoutbox,
@@ -484,7 +487,8 @@ globalkeys = gears.table.join(
                     c.type ~= 'notification' and
                     c.type ~= 'dock' and
                     c.type ~= 'combo' and
-                    c.type ~= 'menu' then awful.titlebar.show(c)
+                    c.type ~= 'menu' and
+                    c.class ~= 'Steam' then awful.titlebar.show(c)
                 elseif not c.floating then awful.titlebar.hide(c) end
             end
         end,
@@ -543,7 +547,8 @@ globalkeys = gears.table.join(
                     c.type ~= 'notification' and
                     c.type ~= 'dock' and
                     c.type ~= 'combo' and
-                    c.type ~= 'menu' then awful.titlebar.show(c)
+                    c.type ~= 'menu' and
+                    c.class ~= 'Steam' then awful.titlebar.show(c)
                 elseif not c.floating then awful.titlebar.hide(c) end
             end
         end,
@@ -771,7 +776,8 @@ client.connect_signal("manage", function (c)
         c.type ~= 'dock' and
         c.type ~= 'combo' and
         c.type ~= 'menu' and
-        c.class ~= 'albert' then awful.titlebar.show(c)
+        c.class ~= 'albert' and
+        c.class ~= 'Steam' then awful.titlebar.show(c)
     elseif not c.floating then awful.titlebar.hide(c) end
 
     if c.class == 'jetbrains-idea' then
