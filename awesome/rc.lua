@@ -155,10 +155,11 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- }}}
 
+-- {{{ Wibar
+
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- {{{ Wibar
 
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -220,45 +221,48 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
-    -- Each screen has its own tag table.
-    awful.tag({
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-    }, s, {
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-        awful.layout.layouts[2],
-    })
-
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
+
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                          awful.button({ }, 1, function () awful.layout.inc( 1) end),
+                          awful.button({ }, 3, function () awful.layout.inc(-1) end),
+                          awful.button({ }, 4, function () awful.layout.inc( 1) end),
+                          awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
 
     if s.index == 1 then
+
+      -- Each screen has its own tag table.
+      awful.tag({
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+      }, s, {
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+          awful.layout.layouts[2],
+      })
+
       -- Create the wibox
       s.mywibox = awful.wibar{
           position = "top",
@@ -307,6 +311,11 @@ awful.screen.connect_for_each_screen(function(s)
       -- s.bottombar.y = 20
     else
 
+      awful.tag({
+          "1",
+      }, s, {
+          awful.layout.layouts[2],
+      })
 
       s.mytaglist = awful.widget.taglist(
         s, awful.widget.taglist.filter.all, taglist_buttons, nil, nil, wibox.layout.fixed.vertical())
