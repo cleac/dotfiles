@@ -29,6 +29,10 @@ function list-projects() {
     done
 }
 
+function comp-projects {
+  ls "$HOME/workspace"
+}
+
 function show-help {
     echo 'roj.sh -- a simple wrapper over tmux to
 easily manage project terminal sessions.
@@ -56,6 +60,7 @@ fi
 case $1 in
     '--list') list-projects;;
     '--help') show-help;;
+    '--comp-list') comp-projects;;
     *)
         # Try to attach
         tmux attach -t "$project" 2> /dev/null
@@ -65,7 +70,7 @@ case $1 in
               create-prompt;
            fi
            # Create session
-           tmux new -s "$project" -c "$ROJDIR"
+           tmux new -s "$project" -c "$ROJDIR" 2> /dev/null
            # If creation is failed, it means that we try
            # to nest tmux sessions, then switch session
            if [ ! $? -eq 0 ]; then
