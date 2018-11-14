@@ -14,14 +14,37 @@ function create-prompt() {
 }
 
 function list-projects() {
-    for pr in $(ls "$HOME/workspace/"); do
+    for pr in $(ls "$HOME/workspace/" | sort); do
+        TMUX_SESSIONS=$(tmux list-sessions 2> /dev/null)
+        if [ ! $? -eq 0 ]; then
+            tmux new -s tmp "tmux detach && /bin/bash" > /dev/null
+            TMUX_SESSIONS=$(tmux list-sessions)
+        fi
         echo -n " - $pr "
-        if [ ! -z "$(tmux list-sessions | grep $pr)" ]; then
+        if [ ! -z "$(echo "$TMUX_SESSIONS" | grep $pr)" ]; then
             echo '(active)'
         else
             echo ''
         fi
     done
+}
+
+function show-help {
+    echo 'roj.sh -- a simple wrapper over tmux to
+easily manage project terminal sessions.
+
+Usage: roj.sh [<project>] --[<command>]
+Note: at least one of arguments must be present.
+Arguments:
+
+  - project -- project in your /home/<username>/workspace
+     directory. If it does not exist, you will be prompted
+     to create one.
+
+  - command -- command to run.
+     List of commands with usage:
+      * list -- show list of sessions
+      * help -- show this message'
 }
 
 if [ -z "$project" ]; then
@@ -32,6 +55,7 @@ fi
 
 case $1 in
     '--list') list-projects;;
+    '--help') show-help;;
     *)
         tmux attach -t "$project" 2> /dev/null
         if [ ! $? -eq 0 ]; then
