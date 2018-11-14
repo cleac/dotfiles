@@ -3,6 +3,15 @@
 project=$1
 ROJDIR="$HOME/workspace/$project"
 
+function tmux_sessions() {
+  TMUX_SESSIONS=$(tmux list-sessions 2> /dev/null)
+  if [ ! $? -eq 0 ]; then
+    tmux new -d > /dev/null
+    TMUX_SESSIONS=$(tmux list-sessions)
+  fi
+  echo "$TMUX_SESSIONS" | awk -F ':' '{ print $1 }'
+}
+
 function create-prompt() {
     echo -n "Project $project does not exist. Would you like to create it? [yN] "
     read v
@@ -14,19 +23,10 @@ function create-prompt() {
 }
 
 function list-projects() {
-    for pr in $(ls "$HOME/workspace/" | sort); do
-        TMUX_SESSIONS=$(tmux list-sessions 2> /dev/null)
-        if [ ! $? -eq 0 ]; then
-            tmux new -s tmp "tmux detach && /bin/bash" > /dev/null
-            TMUX_SESSIONS=$(tmux list-sessions)
-        fi
-        echo -n " - $pr "
-        if [ ! -z "$(echo "$TMUX_SESSIONS" | grep $pr)" ]; then
-            echo '(active)'
-        else
-            echo ''
-        fi
-    done
+  sessions=""
+  ls "$HOME/workspace/" | \
+  awk '{ if (index(sessions, $1) != 0) active="(active)"; printf " - %s %s\n", $1, active }' \
+  sessions="$(tmux_sessions)"
 }
 
 function comp-projects {
@@ -65,17 +65,16 @@ case $1 in
         # Try to attach
         tmux attach -t "$project" 2> /dev/null
         if [ ! $? -eq 0 ]; then
-           if [ ! -d "$ROJDIR" ]; then
-              # Prompt create directory if not exists
-              create-prompt;
-           fi
-           # Create session
-           tmux new -s "$project" -c "$ROJDIR" 2> /dev/null
-           # If creation is failed, it means that we try
-           # to nest tmux sessions, then switch session
-           if [ ! $? -eq 0 ]; then
-              tmux switch -t "$project"
-           fi
+          if [ ! -d "$ROJDIR" ]; then
+             # Prompt create directory if not exists
+             create-prompt;
+          fi
+          # Create session and attach it
+          tmux new -d -s "$project" -c "$ROJDIR" 2> /dev/null
+          tmux attach -t "$project" 2> /dev/null
+          if [ ! $? -eq 0 ]; then
+            tmux switch -t "$project"
+          fi
         fi
 esac
 
