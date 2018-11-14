@@ -33,14 +33,14 @@ function show-help {
     echo 'roj.sh -- a simple wrapper over tmux to
 easily manage project terminal sessions.
 
-Usage: roj.sh [<project>] --[<command>]
-Note: at least one of arguments must be present.
+Usage: roj.sh <project>
 Arguments:
-
   - project -- project in your /home/<username>/workspace
      directory. If it does not exist, you will be prompted
      to create one.
 
+Also usage: roj.sh --command [<arguments>...]
+Arguments:
   - command -- command to run.
      List of commands with usage:
       * list -- show list of sessions
@@ -57,12 +57,20 @@ case $1 in
     '--list') list-projects;;
     '--help') show-help;;
     *)
+        # Try to attach
         tmux attach -t "$project" 2> /dev/null
         if [ ! $? -eq 0 ]; then
            if [ ! -d "$ROJDIR" ]; then
-               create-prompt;
+              # Prompt create directory if not exists
+              create-prompt;
            fi
+           # Create session
            tmux new -s "$project" -c "$ROJDIR"
+           # If creation is failed, it means that we try
+           # to nest tmux sessions, then switch session
+           if [ ! $? -eq 0 ]; then
+              tmux switch -t "$project"
+           fi
         fi
 esac
 
