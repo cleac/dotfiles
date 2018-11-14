@@ -2,10 +2,10 @@ if [[ -n ${ZSH_VERSION-} ]]; then
     autoload -U +X bashcompinit && bashcompinit
 fi
 
-_rojsh_comp() {
+function _rojsh_comp() {
     CUR="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W $(roj.sh --comp-list) -- ${CUR}) )
+    COMPREPLY=( $(compgen -W "$(roj.sh --comp-list)" -- "${CUR}") )
     return 0
 }
 
-complete -f _rojsh_comp roj.sh
+complete -F _rojsh_comp roj.sh
