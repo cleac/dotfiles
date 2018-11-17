@@ -56,6 +56,7 @@ case $1 in
     "switch") switch_connection $2;;
     "list") pretty-vpns;;
     "status") pretty-vpns;;
+    "comp") vpns;;
     "help")
         echo "The help page is in progress";;
     *)
