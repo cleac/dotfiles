@@ -48,7 +48,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'kana/vim-textobj-entire'
 
     " Completion
-    Plug 'davidhalter/jedi-vim', {'for': ['python']}
+    " Plug 'davidhalter/jedi-vim', {'for': ['python']}
     Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
     " Plug 'marijnh/tern_for_vim'
 
@@ -59,8 +59,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'sjl/badwolf'
     Plug 'morhetz/gruvbox'
 
-    " REPL
-    Plug 'jpalardy/vim-slime'
+    " LSP support
+    Plug 'natebosch/vim-lsc'
 
 call plug#end()
 
@@ -158,7 +158,7 @@ let g:android_sdk_path = "/home/alexcleac/Android/Sdk"
 
 call neomake#configure#automake('nw', 1000)
 let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_python_flake8_exe = 'flake8-3'
+" let g:neomake_python_flake8_exe = 'flake8-3'
 
 let g:jedi#popup_on_dot = 0
 
@@ -166,8 +166,15 @@ if has("gui_running")
     set guifont=Source\ Code\ Pro\ 10
 endif
 
+<<<<<<< HEAD
 let g:slime_target = "tmux"
 
+||||||| merged common ancestors
+=======
+let g:lsc_server_commands = { 'python': 'pyls' }
+let g:lsc_auto_map = v:true " Use defaults
+
+>>>>>>> 234b2e42c17c657d25105c0f7e252f44e9f58e79
 " }}}
 
 " Mappings {{{
