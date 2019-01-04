@@ -166,15 +166,11 @@ if has("gui_running")
     set guifont=Source\ Code\ Pro\ 10
 endif
 
-<<<<<<< HEAD
 let g:slime_target = "tmux"
 
-||||||| merged common ancestors
-=======
 let g:lsc_server_commands = { 'python': 'pyls' }
 let g:lsc_auto_map = v:true " Use defaults
 
->>>>>>> 234b2e42c17c657d25105c0f7e252f44e9f58e79
 " }}}
 
 " Mappings {{{
