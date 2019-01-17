@@ -449,7 +449,7 @@ globalkeys = gears.table.join(
               client.focus:raise()
             end), {description = 'move window to right', group = 'move'}),
   awful.key({ modkey, "Shift" }, "j",
-            do_with_client_focus(function ()
+            do_with_client_focus(function (c)
                 if c.floating then c:relative_move(0, 50, 0, 0) end
                 client.focus:raise()
             end), {description = 'move window to top', group = 'move'}),
