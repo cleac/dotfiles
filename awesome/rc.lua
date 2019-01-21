@@ -312,7 +312,7 @@ awful.screen.connect_for_each_screen(function(s)
     else
 
       awful.tag({
-          "1",
+          "1", "2", "3", "4", "5", "6"
       }, s, {
           awful.layout.layouts[2],
       })
@@ -321,7 +321,7 @@ awful.screen.connect_for_each_screen(function(s)
         s, awful.widget.taglist.filter.all, taglist_buttons, nil, nil, wibox.layout.fixed.vertical())
       -- Create the wibox
       s.mywibox = awful.wibar{
-          position = "left",
+          position = "right",
           screen = s,
       }
 

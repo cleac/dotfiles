@@ -2,7 +2,8 @@
 -- Default awesome theme --
 ---------------------------
 
-local THEME_PATH = os.getenv('HOME') .. '/.config/awesome/theme/'
+local HOME_PATH = os.getenv('HOME')
+local THEME_PATH = HOME_PATH .. '/.config/awesome/theme/'
 
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
@@ -21,8 +22,8 @@ theme.wibar_bg_normal     = '#000'
 theme.wibar_bg_focus      = '#000'
 theme.wibar_bg_urgent     = '#880000'
 theme.wibar_bg_minimize   = theme.wibar_bg_normal
-theme.bg_systray    = "#2c3033"
-theme.bg_normal = '#2c3033'
+theme.bg_systray    = "#000"
+theme.bg_normal = '#000'
 
 theme.fg_normal     = "#CCC"
 theme.fg_focus      = "#ffffff"
@@ -117,8 +118,8 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = THEME_PATH.."/background.png"
-theme.wallpaper_lock = THEME_PATH.."/background_locked.png"
+theme.wallpaper = HOME_PATH .. "/Pictures/wallpapers/ben-steward-1309679-unsplash.jpg"
+theme.wallpaper_lock = HOME_PATH .. "/background_locked.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
