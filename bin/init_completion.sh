@@ -1,4 +1,4 @@
-function _rojsh_comp() {
+function _vpnsh_comp() {
     CUR="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "$(vpn.sh comp | paste -sd ' ' -)" -- "${CUR}") )
     return 0
