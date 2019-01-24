@@ -50,7 +50,7 @@ call plug#begin('~/.vim/plugged')
     " Completion
     " Plug 'davidhalter/jedi-vim', {'for': ['python']}
     Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
-    Plug 'marijnh/tern_for_vim'
+    " Plug 'marijnh/tern_for_vim'
 
     " Linting
     Plug 'neomake/neomake'
@@ -165,6 +165,8 @@ let g:jedi#popup_on_dot = 0
 if has("gui_running")
     set guifont=Source\ Code\ Pro\ 10
 endif
+
+let g:slime_target = "tmux"
 
 let g:lsc_server_commands = { 'python': 'pyls' }
 let g:lsc_auto_map = v:true " Use defaults

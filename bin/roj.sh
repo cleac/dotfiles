@@ -25,7 +25,7 @@ function create-prompt() {
 function list-projects() {
   sessions=""
   ls "$HOME/workspace/" | \
-  awk '{ if (index(sessions, $1) != 0) active="(active)"; printf " - %s %s\n", $1, active }' \
+  awk '{ if (index(sessions, $1) != 0) active="(active)"; else active=""; printf " - %s %s\n", $1, active }' \
   sessions="$(tmux_sessions)"
 }
 

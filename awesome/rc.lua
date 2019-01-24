@@ -312,7 +312,7 @@ awful.screen.connect_for_each_screen(function(s)
     else
 
       awful.tag({
-          "1",
+          "1", "2", "3", "4", "5", "6"
       }, s, {
           awful.layout.layouts[2],
       })
@@ -321,7 +321,7 @@ awful.screen.connect_for_each_screen(function(s)
         s, awful.widget.taglist.filter.all, taglist_buttons, nil, nil, wibox.layout.fixed.vertical())
       -- Create the wibox
       s.mywibox = awful.wibar{
-          position = "left",
+          position = "right",
           screen = s,
       }
 
@@ -449,7 +449,7 @@ globalkeys = gears.table.join(
               client.focus:raise()
             end), {description = 'move window to right', group = 'move'}),
   awful.key({ modkey, "Shift" }, "j",
-            do_with_client_focus(function ()
+            do_with_client_focus(function (c)
                 if c.floating then c:relative_move(0, 50, 0, 0) end
                 client.focus:raise()
             end), {description = 'move window to top', group = 'move'}),
