@@ -21,3 +21,6 @@ export PATH=$PATH:~/.roswell/bin
 # For android development
 export PATH=$PATH:/home/alexcleac/vendor/android/tools:/home/alexcleac/vendor/android/tools/bin
 
+autoload -U +X bashcompinit && bashcompinit
+
+source ~/bin/init_completion.sh
