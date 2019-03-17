@@ -4,6 +4,7 @@ alias vim="nvim"
 alias v="nvim"
 alias zat="zathura"
 alias nb="newsbeuter"
+alias qute="qutebrowser"
 
 alias tm="tmux"
 alias tma="tmux attach"
@@ -24,3 +25,6 @@ export PATH=$PATH:/home/alexcleac/vendor/android/tools:/home/alexcleac/vendor/an
 autoload -U +X bashcompinit && bashcompinit
 
 source ~/bin/init_completion.sh
+
+export EDITOR=nvim
+
