@@ -47,11 +47,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'bps/vim-textobj-python', { 'for': ['python', 'rst', 'md'] }
     Plug 'kana/vim-textobj-entire'
 
-    " Completion
-    " Plug 'davidhalter/jedi-vim', {'for': ['python']}
-    Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
-    " Plug 'marijnh/tern_for_vim'
-
     " Linting
     Plug 'neomake/neomake'
 
@@ -87,9 +82,18 @@ if !exists("autocommands_loaded")
     autocmd BufWritePre * :call CleanExtraSpaces()
     autocmd VimEnter * IndentGuidesEnable
 
+    autocmd FileType python setlocal tw=79 softtabstop=4 ts=4 sw=4 et
     autocmd Syntax python setlocal tw=79 softtabstop=4 ts=4 sw=4 et
+    autocmd Syntax python setlocal omnifunc=lsc#complete#complete
+    autocmd FileType python setlocal omnifunc=lsc#complete#complete
+    autocmd Syntax text setlocal tw=0 wrap nonumber
+    autocmd FileType text setlocal tw=0 wrap nonumber
+    autocmd Syntax markdown setlocal tw=0 wrap nonumber
+    autocmd FileType markdown setlocal tw=0 wrap nonumber
     autocmd Syntax lua setlocal softtabstop=2 ts=2 sw=2 et
+    autocmd FileType lua setlocal softtabstop=2 ts=2 sw=2 et
     autocmd Syntax javascript setlocal softtabstop=2 tw=2 sw=2 et fdm=marker fmr={,}
+    autocmd FileType javascript setlocal softtabstop=2 tw=2 sw=2 et fdm=marker fmr={,}
 
     autocmd BufRead *.mako call LoadMako()
 
@@ -102,7 +106,7 @@ endif
 
 set tw=119
 let &l:colorcolumn = '+' . join(range(1, 255), ',+')
-set relativenumber cindent hlsearch ic incsearch
+set  cindent hlsearch ic incsearch
 syntax on
 set backspace=indent,eol,start
 set wildmenu
@@ -169,7 +173,8 @@ endif
 let g:slime_target = "tmux"
 
 let g:lsc_server_commands = { 'python': 'pyls' }
-let g:lsc_auto_map = v:true " Use defaults
+let g:lsc_auto_map = v:false " Use defaults
+set completefunc=lsc#complete#complete
 
 " }}}
 
