@@ -15,32 +15,33 @@ local g_color = require("gears.color")
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
-theme.font = "monospace 10"
+theme.font = "Source Code Pro 10"
+
+theme.bg_normal = '#140b0b'
 
 theme.wibar_height = dpi(24)
-theme.wibar_bg_normal     = '#000'
+theme.wibar_bg_normal     = '#211515'
 theme.wibar_bg_focus      = '#000'
 theme.wibar_bg_urgent     = '#880000'
 theme.wibar_bg_minimize   = theme.wibar_bg_normal
-theme.bg_systray    = "#000"
-theme.bg_normal = '#000'
+theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#CCC"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
 
-theme.useless_gap   = dpi(5)
-theme.max_gap       = dpi(15)
-theme.zero_gap      = dpi(0)
-theme.border_width  = dpi(1)
-theme.border_normal = "#00000011"
-theme.border_focus  = "#706a6a"
+theme.useless_gap   = dpi(0)
+theme.border_width  = dpi(3)
+theme.border_normal = "#232323"
+theme.border_focus  = "#3f3939"
 theme.border_marked = "#91231c"
 
 theme.taglist_fg_normal = "#444444"
 theme.taglist_fg_empty = theme.bg_normal
 theme.taglist_fg_occupied = "#666666"
+theme.taglist_bg_normal = theme.border_normal
+theme.taglist_bg_focus = theme.border_focus
 
 -- There are other variable sets
 -- overriding the default one when
@@ -70,7 +71,7 @@ theme.taglist_fg_occupied = "#666666"
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
 
-theme.notification_font = "monospace 13"
+theme.notification_font = "Sans 12"
 theme.notification_fg = "#FFF"
 theme.notification_bg = "#555e63ff"
 theme.notification_margin = dpi(4)

@@ -23,8 +23,6 @@ local evo = nil
 -- if pcall(function () evo = require('evo') end) then end
 
 naughty.config.defaults.icon_size = 32
-naughty.config.defaults.border_width = 0
-naughty.config.defaults.font = 'Sans 12'
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -55,9 +53,10 @@ end
 
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(os.getenv('HOME') .. "/.config/awesome/theme/theme.lua")
+gears.wallpaper.set(beautiful.border_focus)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
+terminal = "st -f 'Source Code Pro'"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -486,45 +485,20 @@ globalkeys = gears.table.join(
   awful.key({ modkey,           }, "-", function ()
       local current_tag = awful.screen.focused().selected_tag
       awful.tag.incnmaster(1, current_tag)
-      -- current_tag.gap = current_tag.gap - 1
-      -- if current_tag.gap <= 0 then current_tag.gap = beautiful.max_gap end
   end, { description = "change gap size", group = "layout"}),
   awful.key({ modkey, "Shift"   }, "-", function ()
       local current_tag = awful.screen.focused().selected_tag
       awful.tag.incnmaster(-1, current_tag)
-      -- current_tag.gap = current_tag.gap - 1
-      -- if current_tag.gap <= 0 then current_tag.gap = beautiful.max_gap end
   end, { description = "change gap size", group = "layout"}),
   awful.key({ modkey,           }, "=", function ()
       local current_tag = awful.screen.focused().selected_tag
       awful.tag.incncol(1, current_tag)
-      -- current_tag.gap = current_tag.gap - 1
-      -- if current_tag.gap <= 0 then current_tag.gap = beautiful.max_gap end
   end, { description = "change gap size", group = "layout"}),
   awful.key({ modkey, "Shift"   }, "=", function ()
       local current_tag = awful.screen.focused().selected_tag
       awful.tag.incncol(-1, current_tag)
-      -- current_tag.gap = current_tag.gap - 1
-      -- if current_tag.gap <= 0 then current_tag.gap = beautiful.max_gap end
   end, { description = "change gap size", group = "layout"}),
 
-  awful.key({ modkey,           }, "0", function ()
-      local current_tag = awful.screen.focused().selected_tag
-      if current_tag.gap == beautiful.zero_gap then
-          current_tag.gap = current_tag.cached_gap or theme.useless_gap
-          current_tag.cached_gap = nil
-      else
-          current_tag.cached_gap = current_tag.gap
-          current_tag.gap = beautiful.zero_gap
-      end
-      local cur_wibox = awful.screen.focused().mywibox
-      -- if current_tag.cached_gap == nil then
-      --     cur_wibox.opacity = beautiful.wibar_default_opacity
-      -- else
-      --     cur_wibox.opacity = beautiful.wibar_fill_opacity
-      -- end
-
-  end, { description = "change gap size", group = "layout"}),
   awful.key({ modkey, "Shift"   }, "space", function ()
       awful.layout.inc(-1)
       local current_tag = awful.screen.focused().selected_tag
