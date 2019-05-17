@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 project=$1
-ROJDIR="$HOME/workspace/$project"
+# TODO: Mind switching this thing to a parameter
+ROJDIR="$HOME/Projects/$project"
 
 function tmux_sessions() {
   TMUX_SESSIONS=$(tmux list-sessions 2> /dev/null)
@@ -24,13 +25,13 @@ function create-prompt() {
 
 function list-projects() {
   sessions=""
-  ls "$HOME/workspace/" | \
+  ls "$HOME/Projects/" | \
   awk '{ if (index(sessions, $1) != 0) active="(active)"; else active=""; printf " - %s %s\n", $1, active }' \
   sessions="$(tmux_sessions)"
 }
 
 function comp-projects {
-  ls "$HOME/workspace"
+  ls "$HOME/Projects"
 }
 
 function show-help {
@@ -39,7 +40,7 @@ easily manage project terminal sessions.
 
 Usage: roj.sh <project>
 Arguments:
-  - project -- project in your /home/<username>/workspace
+  - project -- project in your /home/<username>/Projects
      directory. If it does not exist, you will be prompted
      to create one.
 
