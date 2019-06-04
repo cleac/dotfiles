@@ -53,7 +53,7 @@ end
 
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(os.getenv('HOME') .. "/.config/awesome/theme/theme.lua")
-gears.wallpaper.set(beautiful.border_focus)
+-- gears.wallpaper.set(beautiful.border_focus)
 
 -- This is used later as the default terminal and editor to run.
 terminal = "st -f 'Source Code Pro'"

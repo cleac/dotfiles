@@ -1,8 +1,6 @@
 [core]
   excludesfile = ~/.gitignore
-[user]
-  email = a.nesterenko@smartweb.com.ua
-  name = Alexander Nesterenko
+	autocrlf = input
 [diff]
   tool = vimdiff
 [difftool]

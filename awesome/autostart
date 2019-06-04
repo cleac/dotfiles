@@ -14,3 +14,4 @@ run_once  ~/software/Telegram
 run_once  unclutter -idle 1
 run_once  caffeine
 run_once  volumeicon
+run_once  kdeconnect-indicator
