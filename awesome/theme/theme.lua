@@ -31,7 +31,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#FFFFFF"
 
-theme.useless_gap   = dpi(0)
+theme.useless_gap   = dpi(4)
 theme.border_width  = dpi(3)
 theme.border_normal = "#232323"
 theme.border_focus  = "#3f393f"
@@ -119,7 +119,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = HOME_PATH .. "/Pictures/wallpapers/twilight.png"
+theme.wallpaper = HOME_PATH .. "/Firefox_wallpaper.png"
 theme.wallpaper_lock = HOME_PATH .. "/background_locked.png"
 
 -- You can use your own layout icons like this:

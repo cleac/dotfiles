@@ -18,10 +18,6 @@ local widgets = require('widgets')
 
 require('autostart').init()
 
-local evo = nil
-
--- if pcall(function () evo = require('evo') end) then end
-
 naughty.config.defaults.icon_size = 32
 
 -- {{{ Error handling
@@ -56,7 +52,7 @@ beautiful.init(os.getenv('HOME') .. "/.config/awesome/theme/theme.lua")
 -- gears.wallpaper.set(beautiful.border_focus)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st -f 'Source Code Pro'"
+terminal = "konsole"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -421,6 +417,24 @@ globalkeys = gears.table.join(
             {description = "swap with next client by index", group = "client"}),
   awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
             {description = "swap with previous client by index", group = "client"}),
+ 
+  awful.key({ modkey,           }, 'u', do_with_client_focus(function(c)
+	local screen = awful.screen.focused()
+	local scrgeo = screen.geometry
+	local geo = c:geometry()
+	if not c.pip then
+		c.pip = c:tags()
+		c.floating = true
+		c:tags(screen.tags)
+		c:geometry({ x = scrgeo.x + scrgeo.width - 540, y = scrgeo.y + scrgeo.height - 300, width = 530, height = 300  })
+		c.ontop = true
+	else
+		c:tags(screen.selected_tags)
+		c.floating = false
+		c.pip = nil
+		c.ontop = false
+	end
+end)),
 
   -- Resizing windows
   awful.key({ modkey, "Control" }, "l",
@@ -466,19 +480,19 @@ globalkeys = gears.table.join(
 
   awful.key({ modkey,           }, "space", function ()
       awful.layout.inc( 1)
-      local current_tag = awful.screen.focused().selected_tag
-      for _, client in pairs(current_tag:clients()) do
-          client.floating = current_tag.layout.name == 'floating'
-          local c = client
-          if c.floating and c.type ~= 'desktop' and
-              c.type ~= 'splash' and
-              c.type ~= 'notification' and
-              c.type ~= 'dock' and
-              c.type ~= 'combo' and
-              c.type ~= 'menu' and
-              c.class ~= 'Steam' then awful.titlebar.show(c)
-          elseif not c.floating then awful.titlebar.hide(c) end
-      end
+      -- local current_tag = awful.screen.focused().selected_tag
+      -- for _, client in pairs(current_tag:clients()) do
+      --     client.floating = current_tag.layout.name == 'floating'
+      --     local c = client
+      --     if c.floating and c.type ~= 'desktop' and
+      --         c.type ~= 'splash' and
+      --         c.type ~= 'notification' and
+      --         c.type ~= 'dock' and
+      --         c.type ~= 'combo' and
+      --         c.type ~= 'menu' and
+      --         c.class ~= 'Steam' then awful.titlebar.show(c)
+      --     elseif not c.floating then awful.titlebar.hide(c) end
+      -- end
   end,
             {description = "select next", group = "layout"}),
 
@@ -501,19 +515,19 @@ globalkeys = gears.table.join(
 
   awful.key({ modkey, "Shift"   }, "space", function ()
       awful.layout.inc(-1)
-      local current_tag = awful.screen.focused().selected_tag
-      for _, client in pairs(current_tag:clients()) do
-          client.floating = current_tag.layout.name == 'floating'
-          local c = client
-          if c.floating and c.type ~= 'desktop' and
-              c.type ~= 'splash' and
-              c.type ~= 'notification' and
-              c.type ~= 'dock' and
-              c.type ~= 'combo' and
-              c.type ~= 'menu' and
-              c.class ~= 'Steam' then awful.titlebar.show(c)
-          elseif not c.floating then awful.titlebar.hide(c) end
-      end
+      -- local current_tag = awful.screen.focused().selected_tag
+      -- for _, client in pairs(current_tag:clients()) do
+      --     client.floating = current_tag.layout.name == 'floating'
+      --     local c = client
+      --     if c.floating and c.type ~= 'desktop' and
+      --         c.type ~= 'splash' and
+      --         c.type ~= 'notification' and
+      --         c.type ~= 'dock' and
+      --         c.type ~= 'combo' and
+      --         c.type ~= 'menu' and
+      --         c.class ~= 'Steam' then awful.titlebar.show(c)
+      --     elseif not c.floating then awful.titlebar.hide(c) end
+      -- end
   end,
             {description = "select previous", group = "layout"}),
 
@@ -666,10 +680,9 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-                     titlebars_enabled = true,
      }
     },
-    { rule={class = 'Xfce4-terminal'},
+    { rule={class = 'st-256color'},
       properties = { size_hints_honor = false }},
     { rule={class = 'albert'},
       properties = { border_width = 0 }},
@@ -699,6 +712,23 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
+      { rule_any = {
+	      class = { "Plank" },
+      }, properties = { border_width = 0, dockable = true,  type = "dock" } },
+      { rule = { class = "MPlayer" },
+        properties = { floating = true } },
+
+	{
+            rule = {
+                class = "jetbrains-.*",
+            }, properties = { focus = true }
+        },
+        {
+            rule = {
+                class = "jetbrains-.*",
+                name = "win.*"
+            }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore }
+        },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -720,34 +750,34 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
 
-    local not_all_tiled = false
-    for _, tag in pairs(c:tags()) do
-        if tag.layout.name == 'floating' then
-            not_all_tiled = true
-            break
-        end
-    end
-    c.floating = not_all_tiled
+    -- local not_all_tiled = false
+    -- for _, tag in pairs(c:tags()) do
+    --     if tag.layout.name == 'floating' then
+    --         not_all_tiled = true
+    --         break
+    --     end
+    -- end
+    -- c.floating = not_all_tiled
 
-    if c.floating and c.type ~= 'desktop' and
-        c.type ~= 'splash' and
-        c.type ~= 'notification' and
-        c.type ~= 'dock' and
-        c.type ~= 'combo' and
-        c.type ~= 'menu' and
-        c.class ~= 'albert' and
-        c.class ~= 'Steam' then awful.titlebar.show(c)
-    elseif not c.floating then awful.titlebar.hide(c) end
+    -- if c.floating and c.type ~= 'desktop' and
+    --     c.type ~= 'splash' and
+    --     c.type ~= 'notification' and
+    --     c.type ~= 'dock' and
+    --     c.type ~= 'combo' and
+    --     c.type ~= 'menu' and
+    --     c.class ~= 'albert' and
+    --     c.class ~= 'Steam' then awful.titlebar.show(c)
+    -- elseif not c.floating then awful.titlebar.hide(c) end
 
-    if c.class == 'jetbrains-idea' then
-        c.floating = true
-        awful.titlebar.hide(c)
-    end
+    -- if c.class == 'jetbrains-idea' then
+    --     c.floating = true
+    --     awful.titlebar.hide(c)
+    -- end
 
-    if c.class == 'albert' then
-        c.floating = true
-        awful.titlebar.hide(c)
-    end
+    -- if c.class == 'albert' then
+    --     c.floating = true
+    --     awful.titlebar.hide(c)
+    -- end
 
 end)
 
