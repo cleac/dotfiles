@@ -23,9 +23,25 @@ export PATH=$PATH:~/.roswell/bin
 # For android development
 export PATH=$PATH:/home/alexcleac/vendor/android/tools:/home/alexcleac/vendor/android/tools/bin
 
+# For pip local installed applications
+export PATH=$PATH:/home/alexcleac/.local/bin/
+
 autoload -U +X bashcompinit && bashcompinit
 
 source ~/bin/init_completion.sh
 
 export EDITOR=nvim
 
+export PATH=$PATH:~/.cargo/bin/
+
+alias mup="mutt -f ~/Mail/personal/Inbox/"
+alias muw="mutt -f ~/Mail/work/Inbox/"
+alias mul="mutt -f ~/Mail/legacy_personal/Inbox/"
+
+alias cws="cd ~/ws"
+alias cevo="cd ~/wsevo/"
+alias coss="cd ~/wsoss/"
+
+alias helm="helm tiller run -- helm"
+
+alias wiki="vim +VimwikiIndex"
