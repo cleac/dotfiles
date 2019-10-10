@@ -28,7 +28,7 @@ local function _colorize(str)
   if colorize_cache[str] == nil then
     colorize_cache[str] = colorSet[math.random(#colorSet)]
   end
-  return '<span color="' .. colorize_cache[str] .. '">' .. str .. '</span>'
+  return '<span font="Source Code Pro 10" color="' .. colorize_cache[str] .. '">' .. str .. '</span>'
 end
 
 local function label_wrap(label_text, func)
@@ -36,8 +36,10 @@ local function label_wrap(label_text, func)
 
   return function ()
     return wibox.widget {
+      -- wibox.widget.textbox('|')
       wibox.container.margin(caption, 4, 2, 2),
       wibox.container.margin(func(), 0, 4, 2),
+      -- wibox.widget.textbox('|'),
       layout = wibox.layout.align.horizontal,
     }
   end
@@ -48,7 +50,7 @@ end
 -- {{{ RAM widget
 
 local ram = label_wrap(
-  'RAM:',
+  '🍺',
   function ()
    local widget = wibox.widget.textbox()
    vicious.register(
@@ -64,20 +66,20 @@ local ram = label_wrap(
 -- {{{ Battery widget
 
 local battery_percent = label_wrap(
-  'Battery:',
+  '🔋',
   function ()
     local widget = wibox.widget.textbox()
     vicious.register(
       widget,
       vicious.widgets.bat,
-      '$1$2%',
+      '$1$2%, $3 left',
       1,
       "BAT0")
     return widget
   end)
 
 local battery_left = label_wrap(
-  'Left:',
+  '',
   function ()
     local widget = wibox.widget.textbox()
     vicious.register(
@@ -91,11 +93,7 @@ local battery_left = label_wrap(
 
 
 function battery()
-  return wibox.widget{
-    wibox.container.margin(battery_percent(), 4, 2),
-    wibox.container.margin(battery_left(), 2, 4),
-    layout = wibox.layout.align.horizontal,
-  }
+  return battery_percent()
 end
 
 -- }}}
@@ -131,7 +129,7 @@ local function vpn_status()
 end
 
 local disk_status = label_wrap(
-  'Disk:',
+  '🏡',
   function ()
     local state = {
       disk = '/home',

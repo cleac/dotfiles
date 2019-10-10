@@ -45,3 +45,8 @@ alias coss="cd ~/wsoss/"
 alias helm="helm tiller run -- helm"
 
 alias wiki="vim +VimwikiIndex"
+
+alias tw="task"
+
+
+export TASKRC=~/.config/taskrc

@@ -18,7 +18,7 @@ local widgets = require('widgets')
 
 require('autostart').init()
 
-naughty.config.defaults.icon_size = 32
+naughty.config.defaults.icon_size = 24
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -97,13 +97,6 @@ local function client_menu_toggle_fn()
             instance = awful.menu.clients({ theme = { width = 250 } })
         end
     end
-end
-
-local function do_if(if_case, action)
-  if (type(if_case) == 'function' and if_case()) or if_case == true then
-    return action()
-  end
-  return nil
 end
 
 local function do_with_client_focus(func)
@@ -342,7 +335,7 @@ root.buttons(gears.table.join(
 local function run_lock_screen ()
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper_lock or beautiful.wallpaper
-        do_if(type(wallpaper) == 'function', function () return wallpaper(nil) end)
+        if type(wallpaper) == 'function' then wallpaper(nil) end
         awful.util.spawn("i3lock -I 1 -e -i " .. wallpaper .. " -c 000000")
     else
         awful.util.spawn("i3lock -I 1 -e -c 000000")
