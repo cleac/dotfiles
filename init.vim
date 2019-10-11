@@ -6,6 +6,8 @@ Plug 'tpope/vim-commentary'
 " Plug 'neomake/neomake'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'vimwiki/vimwiki'
+Plug 'jpalardy/vim-slime'
+Plug 'justinmk/vim-sneak'
 call plug#end()
 
 colorscheme nighted
@@ -18,12 +20,12 @@ let mapleader = ","
 
 nnoremap <silent> <leader>ce :call EditConfig()<CR>
 nnoremap <silent> ,d :noh<CR>
-nnoremap <silent> ,t :NERDTreeToggle<CR> 
+nnoremap <silent> ,t :NERDTreeToggle<CR>
 
 au BufWritePost *.py exe "!flake8 %"
 au BufWritePost *.lua exe "!lualint %"
 au BufReadPre *.c set et sts=2 sw=2
-au BufReadPre *.md,*.wiki,*.txt,*.rst set et sts=2 sw=2 
+au BufReadPre *.md,*.wiki,*.txt,*.rst set et sts=2 sw=2
 
 au BufWritePre * %s/\ \+$//ge
 
