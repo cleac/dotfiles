@@ -25,6 +25,7 @@ nnoremap <silent> ,t :NERDTreeToggle<CR>
 au BufWritePost *.py exe "!flake8 %"
 au BufWritePost *.lua exe "!lualint %"
 au BufReadPre *.c set et sts=2 sw=2
+au Syntax haskell set et sts=2 sw=2
 au BufReadPre *.md,*.wiki,*.txt,*.rst set et sts=2 sw=2
 
 au BufWritePre * %s/\ \+$//ge
@@ -33,3 +34,16 @@ set linebreak
 set undofile
 
 let g:vimwiki_list = [{'path': '~/wiki', 'syntax': 'markdown' }]
+
+function! AttachProjectConfig()
+  if filereadable(".vimconfig")
+    source .vimconfig
+  endif
+endfunction
+if !exists("project_config_attach")
+  let project_config_attach = 1
+  autocmd VimEnter * call AttachProjectConfig()
+endif
+
+" hi Normal ctermbg=0
+
