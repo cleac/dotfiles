@@ -3,7 +3,7 @@
 alias vim="nvim"
 alias v="nvim"
 alias zat="zathura"
-alias nb="newsbeuter"
+alias nb="newsboat"
 alias qute="qutebrowser"
 
 alias tm="tmux"
