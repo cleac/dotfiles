@@ -32,13 +32,13 @@ local function _colorize(str)
 end
 
 local function label_wrap(label_text, func)
-  local caption = wibox.widget.textbox(_colorize(label_text))
+  local caption = wibox.widget.textbox('<span font="Source Code Pro 10">' .. label_text .. '</span>')
 
   return function ()
     return wibox.widget {
       -- wibox.widget.textbox('|')
-      wibox.container.margin(caption, 4, 2, 2),
-      wibox.container.margin(func(), 0, 4, 2),
+      wibox.container.margin(caption, 8, 2, 0),
+      wibox.container.margin(func(), 2, 4, 0),
       -- wibox.widget.textbox('|'),
       layout = wibox.layout.align.horizontal,
     }
@@ -50,13 +50,13 @@ end
 -- {{{ RAM widget
 
 local ram = label_wrap(
-  '🍺',
+  'ram',
   function ()
    local widget = wibox.widget.textbox()
    vicious.register(
      widget,
      vicious.widgets.mem,
-     '$2M/$3M',
+     '$1%',
      1)
    return widget
   end
@@ -66,13 +66,13 @@ local ram = label_wrap(
 -- {{{ Battery widget
 
 local battery_percent = label_wrap(
-  '🔋',
+  'bat',
   function ()
     local widget = wibox.widget.textbox()
     vicious.register(
       widget,
       vicious.widgets.bat,
-      '$1$2%, $3 left',
+      '$2%',
       1,
       "BAT0")
     return widget
@@ -129,21 +129,34 @@ local function vpn_status()
 end
 
 local disk_status = label_wrap(
-  '🏡',
+  'hom',
   function ()
     local state = {
       disk = '/home',
       widget = wibox.widget.textbox(),
     }
-    state.size_key = '{' .. state.disk .. ' size_gb}'
-    state.used_key = '{' .. state.disk .. ' used_gb}'
+    -- state.size_key = '{' .. state.disk .. ' size_gb}'
+    -- state.used_key = '{' .. state.disk .. ' used_gb}'
+    state.used_p_key = '{' .. state.disk .. ' used_p}'
     vicious.register(
       state.widget,
       vicious.widgets.fs,
       function (w, data)
-        return data[state.used_key] .. '/' .. data[state.size_key]
+        return data[state.used_p_key] .. '%'
       end)
     return state.widget
+  end)
+
+
+local cpu_status = label_wrap(
+  'cpu',
+  function ()
+    local widget = wibox.widget.textbox()
+    vicious.register(
+      widget,
+      vicious.widgets.cpu,
+      "$1%")
+    return widget
   end)
 
 -- }}}
@@ -267,4 +280,6 @@ return {
  disk_status=disk_status,
  separator=separator,
  timer=timer,
+ cpu=cpu_status,
+ _label_wrap=label_wrap
 }

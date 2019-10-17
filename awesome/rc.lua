@@ -256,7 +256,19 @@ awful.screen.connect_for_each_screen(function(s)
           position = "top",
           screen = s,
       }
-      s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons)
+      s.mytasklist = awful.widget.tasklist {
+        screen = s,
+        filter = awful.widget.tasklist.filter.focused,
+        -- buttons = tasklist_buttons,
+        widget_template = {
+          {
+              id = 'text_role',
+              widget = wibox.widget.textbox
+          },
+          id = 'background_role',
+          widget = wibox.container.background
+        }
+      }
 
       -- sysystray
       s.systray = wibox.widget.systray()
@@ -274,15 +286,15 @@ awful.screen.connect_for_each_screen(function(s)
           { -- Right widgets
               layout = wibox.layout.fixed.horizontal,
               mykeyboardlayout,
+              widgets.cpu(),
               widgets.disk_status(),
               widgets.ram(),
               widgets.battery(),
-              widgets.separator,
+              wibox.container.margin(mytextclock, 4),
+              s.mylayoutbox,
               wibox.container.margin(
                 s.systray, 2, 2, 4
               ),
-              mytextclock,
-              s.mylayoutbox,
           },
       }
 
@@ -410,7 +422,7 @@ globalkeys = gears.table.join(
             {description = "swap with next client by index", group = "client"}),
   awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
             {description = "swap with previous client by index", group = "client"}),
- 
+
   awful.key({ modkey,           }, 'u', do_with_client_focus(function(c)
 	local screen = awful.screen.focused()
 	local scrgeo = screen.geometry
