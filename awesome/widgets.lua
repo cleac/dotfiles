@@ -57,7 +57,7 @@ local ram = label_wrap(
      widget,
      vicious.widgets.mem,
      '$1%',
-     1)
+     60)
    return widget
   end
 )
@@ -73,7 +73,7 @@ local battery_percent = label_wrap(
       widget,
       vicious.widgets.bat,
       '$2%',
-      1,
+      60,
       "BAT0")
     return widget
   end)
@@ -86,7 +86,7 @@ local battery_left = label_wrap(
       widget,
       vicious.widgets.bat,
       '$3',
-      1,
+      60,
       "BAT0")
     return widget
   end)
@@ -123,7 +123,7 @@ local function vpn_status()
       if status['{tun0 carrier}'] ~= nil then status_str = status_str .. _colorize('<sub>vpn</sub>') end
       return(status_str)
     end,
-    5
+    60
   )
   return widget
 end
@@ -143,7 +143,8 @@ local disk_status = label_wrap(
       vicious.widgets.fs,
       function (w, data)
         return data[state.used_p_key] .. '%'
-      end)
+      end,
+      60)
     return state.widget
   end)
 
@@ -155,9 +156,27 @@ local cpu_status = label_wrap(
     vicious.register(
       widget,
       vicious.widgets.cpu,
-      "$1%")
+      "$1%",
+      60)
     return widget
   end)
+
+local cpu_freq = label_wrap(
+  'cpufreq',
+  function ()
+    local widget = wibox.widget.textbox()
+    vicious.register(
+      widget,
+      vicious.widgets.cpufreq,
+      function(w, arg)
+        return tostring(math.floor(arg[2] * 10) / 10) .. "GHz"
+      end,
+      60,
+      'cpu0')
+    return widget
+  end)
+
+-- }}}
 
 -- }}}
 
@@ -281,5 +300,6 @@ return {
  separator=separator,
  timer=timer,
  cpu=cpu_status,
+ cpufreq=cpu_freq,
  _label_wrap=label_wrap
 }
