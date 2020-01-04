@@ -8,6 +8,9 @@ Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'vimwiki/vimwiki'
 Plug 'jpalardy/vim-slime'
 Plug 'justinmk/vim-sneak'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 colorscheme nighted
@@ -47,3 +50,5 @@ endif
 
 " hi Normal ctermbg=0
 
+let g:vimwiki_list = [{'path': '~/vimwiki',
+			\ 'syntax': 'markdown', 'ext': '.md'}]
