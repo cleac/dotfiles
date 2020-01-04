@@ -57,7 +57,7 @@ local ram = label_wrap(
      widget,
      vicious.widgets.mem,
      '$1%',
-     60)
+     5)
    return widget
   end
 )
@@ -68,12 +68,29 @@ local ram = label_wrap(
 local battery_percent = label_wrap(
   'bat',
   function ()
+      local sent_notification = false
     local widget = wibox.widget.textbox()
     vicious.register(
       widget,
       vicious.widgets.bat,
-      '$2%',
-      60,
+      function (w, status)
+          if status[2] < 10 then
+              if not sent_notification then
+                  naughty.notify{
+                      title   = 'Battery is critically low',
+                      text    = 'There is ' .. status[3] .. ' left',
+                      timeout = 2,
+                      ontop   = true,
+                  }
+                  sent_notification = true
+              end
+              return '<span color="#F77">' .. tostring(status[2]) .. '%</span>'
+          else
+              sent_notification = false
+              return tostring(status[2]) .. '%'
+          end
+      end,
+      5,
       "BAT0")
     return widget
   end)
@@ -86,7 +103,7 @@ local battery_left = label_wrap(
       widget,
       vicious.widgets.bat,
       '$3',
-      60,
+      5,
       "BAT0")
     return widget
   end)
@@ -123,7 +140,7 @@ local function vpn_status()
       if status['{tun0 carrier}'] ~= nil then status_str = status_str .. _colorize('<sub>vpn</sub>') end
       return(status_str)
     end,
-    60
+    5
   )
   return widget
 end
@@ -144,7 +161,7 @@ local disk_status = label_wrap(
       function (w, data)
         return data[state.used_p_key] .. '%'
       end,
-      60)
+      5)
     return state.widget
   end)
 
@@ -157,7 +174,7 @@ local cpu_status = label_wrap(
       widget,
       vicious.widgets.cpu,
       "$1%",
-      60)
+      5)
     return widget
   end)
 
@@ -171,7 +188,7 @@ local cpu_freq = label_wrap(
       function(w, arg)
         return tostring(math.floor(arg[2] * 10) / 10) .. "GHz"
       end,
-      60,
+      5,
       'cpu0')
     return widget
   end)

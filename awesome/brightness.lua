@@ -8,8 +8,8 @@ local io = io
 
 local app = 'light '
 local get_args = ''
-local inc_cmd = '-Ap '
-local dec_cmd = '-Up '
+local inc_cmd = '-A '
+local dec_cmd = '-U '
 local last_modificator = 2
 local percent_modificator = 30
 
@@ -24,12 +24,17 @@ local function getCurBrightness ()
     return tonumber(io.popen(app..get_args):read('*line'))
 end
 
-local function computeBrightnessDiff ()
+local function computeBrightnessDiffOld ()
     local brightness = getCurBrightness()
     if brightness ~= nil and brightness > 0.01 then
         last_modificator = brightness * (percent_modificator / 100.0)
     end
     return last_modificator
+end
+
+local function computeBrightnessDiff ()
+    local brightness = getCurBrightness()
+    return math.log(2 + brightness)
 end
 
 local function showNotif (brightness)

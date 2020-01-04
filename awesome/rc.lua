@@ -52,7 +52,7 @@ beautiful.init(os.getenv('HOME') .. "/.config/awesome/theme/theme.lua")
 -- gears.wallpaper.set(beautiful.border_focus)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "konsole"
+terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -409,6 +409,7 @@ globalkeys = gears.table.join(
             awful.client.focus.global_bydirection('right') end,
             {description = "Focus to client at right of current", group="client"}),
 
+
   awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
             {description = "jump to urgent client", group = "client"}),
 
@@ -424,7 +425,7 @@ globalkeys = gears.table.join(
   awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
             {description = "swap with previous client by index", group = "client"}),
 
-  awful.key({ modkey,           }, 'u', do_with_client_focus(function(c)
+  awful.key({ modkey,           }, '[', do_with_client_focus(function(c)
 	local screen = awful.screen.focused()
 	local scrgeo = screen.geometry
 	local geo = c:geometry()
