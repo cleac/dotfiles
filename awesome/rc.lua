@@ -45,6 +45,16 @@ do
 end
 -- }}}
 
+local function make_table(table)
+	local result = ''
+	for key, value in pairs(table) do
+		if type(value) == 'table' then
+			value = make_table(value)
+		end
+		result = result .. '\n' .. tostring(key) .. ': ' .. tostring(value)
+	end
+	return result
+end
 -- {{{ Variable definitions
 
 -- Themes define colours, icons, font and wallpapers.
@@ -230,22 +240,22 @@ awful.screen.connect_for_each_screen(function(s)
 
       -- Each screen has its own tag table.
       awful.tag({
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
+	  "base",
+          "code",
+          "terminal",
+          "browser",
+          "music",
+          "gaming",
+          "-",
+          "-",
+          "-",
       }, s, {
           awful.layout.layouts[2],
+          awful.layout.layouts[10],
+          awful.layout.layouts[10],
           awful.layout.layouts[2],
-          awful.layout.layouts[2],
-          awful.layout.layouts[2],
-          awful.layout.layouts[2],
-          awful.layout.layouts[2],
+          awful.layout.layouts[10],
+          awful.layout.layouts[10],
           awful.layout.layouts[2],
           awful.layout.layouts[2],
           awful.layout.layouts[2],
@@ -588,7 +598,7 @@ clientkeys = gears.table.join(
     awful.key({ modkey,           }, "i", function (c)
         naughty.notify{
             title='Client class',
-            text="Class: " .. tostring(c.class) .. '\nFloating: ' .. tostring(c.floating)
+            text="Instance: '" .. c.instance .. "'\nName: '".. c.name .. "'\nClass: " .. tostring(c.class) .. '\nFloating: ' .. tostring(c.floating) .. "\ntags: " .. make_table(c:tags())
         }
     end),
     awful.key({ modkey,           }, "n",
@@ -689,11 +699,8 @@ awful.rules.rules = {
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
      }
     },
-    { rule={class = 'st-256color'},
+    { rule_any={class = {'st-256color', 'Xfce4-terminal' }},
       properties = { size_hints_honor = false }},
-    { rule={class = 'albert'},
-      properties = { border_width = 0 }},
-
     -- Floating clients.
     { rule_any = {
         instance = {
@@ -720,22 +727,31 @@ awful.rules.rules = {
         }
       }, properties = { floating = true }},
       { rule_any = {
-	      class = { "Plank" },
-      }, properties = { border_width = 0, dockable = true,  type = "dock" } },
+		class = { 'Xfce4-terminal' },
+	}, except = { name = 'cmus .*' },
+	properties = { screen = 1, tag = 'terminal' },
+      },
+      { rule_any = {
+	      class = { 'firefox', 'qutebrowser' },
+	}, properties = { screen = 1, tag = 'browser' },
+      },
+      { rule_any = {
+	      instance = {'deadbeef'},
+	      name = {'cmus.*'},
+       }, properties = { tag = 'music' }, },
       { rule = { class = "MPlayer" },
         properties = { floating = true } },
-
-	{
-            rule = {
-                class = "jetbrains-.*",
-            }, properties = { focus = true }
-        },
-        {
-            rule = {
-                class = "jetbrains-.*",
-                name = "win.*"
-            }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore }
-        },
+{
+    rule = {
+	class = "jetbrains-.*",
+    }, properties = { focus = true, tag='code' }
+},
+{
+    rule = {
+	class = "jetbrains-.*",
+	name = "win.*"
+    }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore, tag='code' }
+},
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -756,35 +772,6 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-
-    -- local not_all_tiled = false
-    -- for _, tag in pairs(c:tags()) do
-    --     if tag.layout.name == 'floating' then
-    --         not_all_tiled = true
-    --         break
-    --     end
-    -- end
-    -- c.floating = not_all_tiled
-
-    -- if c.floating and c.type ~= 'desktop' and
-    --     c.type ~= 'splash' and
-    --     c.type ~= 'notification' and
-    --     c.type ~= 'dock' and
-    --     c.type ~= 'combo' and
-    --     c.type ~= 'menu' and
-    --     c.class ~= 'albert' and
-    --     c.class ~= 'Steam' then awful.titlebar.show(c)
-    -- elseif not c.floating then awful.titlebar.hide(c) end
-
-    -- if c.class == 'jetbrains-idea' then
-    --     c.floating = true
-    --     awful.titlebar.hide(c)
-    -- end
-
-    -- if c.class == 'albert' then
-    --     c.floating = true
-    --     awful.titlebar.hide(c)
-    -- end
 
 end)
 
