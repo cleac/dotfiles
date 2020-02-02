@@ -13,6 +13,7 @@ run_once  xcompmgr
 run_once  redshift-gtk
 run_once  ~/software/Telegram
 run_once  unclutter -idle 1
-run_once  caffeine
 run_once  volumeicon
 run_once  kdeconnect-indicator
+run_once  xfce4-terminal
+run_once  deadbeef

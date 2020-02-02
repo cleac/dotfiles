@@ -255,7 +255,7 @@ awful.screen.connect_for_each_screen(function(s)
           awful.layout.layouts[10],
           awful.layout.layouts[2],
           awful.layout.layouts[10],
-          awful.layout.layouts[10],
+          awful.layout.layouts[2],
           awful.layout.layouts[2],
           awful.layout.layouts[2],
           awful.layout.layouts[2],
@@ -729,16 +729,19 @@ awful.rules.rules = {
       { rule_any = {
 		class = { 'Xfce4-terminal' },
 	}, except = { name = 'cmus .*' },
-	properties = { screen = 1, tag = 'terminal' },
+	properties = { screen = 1, tag = 'terminal', switchtotag=true, },
       },
       { rule_any = {
 	      class = { 'firefox', 'qutebrowser' },
-	}, properties = { screen = 1, tag = 'browser' },
+	}, properties = { screen = 1, tag = 'browser', switchtotag=true, },
       },
       { rule_any = {
 	      instance = {'deadbeef'},
 	      name = {'cmus.*'},
-       }, properties = { tag = 'music' }, },
+       }, properties = { tag = 'music', switchtotag=true }, },
+      { rule_any = {
+	      instance = {'steam', 'Steam'},
+       }, properties = { tag = 'gaming', switchtotag=true }, },
       { rule = { class = "MPlayer" },
         properties = { floating = true } },
 {
