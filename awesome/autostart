@@ -6,14 +6,8 @@ function run_once() {
   pgrep $@ > /dev/null || ($@ &)
 }
 
-run_once  i3lock -c 000000 && sleep 1
+# run_once  i3lock -c 000000 && sleep 1
 run_once  blueman-applet
 run_once  nm-applet
 run_once  xcompmgr
-run_once  redshift-gtk
-run_once  ~/software/Telegram
-run_once  unclutter -idle 1
 run_once  volumeicon
-run_once  kdeconnect-indicator
-run_once  xfce4-terminal
-run_once  deadbeef
