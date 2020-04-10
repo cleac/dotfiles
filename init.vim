@@ -1,29 +1,27 @@
 call plug#begin('~/.config/nvim/plugged')
-Plug 'wolf-dog/nighted.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-" Plug 'editorconfig/editorconfig-vim'
-" Plug 'neomake/neomake'
+
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'vimwiki/vimwiki'
 Plug 'jpalardy/vim-slime'
-Plug 'justinmk/vim-sneak'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
-colorscheme nighted
-
-function! EditConfig()
-tabnew ~/.config/nvim/init.vim
-endfunction
+colorscheme slate
 
 let mapleader = ","
 
-nnoremap <silent> <leader>ce :call EditConfig()<CR>
-nnoremap <silent> ,d :noh<CR>
-nnoremap <silent> ,t :NERDTreeToggle<CR>
+nnoremap <silent> <leader>ce :tabnew ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>d :noh<CR>
+nnoremap <silent> <leader>t :NERDTreeToggle<CR>
+
+command! W normal :w<CR>
+command! Wq normal :wq<CR>
+command! Q normal :q!<CR>
+command! Qa normal :qa!<CR>
 
 au BufWritePost *.py exe "!flake8 %"
 au BufWritePost *.lua exe "!lualint %"
@@ -35,8 +33,7 @@ au BufWritePre * %s/\ \+$//ge
 
 set linebreak
 set undofile
-
-let g:vimwiki_list = [{'path': '~/wiki', 'syntax': 'markdown' }]
+set number
 
 function! AttachProjectConfig()
   if filereadable(".vimconfig")
@@ -48,7 +45,6 @@ if !exists("project_config_attach")
   autocmd VimEnter * call AttachProjectConfig()
 endif
 
-" hi Normal ctermbg=0
-
 let g:vimwiki_list = [{'path': '~/vimwiki',
 			\ 'syntax': 'markdown', 'ext': '.md'}]
+
