@@ -14,6 +14,8 @@ alias tmat="tmux attach -t"
 alias tmd="tmux detach"
 alias tmn="tmux new"
 
+alias py3="python3"
+
 alias st="st -f 'Source Code Pro'"
 
 alias doc2pdf="unoconv -fpdf"
