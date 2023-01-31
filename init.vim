@@ -18,10 +18,8 @@ nnoremap <silent> <leader>ce :tabnew ~/.config/nvim/init.vim<CR>
 nnoremap <silent> <leader>d :noh<CR>
 nnoremap <silent> <leader>t :NERDTreeToggle<CR>
 
-inoremap [ (
-inoremap ] )
-inoremap [[ [
-inoremap ]] ]
+inoremap ' "
+inoremap " '
 
 command! W normal :w<CR>
 command! Wq normal :wq<CR>
